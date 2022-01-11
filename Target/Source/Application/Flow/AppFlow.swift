@@ -14,7 +14,9 @@ struct AppStepper: Stepper{
     private let disposeBag: DisposeBag = .init()
     
     func readyToEmitSteps() {
-        
+        Observable.just(SMUPStep.signInIsRequired)
+            .bind(to: steps)
+            .disposed(by: disposeBag)
     }
 }
 
