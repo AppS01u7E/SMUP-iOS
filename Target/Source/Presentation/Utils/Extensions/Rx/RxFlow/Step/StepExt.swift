@@ -9,7 +9,7 @@
 import RxFlow
 
 extension Step{
-    var isSMUPStep: SMUPStep? {
+    var asSMUPStep: SMUPStep? {
         return self as? SMUPStep
     }
 }
