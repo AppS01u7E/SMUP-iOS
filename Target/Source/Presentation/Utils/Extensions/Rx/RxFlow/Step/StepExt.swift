@@ -6,4 +6,10 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-import Foundation
+import RxFlow
+
+extension Step{
+    var isSMUPStep: SMUPStep? {
+        return self as? SMUPStep
+    }
+}
