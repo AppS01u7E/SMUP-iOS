@@ -42,9 +42,11 @@ final class AppFlow: Flow{
     // MARK: - Navigate
     
     func navigate(to step: Step) -> FlowContributors {
-        
+        guard let step = step.asSMUPStep else { return .none }
         
         switch step{
+        case .signInIsRequired:
+            return coordinateToSignIn()
         default:
             return .none
         }
@@ -54,5 +56,17 @@ final class AppFlow: Flow{
 // MARK: - Method
 
 private extension AppFlow{
+    func coordinateToSignIn() -> FlowContributors {
+        let flow = SignInFlow()
+        
+        Flows.use(
+            flow,
+            when: .created
+        ) { [unowned self] root in
+            self.rootWindow.rootViewController = root
+        }
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: SMUPStep.signInIsRequired)))
+    }
 }
 
