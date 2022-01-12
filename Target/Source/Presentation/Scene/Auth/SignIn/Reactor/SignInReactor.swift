@@ -19,6 +19,7 @@ final class SignInReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
+        case appleSignInButtonDidTap
     }
     enum Mutation{
     }
@@ -32,7 +33,12 @@ final class SignInReactor: Reactor, Stepper{
 // MARK: - Mutate
 extension SignInReactor{
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action{
+        case .appleSignInButtonDidTap:
+//            steps.accept(SMUPStep.appleSignInIsRequired) // 아직은 퍼블리싱만
+            steps.accept(SMUPStep.mainTabbarIsRequired)
+            return .empty()
+        }
     }
 }
 

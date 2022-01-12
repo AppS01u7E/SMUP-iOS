@@ -15,6 +15,7 @@ enum SMUPStep: Step{
     
     // Auth
     case signInIsRequired
+    case appleSignInIsRequired
     case signInIsCompleted
     
     // Main
