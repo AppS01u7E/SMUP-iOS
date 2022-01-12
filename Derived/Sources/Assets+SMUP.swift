@@ -18,6 +18,9 @@
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum SMUPAsset {
   public static let accentColor = SMUPColors(name: "AccentColor")
+  public static let smupMain1 = SMUPColors(name: "SMUP_MAIN1")
+  public static let smupMain2 = SMUPColors(name: "SMUP_MAIN2")
+  public static let smupMain3 = SMUPColors(name: "SMUP_MAIN3")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

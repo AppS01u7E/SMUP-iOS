@@ -9,5 +9,9 @@
 import UIKit
 
 final class SignInVC: baseVC<SignInReactor>{
-    
+    // MARK: - Properties
+    private let logoLabel = UILabel().then {
+        $0.text = "SMUP"
+        
+    }
 }
