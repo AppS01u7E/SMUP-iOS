@@ -8,6 +8,8 @@
 
 import UIKit
 import AuthenticationServices
+import RxCocoa
+import RxSwift
 
 final class SignInVC: baseVC<SignInReactor>{
     // MARK: - Properties
@@ -36,5 +38,13 @@ final class SignInVC: baseVC<SignInReactor>{
     }
     override func configureVC() {
         view.backgroundColor = SMUPAsset.smupMain3.color
+    }
+    
+    // MARK: - Reactor
+    override func bindView(reactor: SignInReactor) {
+        appleSignInButton.rx.controlEvent(.touchUpInside)
+            .map { _ in Reactor.Action.appleSignInButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
