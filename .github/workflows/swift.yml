@@ -1,0 +1,25 @@
+name: Swift
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install tuist
+      run: curl -Ls https://install.tuist.io | bash
+    - name: install Cocoapods
+      run: sudo gem install cocoapods
+    - name: install Make
+      run: sudo make install
+    - name: Build
+      run: |
+        make generate
+        xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUP -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0'
+    - name: Run tests
+      run: swift test -v
