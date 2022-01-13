@@ -1,4 +1,5 @@
 import XCTest
+@testable import SMUP
 
 class TargetTests: XCTestCase {
 

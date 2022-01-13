@@ -1,3 +1,5 @@
+import XCTest
+
 class TargetUITests: XCTestCase {
 
     override func setUpWithError() throws {
