@@ -19,21 +19,21 @@ extension Container{
     
     // MARK: - VC
     private func registerVC() {
-        autoregister(SignInVC.self, initializer: SignInVC.init)
+        [SignInVC].forEach{ autoregister($0.self, initializer: $0.init) }
     }
     
     // MARK: - Reactor
     private func registerReactor() {
-        autoregister(SignInReactor.self, initializer: SignInReactor.init)
+        [SignInReactor].forEach{ autoregister($0.self, initializer: $0.init) }
     }
     
     // MARK: - Stepper
     private func registerStepper() {
-        autoregister(SignInStepper.self, initializer: SignInStepper.init)
+        [SignInStepper].forEach{ autoregister($0.self, initializer: $0.init) }
     }
     
     // MARK: - Flow
     private func registerFlow() {
-        autoregister(SignInFlow.self, initializer: SignInFlow.init)
+        [SignInFlow].forEach{ autoregister($0.self, initializer: $0.init) }
     }
 }
