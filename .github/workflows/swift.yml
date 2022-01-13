@@ -15,9 +15,11 @@ jobs:
       run: curl -Ls https://install.tuist.io | bash
     - name: install Cocoapods
       run: sudo gem install cocoapods
-    - name: Build
+    - name: project Generate
+      run: make generate
+    - name: Tests
       run: |
-        make generate
-        xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUP -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0'
-    - name: Run tests
-      run: xcodebuild clean test -workspace "SMUP.xcworkspace" -scheme "SMUPTest" -destination "platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0"
+        xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUPTest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0'
+        xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUPUITest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0'
+
+        
