@@ -15,8 +15,6 @@ jobs:
       run: curl -Ls https://install.tuist.io | bash
     - name: install Cocoapods
       run: sudo gem install cocoapods
-    - name: install Make
-      run: sudo make install
     - name: Build
       run: |
         make generate
