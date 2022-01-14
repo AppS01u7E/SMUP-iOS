@@ -19,6 +19,7 @@ target 'SMUP' do
   pod 'Floaty', '~> 4.2.0'
   pod 'Then', '~> 2.7.0'
   pod 'SnapKit', '~> 5.0.1'
+  pod 'MessageKit', '~> 3.0.0'
   pod 'Swinject', '~> 2.7'
   pod 'SwinjectAutoregistration', '~> 2.7'
 
