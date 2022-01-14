@@ -39,6 +39,8 @@ final class SignInFlow: Flow{
         switch step{
         case .signInIsRequired:
             return coordinateToSignIn()
+        case .mainTabbarIsRequired:
+            return .end(forwardToParentFlowWithStep: SMUPStep.mainTabbarIsRequired)
         default:
             return .none
         }
@@ -49,6 +51,6 @@ final class SignInFlow: Flow{
 private extension SignInFlow{
     func coordinateToSignIn() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
 }
