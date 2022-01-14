@@ -21,7 +21,10 @@ enum SMUPStep: Step{
     // Main
     case mainTabbarIsRequired
     
-    // Home
+    // SOOM
+    case soomIsRequired
+    
+    // MARK: - Main
     case homeIsRequired
     
     // TimeMap
@@ -30,9 +33,9 @@ enum SMUPStep: Step{
     // Chatting
     case chattingIsRequired
     
-    // SOOM
-    case soomIsRequired
     
     // Settings
     case settingIsRequired
+    
+    // MARK: - SOOM
 }
