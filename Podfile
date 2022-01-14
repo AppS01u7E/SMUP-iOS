@@ -16,7 +16,7 @@ target 'SMUP' do
   pod 'RxFlow', '~> 2.12.4'
 
   # Utils
-  pod 'Floaty', '~> 4.2.0'
+  pod 'JJFloatingActionButton'
   pod 'Then', '~> 2.7.0'
   pod 'SnapKit', '~> 5.0.1'
   pod 'Swinject', '~> 2.7'

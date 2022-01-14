@@ -7,7 +7,7 @@
 //
 
 import RxFlow
-import Floaty
+import JJFloatingActionButton
 
 final class MainTabbarFlow: Flow{
     // MARK: - TabIndex
@@ -49,33 +49,32 @@ final class MainTabbarFlow: Flow{
 private extension MainTabbarFlow{
     func coordinateToMainTabbar() -> FlowContributors{
         Flows.use(
-            homeFlow, timeMapFlow, chatFlow, soomFlow, settingFlow,
-            when: .created
-        ) { [unowned self] (homeRoot: UINavigationController,
-                            timeRoot: UINavigationController,
-                            chatRoot: UINavigationController,
-                            soomRoot: UINavigationController,
-                            settingRoot: UINavigationController) in
-            let homeFloaty = FloatyItem()
-            homeFloaty.icon = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            [
+                homeFlow, timeMapFlow, chatFlow, soomFlow, settingFlow
+            ], when: .created
+        ) { [unowned self] (roots) in
             
-            let timemapFloaty = FloatyItem()
-            timemapFloaty.icon = UIImage(systemName: "calendar")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let homeFloaty = JJActionItem()
+            homeFloaty.buttonImage = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let chatFloaty = FloatyItem()
-            chatFloaty.icon = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let timemapFloaty = JJActionItem()
+            timemapFloaty.buttonImage = UIImage(systemName: "magnifyingglass")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let soomFloaty = FloatyItem()
-            soomFloaty.icon = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let chatFloaty = JJActionItem()
+            chatFloaty.buttonImage = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let settingFloaty = FloatyItem()
-            settingFloaty.icon = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let soomFloaty = JJActionItem()
+            soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            [homeFloaty, timemapFloaty, chatFloaty, soomFloaty, settingFloaty].forEach{ $0.buttonColor = SMUPAsset.smupFloaty.color }
+            let settingFloaty = JJActionItem()
+            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            self.rootVC.setViewControllers(viewControllers: [homeRoot, timeRoot, chatRoot, soomRoot, settingRoot], floaties: [homeFloaty, timemapFloaty, chatFloaty, soomFloaty, settingFloaty], animated: false)
             
+            let items = [homeFloaty, timemapFloaty, chatFloaty, soomFloaty, settingFloaty]
+            
+            self.rootVC.setViewControllers(viewControllers: roots, floaties: items, animated: false)
         }
+        
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: homeFlow.stepper),
             .contribute(withNextPresentable: timeMapFlow, withNextStepper: timeMapFlow.stepper),

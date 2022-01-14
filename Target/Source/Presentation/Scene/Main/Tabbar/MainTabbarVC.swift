@@ -7,19 +7,18 @@
 //
 
 import UIKit
-import Floaty
 import SnapKit
 import Then
 import RxCocoa
 import RxSwift
+import JJFloatingActionButton
 
 final class MainTabbarVC: UITabBarController {
     // MARK: - Properties
-    private let floaty = Floaty().then {
-        $0.openAnimationType = .slideLeft
+    private let floaty = JJFloatingActionButton().then {
+        $0.buttonAnimationConfiguration = .transition(toImage: .init(systemName: "xmark") ?? .init())
+        $0.itemAnimationConfiguration = .slideIn()
         $0.buttonColor = SMUPAsset.smupFloaty.color
-        $0.itemButtonColor = SMUPAsset.smupFloaty.color
-        $0.size = 64
     }
     
     // MARK: - Init
@@ -36,18 +35,17 @@ final class MainTabbarVC: UITabBarController {
     
     
     // MARK: - Method
-    func setViewControllers(viewControllers: [UIViewController]? ,floaties: [FloatyItem]?, animated: Bool) {
+    func setViewControllers(viewControllers: [UIViewController]? ,floaties: [JJActionItem]?, animated: Bool) {
         self.setViewControllers(viewControllers, animated: animated)
         guard let floaties = floaties else {
             return
         }
-        
         floaties.enumerated().forEach { item in
-            item.element.handler = { _ in
+            item.element.action = { _ in
                 self.didSelectFloatyItem(item.offset)
             }
-            item.element.size = 44
-            floaty.addItem(item: item.element)
+            item.element.buttonColor = SMUPAsset.smupFloaty.color
+            floaty.addItem(item.element)
         }
     }
 }
@@ -56,7 +54,6 @@ final class MainTabbarVC: UITabBarController {
 private extension MainTabbarVC{
     func addView(){
         self.view.insertSubview(floaty, belowSubview: self.tabBar)
-        
     }
     func setLayout(){
         floaty.snp.makeConstraints {
@@ -74,7 +71,7 @@ private extension MainTabbarVC{
 private extension MainTabbarVC{
     func didSelectFloatyItem(_ index: Int) {
         self.selectedIndex = index
-        self.floaty.buttonImage = self.floaty.items[index].icon
+        self.floaty.buttonImage = self.floaty.items[index].buttonImage
     }
 }
 
