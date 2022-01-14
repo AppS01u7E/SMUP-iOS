@@ -23,6 +23,12 @@ class baseVC<T: Reactor>: UIViewController{
         configureVC()
     }
     
+    @Inject var reactor: T
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     init(reactor: T){
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor

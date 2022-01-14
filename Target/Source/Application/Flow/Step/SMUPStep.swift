@@ -21,6 +21,9 @@ enum SMUPStep: Step{
     // Main
     case mainTabbarIsRequired
     
+    // Home
+    case homeIsRequired
+    
     // TimeMap
     case timeMapIsRequired
     

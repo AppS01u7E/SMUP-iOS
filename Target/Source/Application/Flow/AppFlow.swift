@@ -49,6 +49,8 @@ final class AppFlow: Flow{
         switch step{
         case .signInIsRequired:
             return coordinateToSignIn()
+        case .mainTabbarIsRequired:
+            return coordinateToMainTabbar()
         default:
             return .none
         }
@@ -69,6 +71,17 @@ private extension AppFlow{
         }
         
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: SMUPStep.signInIsRequired)))
+    }
+    func coordinateToMainTabbar() -> FlowContributors{
+        let flow = MainTabbarFlow()
+        
+        Flows.use(
+            flow,
+            when: .created
+        ) { [unowned self] root in
+            self.rootWindow.rootViewController = root
+        }
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: SMUPStep.mainTabbarIsRequired)))
     }
 }
 

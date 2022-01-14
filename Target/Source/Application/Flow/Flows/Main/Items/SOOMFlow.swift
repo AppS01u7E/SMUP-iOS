@@ -1,31 +1,29 @@
 //
-//  SignInFlow.swift
+//  SOOMFlow.swift
 //  SMUP
 //
-//  Created by 최형우 on 2022/01/12.
+//  Created by 최형우 on 2022/01/14.
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
 import RxFlow
 import RxRelay
 
-struct SignInStepper: Stepper{
+struct SOOMStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
     
     var initialStep: Step{
-        return SMUPStep.signInIsRequired
+        return SMUPStep.soomIsRequired
     }
 }
 
-final class SignInFlow: Flow{
+final class SOOMFlow: Flow{
     // MARK: - Properties
     var root: Presentable{
         return self.rootVC
     }
-    
-    @Inject var stepper: SignInStepper
-    @Inject private var vc: SignInVC
-    @Inject private var reactor: SignInReactor
+    @Inject private var vc: SOOMVC
+    @Inject var stepper: SOOMStepper
     private let rootVC = UINavigationController()
     
     // MARK: - Init
@@ -37,10 +35,8 @@ final class SignInFlow: Flow{
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step.asSMUPStep else { return .none }
         switch step{
-        case .signInIsRequired:
-            return coordinateToSignIn()
-        case .mainTabbarIsRequired:
-            return .end(forwardToParentFlowWithStep: SMUPStep.mainTabbarIsRequired)
+        case .soomIsRequired:
+            return coordinateToSOOM()
         default:
             return .none
         }
@@ -48,8 +44,8 @@ final class SignInFlow: Flow{
 }
 
 // MARK: - Method
-private extension SignInFlow{
-    func coordinateToSignIn() -> FlowContributors{
+private extension SOOMFlow{
+    func coordinateToSOOM() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
