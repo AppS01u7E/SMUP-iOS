@@ -22,6 +22,7 @@ target 'SMUP' do
   pod 'MessageKit', '~> 3.0.0'
   pod 'Swinject', '~> 2.7'
   pod 'SwinjectAutoregistration', '~> 2.7'
+  pod 'SwiftDate', '~> 6.3.1'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
