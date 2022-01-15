@@ -23,6 +23,8 @@ final class HomeReactor: Reactor, Stepper{
     enum Mutation{
     }
     struct State{
+        var selectedDate = Date()
+        var meal = Meal(breakfast: [], lunch: [], dinner: [])
     }
     
     var initialState: State = State()
