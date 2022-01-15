@@ -7,5 +7,5 @@
 //
 
 final class HomeVC: baseVC<HomeReactor>{
-    
+    // MARK: - Properties
 }
