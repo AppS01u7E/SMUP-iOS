@@ -26,6 +26,8 @@ extension Container{
         autoregister(ChattingVC.self, initializer: ChattingVC.init)
         autoregister(SOOMVC.self, initializer: SOOMVC.init)
         autoregister(SettingVC.self, initializer: SettingVC.init)
+        autoregister(SearchVC.self, initializer: SearchVC.init)
+        autoregister(MySchoolVC.self, initializer: MySchoolVC.init)
     }
     
     // MARK: - Reactor
@@ -36,6 +38,8 @@ extension Container{
         autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(SOOMReactor.self, initializer: SOOMReactor.init)
         autoregister(SettingReactor.self, initializer: SettingReactor.init)
+        autoregister(SearchReactor.self, initializer: SearchReactor.init)
+        autoregister(MySchoolReactor.self, initializer: MySchoolReactor.init)
     }
     
     // MARK: - Stepper
@@ -46,6 +50,8 @@ extension Container{
         autoregister(ChattingStepper.self, initializer: ChattingStepper.init)
         autoregister(SOOMStepper.self, initializer: SOOMStepper.init)
         autoregister(SettingStepper.self, initializer: SettingStepper.init)
+        autoregister(SearchStepper.self, initializer: SearchStepper.init)
+        autoregister(MySchoolStepper.self, initializer: MySchoolStepper.init)
     }
     
     // MARK: - Flow
@@ -56,5 +62,7 @@ extension Container{
         autoregister(ChattingFlow.self, initializer: ChattingFlow.init)
         autoregister(SOOMFlow.self, initializer: SOOMFlow.init)
         autoregister(SettingFlow.self, initializer: SettingFlow.init)
+        autoregister(SearchFlow.self, initializer: SearchFlow.init)
+        autoregister(MySchoolFlow.self, initializer: MySchoolFlow.init)
     }
 }
