@@ -16,10 +16,13 @@ jobs:
     - name: install Cocoapods
       run: sudo gem install cocoapods
     - name: project Generate
-      run: make generate
+      run: |
+        tuist generate
+        pod install
     - name: Tests
       run: |
         xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUPTest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+        pod install
         xcodebuild test -workspace SMUP.xcworkspace -scheme SMUPUITest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
 
         
