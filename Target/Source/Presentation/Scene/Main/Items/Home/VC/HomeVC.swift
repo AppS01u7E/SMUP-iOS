@@ -20,7 +20,6 @@ final class HomeVC: baseVC<HomeReactor>{
     
     // MARK: - UI
     override func addView() {
-        dayStack.addA
         
     }
     override func setLayout() {

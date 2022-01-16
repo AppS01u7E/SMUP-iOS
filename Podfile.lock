@@ -1,9 +1,11 @@
 PODS:
   - Alamofire (5.5.0)
-  - InputBarAccessoryView (4.2.2)
+  - InputBarAccessoryView (5.4.0):
+    - InputBarAccessoryView/Core (= 5.4.0)
+  - InputBarAccessoryView/Core (5.4.0)
   - JJFloatingActionButton (2.5.0)
-  - MessageKit (3.0.0):
-    - InputBarAccessoryView (~> 4.2.2)
+  - MessageKit (3.7.0):
+    - InputBarAccessoryView (~> 5.4.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -34,7 +36,7 @@ PODS:
 
 DEPENDENCIES:
   - JJFloatingActionButton
-  - MessageKit (~> 3.0.0)
+  - MessageKit (~> 3.7.0)
   - Moya/RxSwift (~> 15.0.0)
   - ReactorKit (~> 3.1.0)
   - RxCocoa (~> 6.2.0)
@@ -69,9 +71,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
+  InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
-  MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
+  MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   ReactorKit: a06dd2a5c9339287aedf3dc821cfab6347eca106
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
@@ -86,6 +88,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 2fff0c7ee8e38b1fb2e2f3415be6b1d72584544c
+PODFILE CHECKSUM: 2b03842ca5052ada96a7f0089d221a19310cb8fe
 
 COCOAPODS: 1.11.2
