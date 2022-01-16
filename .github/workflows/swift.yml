@@ -7,19 +7,25 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: macos-11
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        swift-version: "5.5.2"
+        xcode-version: latest
     - name: install tuist
       run: curl -Ls https://install.tuist.io | bash
     - name: install Cocoapods
       run: sudo gem install cocoapods
     - name: project Generate
-      run: make generate
+      run: |
+        rm -rf Podfile.lock
+        tuist generate
+        pod install
     - name: Tests
       run: |
-        xcodebuild clean test -workspace SMUP.xcworkspace -scheme SMUPTest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
-        xcodebuild test -workspace SMUP.xcworkspace -scheme SMUPUITest -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+        xcodebuild clean test -workspace SMUP.xcworkspace -scheme 'SMUPTest' -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
+        xcodebuild clean test -workspace SMUP.xcworkspace -scheme 'SMUPUITest' -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
 
         

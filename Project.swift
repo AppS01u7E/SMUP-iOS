@@ -33,10 +33,10 @@ let project = Project(
             name: "\(projectName)UITest",
             platform: .iOS,
             product: .uiTests,
-            bundleId: "\(orginazationIden).\(projectName)UITest",
+            bundleId: "\(orginazationIden).\(projectName)Test",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: [.iphone, .ipad]),
             infoPlist: .default,
-            sources: ["TargetUITest/Tests/**"],
+            sources: ["TargetTest/Tests/**"],
             dependencies: [
                 .target(name: projectName)
             ]
