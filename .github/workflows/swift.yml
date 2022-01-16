@@ -20,6 +20,7 @@ jobs:
       run: sudo gem install cocoapods
     - name: project Generate
       run: |
+        rm -rf Podfile.lock
         tuist generate
         pod install
     - name: Tests
