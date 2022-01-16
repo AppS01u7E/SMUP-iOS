@@ -83,11 +83,11 @@ private extension AppFlow{
         ) { [unowned self] root in
             self.rootWindow.rootViewController = root
         }
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: SMUPStep.mainTabbarIsRequired)))
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: flow.rootVC))
     }
     
     func coordinateToSoomTabbar() -> FlowContributors{
-        let flow = MainTabbarFlow()
+        let flow = SoomTabbarFlow()
         
         Flows.use(
             flow,
@@ -95,7 +95,7 @@ private extension AppFlow{
         ) { [unowned self] root in
             self.rootWindow.rootViewController = root
         }
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: SMUPStep.soomTabbarIsRequired)))
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: flow.rootVC))
     }
 }
 

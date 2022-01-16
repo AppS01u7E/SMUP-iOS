@@ -12,13 +12,28 @@ import Then
 import RxCocoa
 import RxSwift
 import JJFloatingActionButton
+import RxFlow
 
-final class MainTabbarVC: UITabBarController {
+enum MainTabbarItems{
+    case home
+    case chat
+    case setting
+    case soom
+    case mySchool
+}
+
+final class MainTabbarVC: UITabBarController, Stepper {
     // MARK: - Properties
     private let floaty = JJFloatingActionButton().then {
         $0.buttonAnimationConfiguration = .transition(toImage: .init(systemName: "xmark") ?? .init())
         $0.itemAnimationConfiguration = .slideIn()
         $0.buttonColor = SMUPAsset.smupFloaty.color
+    }
+    
+    var steps: PublishRelay<Step> = .init()
+    
+    var initialStep: Step {
+        return SMUPStep.mainTabbarIsRequired
     }
     
     // MARK: - Init
@@ -41,11 +56,20 @@ final class MainTabbarVC: UITabBarController {
             return
         }
         floaties.enumerated().forEach { item in
-            item.element.action = { _ in
-                self.didSelectFloatyItem(item.offset)
+            if item.offset == 4{
+                item.element.action = { _ in
+                    self.steps.accept(SMUPStep.soomTabbarIsRequired)
+                }
+                item.element.buttonColor = SMUPAsset.smupFloaty.color
+                floaty.addItem(item.element)
+            }else{
+                item.element.action = { _ in
+                    self.didSelectFloatyItem(item.offset)
+                }
+                item.element.buttonColor = SMUPAsset.smupFloaty.color
+                floaty.addItem(item.element)
             }
-            item.element.buttonColor = SMUPAsset.smupFloaty.color
-            floaty.addItem(item.element)
+            
         }
     }
 }

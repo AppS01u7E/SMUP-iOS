@@ -8,11 +8,16 @@
 
 import RxFlow
 import JJFloatingActionButton
+import RxRelay
 
 final class MainTabbarFlow: Flow{
     // MARK: - TabIndex
     enum TabIndex: Int{
         case home = 0
+        case mySchool = 1
+        case chat
+        case soom
+        case setting
     }
     
     // MARK: - Root
@@ -20,12 +25,11 @@ final class MainTabbarFlow: Flow{
         return self.rootVC
     }
     @Inject private var homeFlow: HomeFlow
-    @Inject private var MySchoolFlow: MySchoolFlow
+    @Inject private var mySchoolFlow: MySchoolFlow
     @Inject private var chatFlow: ChattingFlow
-    @Inject private var soomFlow: SOOMFlow
     @Inject private var settingFlow: SettingFlow
     
-    private let rootVC: MainTabbarVC = .init()
+    let rootVC: MainTabbarVC = .init()
     
     // MARK: - deinit
     deinit{
@@ -39,6 +43,8 @@ final class MainTabbarFlow: Flow{
         switch step{
         case .mainTabbarIsRequired:
             return coordinateToMainTabbar()
+        case .soomTabbarIsRequired:
+            return .end(forwardToParentFlowWithStep: SMUPStep.soomTabbarIsRequired)
         default:
             return .none
         }
@@ -50,36 +56,36 @@ private extension MainTabbarFlow{
     func coordinateToMainTabbar() -> FlowContributors{
         Flows.use(
             [
-                homeFlow, MySchoolFlow, chatFlow, soomFlow, settingFlow
+                homeFlow, mySchoolFlow, chatFlow, settingFlow
             ], when: .created
         ) { [unowned self] (roots) in
-            
-            let mySchoolFloaty = JJActionItem()
-            mySchoolFloaty.buttonImage = UIImage(systemName: "graduationcap")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            
-            let soomFloaty = JJActionItem()
-            soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
             let homeFloaty = JJActionItem()
             homeFloaty.buttonImage = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let settingFloaty = JJActionItem()
-            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let mySchoolFloaty = JJActionItem()
+            mySchoolFloaty.buttonImage = UIImage(systemName: "graduationcap")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
             let chatFloaty = JJActionItem()
             chatFloaty.buttonImage = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let items = [chatFloaty, settingFloaty, homeFloaty, soomFloaty, mySchoolFloaty]
+            let settingFloaty = JJActionItem()
+            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            
+            let soomFloaty = JJActionItem()
+            soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            
+            let items = [homeFloaty, mySchoolFloaty, chatFloaty, settingFloaty, soomFloaty]
             
             self.rootVC.setViewControllers(viewControllers: roots, floaties: items, animated: false)
+            
         }
         
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: homeFlow.stepper),
-            .contribute(withNextPresentable: MySchoolFlow, withNextStepper: MySchoolFlow.stepper),
+            .contribute(withNextPresentable: mySchoolFlow, withNextStepper: mySchoolFlow.stepper),
             .contribute(withNextPresentable: chatFlow, withNextStepper: chatFlow.stepper),
-            .contribute(withNextPresentable: soomFlow, withNextStepper: soomFlow.stepper),
-            .contribute(withNextPresentable: settingFlow, withNextStepper: settingFlow.stepper)
+            .contribute(withNextPresentable: settingFlow, withNextStepper: settingFlow.stepper),
         ])
     }
 }

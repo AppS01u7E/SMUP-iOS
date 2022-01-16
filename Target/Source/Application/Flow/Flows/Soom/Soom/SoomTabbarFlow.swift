@@ -13,19 +13,23 @@ final class SoomTabbarFlow: Flow{
     // MARK: - TabIndex
     enum TabIndex: Int{
         case home = 0
+        case search
+        case chat
+        case soom
+        case setting
     }
     
     // MARK: - Root
     var root: Presentable{
         return self.rootVC
     }
-    @Inject private var homeFlow: HomeFlow
-    @Inject private var SearchFlow: SearchFlow
+    
+    @Inject private var searchFlow: SearchFlow
     @Inject private var chatFlow: ChattingFlow
     @Inject private var soomFlow: SOOMFlow
     @Inject private var settingFlow: SettingFlow
     
-    private let rootVC: SoomTabbarVC = .init()
+    let rootVC: SoomTabbarVC = .init()
     
     // MARK: - deinit
     deinit{
@@ -39,6 +43,8 @@ final class SoomTabbarFlow: Flow{
         switch step{
         case .soomTabbarIsRequired:
             return coordinateToSoomTabbar()
+        case .mainTabbarIsRequired:
+            return .end(forwardToParentFlowWithStep: SMUPStep.mainTabbarIsRequired)
         default:
             return .none
         }
@@ -50,33 +56,32 @@ private extension SoomTabbarFlow{
     func coordinateToSoomTabbar() -> FlowContributors{
         Flows.use(
             [
-                homeFlow, SearchFlow, chatFlow, soomFlow, settingFlow
+                searchFlow, chatFlow, soomFlow, settingFlow
             ], when: .created
         ) { [unowned self] (roots) in
-            
-            let SearchFloaty = JJActionItem()
-            SearchFloaty.buttonImage = UIImage(systemName: "magnifyingglass")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
             let soomFloaty = JJActionItem()
             soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let homeFloaty = JJActionItem()
-            homeFloaty.buttonImage = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            
-            let settingFloaty = JJActionItem()
-            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let searchFloaty = JJActionItem()
+            searchFloaty.buttonImage = UIImage(systemName: "magnifyingglass")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
             let chatFloaty = JJActionItem()
             chatFloaty.buttonImage = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let items = [SearchFloaty, chatFloaty, settingFloaty, soomFloaty, homeFloaty]
+            let settingFloaty = JJActionItem()
+            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            
+            let homeFloaty = JJActionItem()
+            homeFloaty.buttonImage = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            
+            let items = [soomFloaty, searchFloaty, chatFloaty, settingFloaty, homeFloaty]
             
             self.rootVC.setViewControllers(viewControllers: roots, floaties: items, animated: false)
         }
         
         return .multiple(flowContributors: [
-            .contribute(withNextPresentable: homeFlow, withNextStepper: homeFlow.stepper),
-            .contribute(withNextPresentable: SearchFlow, withNextStepper: SearchFlow.stepper),
+            .contribute(withNextPresentable: searchFlow, withNextStepper: searchFlow.stepper),
             .contribute(withNextPresentable: chatFlow, withNextStepper: chatFlow.stepper),
             .contribute(withNextPresentable: soomFlow, withNextStepper: soomFlow.stepper),
             .contribute(withNextPresentable: settingFlow, withNextStepper: settingFlow.stepper)

@@ -12,13 +12,20 @@ import Then
 import RxCocoa
 import RxSwift
 import JJFloatingActionButton
+import RxFlow
 
-final class SoomTabbarVC: UITabBarController {
+final class SoomTabbarVC: UITabBarController, Stepper {
     // MARK: - Properties
     private let floaty = JJFloatingActionButton().then {
         $0.buttonAnimationConfiguration = .transition(toImage: .init(systemName: "xmark") ?? .init())
         $0.itemAnimationConfiguration = .slideIn()
         $0.buttonColor = SMUPAsset.smupFloaty.color
+    }
+    
+    var steps: PublishRelay<Step> = .init()
+    
+    var initialStep: Step{
+        return SMUPStep.soomTabbarIsRequired
     }
     
     // MARK: - Init
@@ -33,7 +40,6 @@ final class SoomTabbarVC: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Method
     func setViewControllers(viewControllers: [UIViewController]? ,floaties: [JJActionItem]?, animated: Bool) {
         self.setViewControllers(viewControllers, animated: animated)
@@ -41,11 +47,19 @@ final class SoomTabbarVC: UITabBarController {
             return
         }
         floaties.enumerated().forEach { item in
-            item.element.action = { _ in
-                self.didSelectFloatyItem(item.offset)
+            if item.offset == 4{
+                item.element.action = { _ in
+                    self.steps.accept(SMUPStep.mainTabbarIsRequired)
+                }
+                item.element.buttonColor = SMUPAsset.smupFloaty.color
+                floaty.addItem(item.element)
+            }else{
+                item.element.action = { _ in
+                    self.didSelectFloatyItem(item.offset)
+                }
+                item.element.buttonColor = SMUPAsset.smupFloaty.color
+                floaty.addItem(item.element)
             }
-            item.element.buttonColor = SMUPAsset.smupFloaty.color
-            floaty.addItem(item.element)
         }
     }
 }
@@ -63,7 +77,7 @@ private extension SoomTabbarVC{
     }
     func configureVC(){
         self.tabBar.isHidden = true
-        floaty.buttonImage = UIImage(systemName: "rectangle.on.retangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        floaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
     }
 }
 
