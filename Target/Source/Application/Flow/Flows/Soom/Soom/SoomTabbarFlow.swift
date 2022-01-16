@@ -9,7 +9,7 @@
 import RxFlow
 import JJFloatingActionButton
 
-final class MainTabbarFlow: Flow{
+final class SoomTabbarFlow: Flow{
     // MARK: - TabIndex
     enum TabIndex: Int{
         case home = 0
@@ -20,12 +20,12 @@ final class MainTabbarFlow: Flow{
         return self.rootVC
     }
     @Inject private var homeFlow: HomeFlow
-    @Inject private var MySchoolFlow: MySchoolFlow
+    @Inject private var SearchFlow: SearchFlow
     @Inject private var chatFlow: ChattingFlow
     @Inject private var soomFlow: SOOMFlow
     @Inject private var settingFlow: SettingFlow
     
-    private let rootVC: MainTabbarVC = .init()
+    private let rootVC: SoomTabbarVC = .init()
     
     // MARK: - deinit
     deinit{
@@ -37,8 +37,8 @@ final class MainTabbarFlow: Flow{
         guard let step = step.asSMUPStep else { return .none }
         
         switch step{
-        case .mainTabbarIsRequired:
-            return coordinateToMainTabbar()
+        case .soomTabbarIsRequired:
+            return coordinateToSoomTabbar()
         default:
             return .none
         }
@@ -46,16 +46,16 @@ final class MainTabbarFlow: Flow{
 }
 
 // MARK: - Method
-private extension MainTabbarFlow{
-    func coordinateToMainTabbar() -> FlowContributors{
+private extension SoomTabbarFlow{
+    func coordinateToSoomTabbar() -> FlowContributors{
         Flows.use(
             [
-                homeFlow, MySchoolFlow, chatFlow, soomFlow, settingFlow
+                homeFlow, SearchFlow, chatFlow, soomFlow, settingFlow
             ], when: .created
         ) { [unowned self] (roots) in
             
-            let mySchoolFloaty = JJActionItem()
-            mySchoolFloaty.buttonImage = UIImage(systemName: "graduationcap")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let SearchFloaty = JJActionItem()
+            SearchFloaty.buttonImage = UIImage(systemName: "magnifyingglass")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
             let soomFloaty = JJActionItem()
             soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -69,14 +69,14 @@ private extension MainTabbarFlow{
             let chatFloaty = JJActionItem()
             chatFloaty.buttonImage = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
             
-            let items = [chatFloaty, settingFloaty, homeFloaty, soomFloaty, mySchoolFloaty]
+            let items = [SearchFloaty, chatFloaty, settingFloaty, soomFloaty, homeFloaty]
             
             self.rootVC.setViewControllers(viewControllers: roots, floaties: items, animated: false)
         }
         
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: homeFlow.stepper),
-            .contribute(withNextPresentable: MySchoolFlow, withNextStepper: MySchoolFlow.stepper),
+            .contribute(withNextPresentable: SearchFlow, withNextStepper: SearchFlow.stepper),
             .contribute(withNextPresentable: chatFlow, withNextStepper: chatFlow.stepper),
             .contribute(withNextPresentable: soomFlow, withNextStepper: soomFlow.stepper),
             .contribute(withNextPresentable: settingFlow, withNextStepper: settingFlow.stepper)
