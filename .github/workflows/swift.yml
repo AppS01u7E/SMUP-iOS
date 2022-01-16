@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        xcode-version: '13.0'
+        swift-version: "5.5.2"
     - name: install tuist
       run: curl -Ls https://install.tuist.io | bash
     - name: install Cocoapods
