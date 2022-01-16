@@ -9,6 +9,7 @@
 import UIKit
 import Then
 import SnapKit
+import SwiftDate
 
 final class SelectedDateLabel: UILabel {
     // MARK: - Properties
@@ -16,6 +17,13 @@ final class SelectedDateLabel: UILabel {
         $0.textColor = .gray
         $0.text = "ASDF"
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
+    }
+    
+    private var selectedDate = Date()
+    
+    private let formatter = DateFormatter().then {
+        $0.dateFormat = "yyyy.MM.dd"
+        $0.locale = Locale(identifier: "KO_KR")
     }
     
     // MARK: - Init
@@ -32,8 +40,19 @@ final class SelectedDateLabel: UILabel {
     }
     
     // MARK: - Open Method
-    public func dateDidChange(date: Date){
+    public func bindDate(date: Date){
+        self.selectedDate = date
+        if selectedDate.isToday{
+            self.text = "Today"
+        }
+        else if selectedDate.isInPast{
+            self.text = "\(Date().day - selectedDate.day)일 전"
+        }
+        else if selectedDate.isInFuture{
+            self.text = "\(selectedDate.day - Date().day)일 후"
+        }
         
+        self.detailDateLabel.text = formatter.string(from: selectedDate)
     }
 }
 

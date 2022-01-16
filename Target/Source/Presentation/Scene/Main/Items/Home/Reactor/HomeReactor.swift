@@ -10,6 +10,7 @@ import Foundation
 import ReactorKit
 import RxFlow
 import RxCocoa
+import SwiftDate
 
 final class HomeReactor: Reactor, Stepper{
     // MARK: - Properties
@@ -19,8 +20,11 @@ final class HomeReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
+        case plusDay
+        case minusDay
     }
     enum Mutation{
+        case setDate(Date)
     }
     struct State{
         var selectedDate = Date()
@@ -35,8 +39,10 @@ final class HomeReactor: Reactor, Stepper{
 extension HomeReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        default:
-            return .empty()
+        case .plusDay:
+            return .just(.setDate(currentState.selectedDate + 1.days))
+        case .minusDay:
+            return .just(.setDate(currentState.selectedDate - 1.days))
         }
     }
 }
@@ -46,7 +52,8 @@ extension HomeReactor{
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-            
+        case let .setDate(date):
+            newState.selectedDate = date
         }
         return newState
     }

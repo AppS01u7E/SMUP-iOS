@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxCocoa
 
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
@@ -36,6 +37,12 @@ final class HomeVC: baseVC<HomeReactor>{
         view.addSubViews(dayStack, mealStack)
     }
     override func setLayout() {
+        beforeDayButton.snp.makeConstraints {
+            $0.width.height.equalTo(48)
+        }
+        afterDayButton.snp.makeConstraints {
+            $0.width.height.equalTo(48)
+        }
         dayStack.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
             $0.centerX.equalToSuperview()
@@ -43,5 +50,29 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     override func configureVC() {
         
+    }
+    
+    // MARK: - Reactor
+    override func bindView(reactor: HomeReactor) {
+        beforeDayButton.rx.tap
+            .map { _ in Reactor.Action.minusDay }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        afterDayButton.rx.tap
+            .map { _ in Reactor.Action.plusDay }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindState(reactor: HomeReactor) {
+        let sharedState = reactor.state.share(replay: 1)
+        
+        sharedState
+            .map(\.selectedDate)
+            .subscribe(onNext: { [weak self] in
+                self?.selectedDayLabel.bindDate(date: $0)
+            })
+            .disposed(by: disposeBag)
     }
 }
