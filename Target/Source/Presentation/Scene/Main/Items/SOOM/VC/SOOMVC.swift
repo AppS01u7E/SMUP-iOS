@@ -8,4 +8,8 @@
 
 final class SOOMVC: baseVC<SOOMReactor>{
     
+    
+    override func configureVC() {
+        view.backgroundColor = .systemBlue
+    }
 }
