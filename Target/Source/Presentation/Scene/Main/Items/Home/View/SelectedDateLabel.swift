@@ -63,9 +63,10 @@ private extension SelectedDateLabel{
     }
     func setLayout(){
         detailDateLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.snp.top).offset(-8)
         }
+        
     }
     func configureView(){
         self.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)

@@ -18,9 +18,11 @@ class baseVC<T: Reactor>: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setUp()
         addView()
         setLayout()
         configureVC()
+        configureNavigation()
     }
     
     @Inject var reactor: T
@@ -42,10 +44,11 @@ class baseVC<T: Reactor>: UIViewController{
         print("\(type(of: self)): \(#function)")
     }
     
+    func setUp(){}
     func addView(){}
     func setLayout(){}
     func configureVC(){}
-    func setNavigation(){}
+    func configureNavigation(){}
     
     func bindView(reactor: T){}
     func bindAction(reactor: T){}
