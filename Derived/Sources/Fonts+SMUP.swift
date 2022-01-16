@@ -16,6 +16,18 @@
 
 // swiftlint:disable identifier_name line_length type_body_length
 public enum SMUPFontFamily {
+  public enum Inter {
+    public static let black = SMUPFontConvertible(name: "Inter-Black", family: "Inter", path: "Inter-Black.ttf")
+    public static let bold = SMUPFontConvertible(name: "Inter-Bold", family: "Inter", path: "Inter-Bold.ttf")
+    public static let extraBold = SMUPFontConvertible(name: "Inter-ExtraBold", family: "Inter", path: "Inter-ExtraBold.ttf")
+    public static let extraLight = SMUPFontConvertible(name: "Inter-ExtraLight", family: "Inter", path: "Inter-ExtraLight.ttf")
+    public static let light = SMUPFontConvertible(name: "Inter-Light", family: "Inter", path: "Inter-Light.ttf")
+    public static let medium = SMUPFontConvertible(name: "Inter-Medium", family: "Inter", path: "Inter-Medium.ttf")
+    public static let regular = SMUPFontConvertible(name: "Inter-Regular", family: "Inter", path: "Inter-Regular.ttf")
+    public static let semiBold = SMUPFontConvertible(name: "Inter-SemiBold", family: "Inter", path: "Inter-SemiBold.ttf")
+    public static let thin = SMUPFontConvertible(name: "Inter-Thin", family: "Inter", path: "Inter-Thin.ttf")
+    public static let all: [SMUPFontConvertible] = [black, bold, extraBold, extraLight, light, medium, regular, semiBold, thin]
+  }
   public enum NotoSansKR {
     public static let black = SMUPFontConvertible(name: "NotoSansKR-Black", family: "Noto Sans KR", path: "NotoSansKR-Black.otf")
     public static let bold = SMUPFontConvertible(name: "NotoSansKR-Bold", family: "Noto Sans KR", path: "NotoSansKR-Bold.otf")
@@ -25,7 +37,7 @@ public enum SMUPFontFamily {
     public static let thin = SMUPFontConvertible(name: "NotoSansKR-Thin", family: "Noto Sans KR", path: "NotoSansKR-Thin.otf")
     public static let all: [SMUPFontConvertible] = [black, bold, light, medium, regular, thin]
   }
-  public static let allCustomFonts: [SMUPFontConvertible] = [NotoSansKR.all].flatMap { $0 }
+  public static let allCustomFonts: [SMUPFontConvertible] = [Inter.all, NotoSansKR.all].flatMap { $0 }
   public static func registerAllCustomFonts() {
     allCustomFonts.forEach { $0.register() }
   }
