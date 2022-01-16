@@ -25,7 +25,7 @@ extension Container{
         autoregister(TimeMapVC.self, initializer: TimeMapVC.init)
         autoregister(ChattingVC.self, initializer: ChattingVC.init)
         autoregister(SOOMVC.self, initializer: SOOMVC.init)
-        autoregister(SettingVC.self, initializer: SettingVC.init)
+        autoregister(MainSettingVC.self, initializer: MainSettingVC.init)
         autoregister(SearchVC.self, initializer: SearchVC.init)
         autoregister(MySchoolVC.self, initializer: MySchoolVC.init)
     }
@@ -37,7 +37,7 @@ extension Container{
         autoregister(TimeMapReactor.self, initializer: TimeMapReactor.init)
         autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(SOOMReactor.self, initializer: SOOMReactor.init)
-        autoregister(SettingReactor.self, initializer: SettingReactor.init)
+        autoregister(MainSettingReactor.self, initializer: MainSettingReactor.init)
         autoregister(SearchReactor.self, initializer: SearchReactor.init)
         autoregister(MySchoolReactor.self, initializer: MySchoolReactor.init)
     }

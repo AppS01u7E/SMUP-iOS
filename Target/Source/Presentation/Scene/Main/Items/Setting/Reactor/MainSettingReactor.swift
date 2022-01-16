@@ -11,7 +11,7 @@ import ReactorKit
 import RxFlow
 import RxCocoa
 
-final class SettingReactor: Reactor, Stepper{
+final class MainSettingReactor: Reactor, Stepper{
     // MARK: - Properties
     var steps: PublishRelay<Step> = .init()
     
@@ -30,7 +30,7 @@ final class SettingReactor: Reactor, Stepper{
 }
 
 // MARK: - Mutate
-extension SettingReactor{
+extension MainSettingReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
         default:
@@ -40,7 +40,7 @@ extension SettingReactor{
 }
 
 // MARK: - Reduce
-extension SettingReactor{
+extension MainSettingReactor{
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
@@ -52,6 +52,6 @@ extension SettingReactor{
 
 
 // MARK: - Method
-private extension SettingReactor{
+private extension MainSettingReactor{
     
 }

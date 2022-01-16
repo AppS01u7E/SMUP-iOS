@@ -6,6 +6,6 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-final class SettingVC: baseVC<SettingReactor>{
+final class MainSettingVC: baseVC<MainSettingReactor>{
     
 }

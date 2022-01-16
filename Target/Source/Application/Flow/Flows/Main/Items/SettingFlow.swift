@@ -22,7 +22,7 @@ final class SettingFlow: Flow{
     var root: Presentable{
         return self.rootVC
     }
-    @Inject private var vc: SettingVC
+    @Inject private var vc: MainSettingVC
     @Inject var stepper: SettingStepper
     private let rootVC = UINavigationController()
     
