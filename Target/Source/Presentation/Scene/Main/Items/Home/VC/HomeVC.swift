@@ -10,11 +10,15 @@ import UIKit
 
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
-    private let beforeDayButton = UIButton()
-    private let selectedDayLabel = UILabel()
-    private let afterDayButton = UIButton()
+    private let beforeDayButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+    }
+    private let selectedDayLabel = SelectedDateLabel()
+    private let afterDayButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+    }
     private let dayStack = UIStackView().then {
-        $0.axis = .vertical
+        $0.axis = .horizontal
         $0.spacing = 35
     }
     private let breakfastLabel = UILabel()
@@ -32,7 +36,10 @@ final class HomeVC: baseVC<HomeReactor>{
         view.addSubViews(dayStack, mealStack)
     }
     override func setLayout() {
-        
+        dayStack.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(100)
+            $0.centerX.equalToSuperview()
+        }
     }
     override func configureVC() {
         
