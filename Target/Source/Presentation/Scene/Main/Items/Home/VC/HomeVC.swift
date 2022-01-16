@@ -52,6 +52,7 @@ final class HomeVC: baseVC<HomeReactor>{
         
     }
     
+    
     // MARK: - Reactor
     override func bindView(reactor: HomeReactor) {
         beforeDayButton.rx.tap

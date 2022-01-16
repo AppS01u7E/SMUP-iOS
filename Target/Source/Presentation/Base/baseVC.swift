@@ -45,6 +45,7 @@ class baseVC<T: Reactor>: UIViewController{
     func addView(){}
     func setLayout(){}
     func configureVC(){}
+    func setNavigation(){}
     
     func bindView(reactor: T){}
     func bindAction(reactor: T){}
