@@ -23,7 +23,6 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
     }
     override func addView() {
         view.addSubViews(mainView)
-        mainView.addSubViews(calendar)
     }
     override func setLayout() {
         mainView.snp.makeConstraints {

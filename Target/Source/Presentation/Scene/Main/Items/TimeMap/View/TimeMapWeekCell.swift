@@ -6,4 +6,6 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-
+final class TimeMapWeekCell: baseCollectionViewCell<Week> {
+    // MARK: - Properties
+}
