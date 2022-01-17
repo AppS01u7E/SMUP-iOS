@@ -97,6 +97,11 @@ final class HomeVC: baseVC<HomeReactor>{
             .map { _ in Reactor.Action.afterDayButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        checkScheduleButton.rx.tap
+            .map { _ in Reactor.Action.scheduleButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     override func bindState(reactor: HomeReactor) {
