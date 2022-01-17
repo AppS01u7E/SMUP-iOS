@@ -24,6 +24,7 @@ target 'SMUP' do
   pod 'Swinject', '~> 2.7'
   pod 'SwinjectAutoregistration', '~> 2.7'
   pod 'SwiftDate', '~> 6.3.1'
+  pod 'FSCalendar', '~> 2.8.3'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
