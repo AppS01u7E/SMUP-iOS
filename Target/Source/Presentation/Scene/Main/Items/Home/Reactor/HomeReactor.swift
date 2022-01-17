@@ -23,6 +23,7 @@ final class HomeReactor: Reactor, Stepper{
         case viewDidLoad
         case afterDayButtonDidTap
         case beforeDayButtonDidTap
+        case scheduleButtonDidTap
     }
     enum Mutation{
         case setDate(Date)
@@ -50,6 +51,9 @@ extension HomeReactor{
             return .just(.setDate(currentState.selectedDate + 1.days))
         case .beforeDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate - 1.days))
+        case .scheduleButtonDidTap:
+            steps.accept(SMUPStep.timeMapIsRequired)
+            return .empty()
         }
     }
 }

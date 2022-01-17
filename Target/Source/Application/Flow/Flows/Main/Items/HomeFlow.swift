@@ -37,6 +37,8 @@ final class HomeFlow: Flow{
         switch step{
         case .homeIsRequired:
             return coordinateToHome()
+        case .timeMapIsRequired:
+            return navigateToTimeMap()
         default:
             return .none
         }
@@ -47,6 +49,11 @@ final class HomeFlow: Flow{
 private extension HomeFlow{
     func coordinateToHome() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func navigateToTimeMap() -> FlowContributors{
+        let vc = TimeMapVC()
+        self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
 }
