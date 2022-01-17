@@ -8,6 +8,7 @@
 
 import UIKit
 import RxCocoa
+import RxViewController
 
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
@@ -28,9 +29,9 @@ final class HomeVC: baseVC<HomeReactor>{
     
     private let checkScheduleButton = CheckScheduleButton(title: "시간표 및 일정 확인")
     
-    private let breakfastLabel = UILabel()
-    private let lunchLabel = UILabel()
-    private let dinnerLabel = UILabel()
+    private let breakfastLabel = MealLabel(part: .breakfast)
+    private let lunchLabel = MealLabel(part: .lunch)
+    private let dinnerLabel = MealLabel(part: .dinner)
     private let mealStack = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 25
@@ -63,7 +64,11 @@ final class HomeVC: baseVC<HomeReactor>{
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.1277)
             $0.height.equalTo(bound.height*0.1371)
         }
-        
+        mealStack.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.1277)
+            $0.top.equalTo(checkScheduleButton.snp.bottom).offset(30)
+        }
     }
     override func configureVC() {
         
@@ -76,6 +81,13 @@ final class HomeVC: baseVC<HomeReactor>{
     
     
     // MARK: - Reactor
+    override func bindAction(reactor: HomeReactor) {
+        self.rx.viewDidAppear
+            .map { _ in Reactor.Action.viewDidAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
     override func bindView(reactor: HomeReactor) {
         beforeDayButton.rx.tap
             .map { _ in Reactor.Action.minusDay }
@@ -89,12 +101,38 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     override func bindState(reactor: HomeReactor) {
-        let sharedState = reactor.state.share(replay: 1)
+        let sharedState = reactor.state.share(replay: 2)
         
         sharedState
             .map(\.selectedDate)
             .subscribe(onNext: { [weak self] in
                 self?.selectedDayLabel.bindDate(date: $0)
+            })
+            .disposed(by: disposeBag)
+        
+        let mealShared = sharedState.map(\.meal).share(replay: 3)
+        
+        mealShared
+            .map(\.breakfast)
+            .map { $0.joined(separator: " ") }
+            .subscribe(onNext: { [weak self] in
+                self?.breakfastLabel.setDetailMeal(content: $0)
+            })
+            .disposed(by: disposeBag)
+        
+        mealShared
+            .map(\.lunch)
+            .map { $0.joined(separator: " ") }
+            .subscribe(onNext: { [weak self] in
+                self?.lunchLabel.setDetailMeal(content: $0)
+            })
+            .disposed(by: disposeBag)
+        
+        mealShared
+            .map(\.dinner)
+            .map { $0.joined(separator: " ") }
+            .subscribe(onNext: { [weak self] in
+                self?.dinnerLabel.setDetailMeal(content: $0)
             })
             .disposed(by: disposeBag)
     }
