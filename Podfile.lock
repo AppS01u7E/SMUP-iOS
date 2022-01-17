@@ -1,7 +1,9 @@
 PODS:
   - Alamofire (5.5.0)
+  - AnimatedCollectionViewLayout (1.1.0)
   - Differentiator (5.0.0)
   - FSCalendar (2.8.2)
+  - Hero (1.6.1)
   - InputBarAccessoryView (5.4.0):
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
@@ -44,7 +46,9 @@ PODS:
   - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
+  - AnimatedCollectionViewLayout (~> 1.1.0)
   - FSCalendar (~> 2.8.2)
+  - Hero (~> 1.6.1)
   - JJFloatingActionButton
   - MessageKit (~> 3.7.0)
   - Moya/RxSwift (~> 15.0.0)
@@ -64,8 +68,10 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AnimatedCollectionViewLayout
     - Differentiator
     - FSCalendar
+    - Hero
     - InputBarAccessoryView
     - JJFloatingActionButton
     - MessageKit
@@ -87,8 +93,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  AnimatedCollectionViewLayout: 0c1a38c4be115c525c887be183fc91ef65737c5d
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
@@ -108,6 +116,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 1b3f51990ae14e28f31a63459591ce7f9c1517ff
+PODFILE CHECKSUM: 19973ded68c20dc8ac5f5de89d83da50b85392a0
 
 COCOAPODS: 1.11.2
