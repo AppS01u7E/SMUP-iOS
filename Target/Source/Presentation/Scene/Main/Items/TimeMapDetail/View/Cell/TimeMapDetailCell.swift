@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
+final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
     // MARK: - Properties
     private let dateLabel = UILabel().then {
         $0.textAlignment = .center
@@ -35,19 +35,51 @@ final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 12)
     }
     
+    private let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
+    
+    private let goDirectButton = UIButton().then {
+        $0.setTitle("보러 가기", for: .normal)
+        $0.setTitleColor(SMUPAsset.smupMain2.color, for: .normal)
+        $0.setImage(.init(systemName: "chevron.forward.circle")?.tintColor(SMUPAsset.smupMain2.color), for: .normal)
+        $0.semanticContentAttribute = .forceRightToLeft
+    }
+    
     // MARK: - UI
     override func addView() {
         dateStack.addArrangeSubviews(dateLabel, perioLabel)
-        addSubViews(dateStack, contentLabel, referenceLabel)
+        addSubViews(scrollView, goDirectButton)
+        scrollView.addSubViews(dateStack, contentLabel, referenceLabel)
     }
     override func setLayout() {
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        dateStack.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(bound.height*0.02)
+        }
+        contentLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(dateStack.snp.bottom).offset(bound.height*0.02)
+            $0.leading.trailing.equalToSuperview().inset(3)
+        }
+        referenceLabel.snp.makeConstraints {
+            $0.top.equalTo(contentLabel.snp.bottom).offset(bound.height*0.02)
+            $0.leading.trailing.equalToSuperview().inset(3)
+        }
+        goDirectButton.snp.makeConstraints {
+            $0.bottom.trailing.equalToSuperview().inset(10)
+        }
         
     }
     override func configureCell() {
-        
+        self.layer.cornerRadius = 15
+        self.backgroundColor = .white
     }
     
-    override func bind(_ model: TimeMap) {
+    override func bindView(reactor: TimeMapDetailCellReactor) {
         
     }
 }
