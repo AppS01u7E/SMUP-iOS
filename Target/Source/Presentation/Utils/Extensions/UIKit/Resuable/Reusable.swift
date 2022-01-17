@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ReuseIdentifiable{
-    static var reusableID: String
+    static var reusableID: String { get }
 }
 extension ReuseIdentifiable{
     static var reusableID: String{
