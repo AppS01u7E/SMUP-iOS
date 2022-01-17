@@ -23,8 +23,8 @@ extension UIImage {
         let downSampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downSampleOptions)!
         let newImage = UIImage(cgImage: downSampledImage)
         return newImage
-        
     }
-
-    
+    func tintColor(_ color: UIColor) -> UIImage{
+        return self.withTintColor(color, renderingMode: .alwaysOriginal)
+    }
 }

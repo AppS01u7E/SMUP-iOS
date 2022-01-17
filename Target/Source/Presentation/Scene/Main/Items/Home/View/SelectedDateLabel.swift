@@ -9,6 +9,7 @@
 import UIKit
 import Then
 import SnapKit
+import SwiftDate
 
 final class SelectedDateLabel: UILabel {
     // MARK: - Properties
@@ -16,6 +17,13 @@ final class SelectedDateLabel: UILabel {
         $0.textColor = .gray
         $0.text = "ASDF"
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
+    }
+    
+    private var selectedDate = Date()
+    
+    private let formatter = DateFormatter().then {
+        $0.dateFormat = "yyyy.MM.dd"
+        $0.locale = Locale(identifier: "KO_KR")
     }
     
     // MARK: - Init
@@ -32,8 +40,20 @@ final class SelectedDateLabel: UILabel {
     }
     
     // MARK: - Open Method
-    public func dateDidChange(date: Date){
+    public func bindDate(date: Date){
+        self.selectedDate = date
+        if selectedDate.isToday{
+            self.text = "Today"
+        }
+        else if selectedDate.isBeforeDate(Date(), granularity: .day){
+            self.text = "\(Date().difference(in: .day, from: selectedDate) ?? 0)일 전"
+            
+        }
+        else if selectedDate.isAfterDate(Date(), granularity: .day){
+            self.text = "\((Date().difference(in: .day, from: selectedDate) ?? 0)+1)일 후"
+        }
         
+        self.detailDateLabel.text = formatter.string(from: selectedDate)
     }
 }
 
@@ -44,9 +64,10 @@ private extension SelectedDateLabel{
     }
     func setLayout(){
         detailDateLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.snp.top).offset(-8)
         }
+        
     }
     func configureView(){
         self.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)

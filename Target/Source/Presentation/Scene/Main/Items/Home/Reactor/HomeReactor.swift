@@ -10,6 +10,7 @@ import Foundation
 import ReactorKit
 import RxFlow
 import RxCocoa
+import SwiftDate
 
 final class HomeReactor: Reactor, Stepper{
     // MARK: - Properties
@@ -19,8 +20,13 @@ final class HomeReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
+        case viewDidAppear
+        case plusDay
+        case minusDay
     }
     enum Mutation{
+        case setDate(Date)
+        case setMeal(Meal)
     }
     struct State{
         var selectedDate = Date()
@@ -35,8 +41,15 @@ final class HomeReactor: Reactor, Stepper{
 extension HomeReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        default:
-            return .empty()
+        case .viewDidAppear:
+            // TODO: 대충 급식 가져오는 API 불러오는 단계 라이프사이클이라는 뜻
+            return .just(.setMeal(.init(breakfast: ["아침","아침ㅁ"],
+                                        lunch: ["점심", "점심ㅁ"],
+                                        dinner: ["저녁", "저녁ㅁ"])))
+        case .plusDay:
+            return .just(.setDate(currentState.selectedDate + 1.days))
+        case .minusDay:
+            return .just(.setDate(currentState.selectedDate - 1.days))
         }
     }
 }
@@ -46,7 +59,10 @@ extension HomeReactor{
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-            
+        case let .setDate(date):
+            newState.selectedDate = date
+        case let .setMeal(meal):
+            newState.meal = meal
         }
         return newState
     }
