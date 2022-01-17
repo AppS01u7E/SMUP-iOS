@@ -76,6 +76,10 @@ final class HomeVC: baseVC<HomeReactor>{
     override func configureNavigation() {
         self.navigationItem.setTitle(title: "SMUP")
         self.navigationItem.rightBarButtonItem = alarmButton
+        
+        let back: UIBarButtonItem = .init(title: "시간표 및 일정", style: .plain, target: self, action: nil)
+        back.tintColor = .black
+        self.navigationItem.backBarButtonItem = back
     }
     
     
