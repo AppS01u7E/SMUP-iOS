@@ -26,6 +26,7 @@ target 'SMUP' do
   pod 'SwiftDate', '~> 6.3.1'
   pod 'FSCalendar', '~> 2.8.2'
   pod 'RxGesture', '~> 4.0.3'
+  pod 'AnimatedCollectionViewLayout', '~> 1.1.0'
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
 
