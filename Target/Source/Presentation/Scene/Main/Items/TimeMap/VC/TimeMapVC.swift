@@ -45,6 +45,18 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         $0.showsVerticalScrollIndicator = false
     }
     
+    private let timeLabel = UILabel().then {
+        $0.textColor = .black.withAlphaComponent(0.47)
+        $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 20)
+        $0.text = "시간"
+    }
+    
+    private let scheduleLabel = UILabel().then {
+        $0.textColor = .black.withAlphaComponent(0.47)
+        $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 20)
+        $0.text = "일정"
+    }
+    
     // MARK: - Lifecycle
     init(selectedDate: Date){
         self.selectedDate = selectedDate
@@ -77,7 +89,7 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
     }
     override func addView() {
         view.addSubViews(mainView, selectedDateLabel)
-        mainView.addSubViews(weekDayCollectionView, scheduleTableView)
+        mainView.addSubViews(weekDayCollectionView, scheduleTableView, timeLabel, scheduleLabel)
     }
     override func setLayout() {
         mainView.snp.makeConstraints {
@@ -97,6 +109,14 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
             $0.top.equalTo(weekDayCollectionView.snp.bottom).offset(bound.height*0.078)
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.07)
             $0.bottom.equalToSuperview()
+        }
+        timeLabel.snp.makeConstraints {
+            $0.bottom.equalTo(scheduleTableView.snp.top)
+            $0.leading.equalTo(scheduleTableView.snp.leading).offset(5)
+        }
+        scheduleLabel.snp.makeConstraints {
+            $0.bottom.equalTo(timeLabel)
+            $0.leading.equalTo(timeLabel.snp.trailing).offset(bound.width*0.108)
         }
     }
     override func configureVC() {

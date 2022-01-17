@@ -23,26 +23,26 @@ extension Int{
     }
     func convertStartTime() -> String{
         switch self{
-        case 1: return "\(Date(year: 1, month: 1, day: 1, hour: 8, minute: 40).toString(.custom("HH:MM")))"
-        case 2: return "\(Date(year: 1, month: 1, day: 1, hour: 9, minute: 40).toString(.custom("HH:MM")))"
-        case 3: return "\(Date(year: 1, month: 1, day: 1, hour: 10, minute: 40).toString(.custom("HH:MM")))"
-        case 4: return "\(Date(year: 1, month: 1, day: 1, hour: 11, minute: 40).toString(.custom("HH:MM")))"
-        case 5: return "\(Date(year: 1, month: 1, day: 1, hour: 13, minute: 30).toString(.custom("HH:MM")))"
-        case 6: return "\(Date(year: 1, month: 1, day: 1, hour: 14, minute: 30).toString(.custom("HH:MM")))"
-        case 7: return "\(Date(year: 1, month: 1, day: 1, hour: 15, minute: 30).toString(.custom("HH:MM")))"
-        default: return "\(Date(year: 1, month: 1, day: 1, hour: 12, minute: 40).toString(.custom("HH:MM")))"
+        case 1: return "\(Date(year: 1, month: 1, day: 1, hour: 8, minute: 40).toString(.custom("HH:mm")))"
+        case 2: return "\(Date(year: 1, month: 1, day: 1, hour: 9, minute: 40).toString(.custom("HH:mm")))"
+        case 3: return "\(Date(year: 1, month: 1, day: 1, hour: 10, minute: 40).toString(.custom("HH:mm")))"
+        case 4: return "\(Date(year: 1, month: 1, day: 1, hour: 11, minute: 40).toString(.custom("HH:mm")))"
+        case 5: return "\(Date(year: 1, month: 1, day: 1, hour: 13, minute: 30).toString(.custom("HH:mm")))"
+        case 6: return "\(Date(year: 1, month: 1, day: 1, hour: 14, minute: 30).toString(.custom("HH:mm")))"
+        case 7: return "\(Date(year: 1, month: 1, day: 1, hour: 15, minute: 30).toString(.custom("HH:mm")))"
+        default: return "\(Date(year: 1, month: 1, day: 1, hour: 12, minute: 40).toString(.custom("HH:mm")))"
         }
     }
     func convertEndTime() -> String{
         switch self{
-        case 1: return "\(Date(year: 1, month: 1, day: 1, hour: 9, minute: 30).toString(.custom("HH:MM")))"
-        case 2: return "\(Date(year: 1, month: 1, day: 1, hour: 10, minute: 30).toString(.custom("HH:MM")))"
-        case 3: return "\(Date(year: 1, month: 1, day: 1, hour: 11, minute: 30).toString(.custom("HH:MM")))"
-        case 4: return "\(Date(year: 1, month: 1, day: 1, hour: 12, minute: 30).toString(.custom("HH:MM")))"
-        case 5: return "\(Date(year: 1, month: 1, day: 1, hour: 14, minute: 20).toString(.custom("HH:MM")))"
-        case 6: return "\(Date(year: 1, month: 1, day: 1, hour: 15, minute: 20).toString(.custom("HH:MM")))"
-        case 7: return "\(Date(year: 1, month: 1, day: 1, hour: 16, minute: 20).toString(.custom("HH:MM")))"
-        default: return "\(Date(year: 1, month: 1, day: 1, hour: 13, minute: 30).toString(.custom("HH:MM")))"
+        case 1: return "\(Date(year: 1, month: 1, day: 1, hour: 9, minute: 30).toString(.custom("HH:mm")))"
+        case 2: return "\(Date(year: 1, month: 1, day: 1, hour: 10, minute: 30).toString(.custom("HH:mm")))"
+        case 3: return "\(Date(year: 1, month: 1, day: 1, hour: 11, minute: 30).toString(.custom("HH:mm")))"
+        case 4: return "\(Date(year: 1, month: 1, day: 1, hour: 12, minute: 30).toString(.custom("HH:mm")))"
+        case 5: return "\(Date(year: 1, month: 1, day: 1, hour: 14, minute: 20).toString(.custom("HH:mm")))"
+        case 6: return "\(Date(year: 1, month: 1, day: 1, hour: 15, minute: 20).toString(.custom("HH:mm")))"
+        case 7: return "\(Date(year: 1, month: 1, day: 1, hour: 16, minute: 20).toString(.custom("HH:mm")))"
+        default: return "\(Date(year: 1, month: 1, day: 1, hour: 13, minute: 30).toString(.custom("HH:mm")))"
         }
     }
 }

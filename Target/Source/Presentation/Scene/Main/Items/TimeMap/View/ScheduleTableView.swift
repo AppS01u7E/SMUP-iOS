@@ -65,7 +65,7 @@ final class ScheduleTableViewCell: baseTableViewCell<TimeMap>{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(3)
             $0.top.bottom.equalToSuperview().inset(5)
-            $0.width.equalTo(bound.width*0.12)
+            $0.width.equalTo(bound.width*0.15)
         }
         scheduleStack.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(Metric.scheduleHorizontalPadding)
@@ -93,7 +93,7 @@ final class ScheduleTableViewCell: baseTableViewCell<TimeMap>{
         str.setColorForText(textToFind: start, withColor: .black)
         str.setFontForText(textToFind: start, withFont: .init(font: SMUPFontFamily.Inter.semiBold, size: 16) ?? .init())
         
-        str.setColorForText(textToFind: end, withColor: .systemGray5)
+        str.setColorForText(textToFind: end, withColor: .systemGray4)
         str.setFontForText(textToFind: end, withFont: .init(font: SMUPFontFamily.Inter.medium, size: 12) ?? .init())
         timeLabel.attributedText = str
         
