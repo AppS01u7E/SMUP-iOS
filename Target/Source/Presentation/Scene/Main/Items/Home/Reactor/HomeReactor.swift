@@ -20,7 +20,7 @@ final class HomeReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
-        case viewDidAppear
+        case viewDidLoad
         case plusDay
         case minusDay
     }
@@ -41,7 +41,7 @@ final class HomeReactor: Reactor, Stepper{
 extension HomeReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        case .viewDidAppear:
+        case .viewDidLoad:
             // TODO: 대충 급식 가져오는 API 불러오는 단계 라이프사이클이라는 뜻
             return .just(.setMeal(.init(breakfast: ["아침","아침ㅁ"],
                                         lunch: ["점심", "점심ㅁ"],

@@ -81,8 +81,8 @@ final class HomeVC: baseVC<HomeReactor>{
     
     // MARK: - Reactor
     override func bindAction(reactor: HomeReactor) {
-        self.rx.viewDidAppear
-            .map { _ in Reactor.Action.viewDidAppear }
+        self.rx.viewDidLoad
+            .map { _ in Reactor.Action.viewDidLoad }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
