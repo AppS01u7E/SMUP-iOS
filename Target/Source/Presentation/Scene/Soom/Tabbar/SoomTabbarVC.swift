@@ -51,15 +51,13 @@ final class SoomTabbarVC: UITabBarController, Stepper {
                 item.element.action = { _ in
                     self.steps.accept(SMUPStep.mainTabbarIsRequired)
                 }
-                item.element.buttonColor = SMUPAsset.smupFloaty.color
-                floaty.addItem(item.element)
             }else{
                 item.element.action = { _ in
                     self.didSelectFloatyItem(item.offset)
                 }
-                item.element.buttonColor = SMUPAsset.smupFloaty.color
-                floaty.addItem(item.element)
             }
+            item.element.buttonColor = SMUPAsset.smupFloaty.color
+            floaty.addItem(item.element)
         }
     }
 }
