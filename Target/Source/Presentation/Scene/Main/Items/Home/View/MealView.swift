@@ -32,8 +32,9 @@ final class MealLabel: UIView{
     
     // MARK: - OpenMethod
     public func setDetailMeal(content: String){
-        let str = NSMutableAttributedString(attributedString: contentLabel.attributedText ?? .init())
-        str.append(.init(string: "\(content)\n"))
+        let str = NSMutableAttributedString(string: "\(part.rawValue)\n\(content)")
+        str.setColorForText(textToFind: part.rawValue, withColor: SMUPAsset.smupMain2.color)
+        str.setFontForText(textToFind: part.rawValue, withFont: UIFont(font: SMUPFontFamily.Inter.bold, size: 24) ?? .init())
         self.contentLabel.attributedText = str
         self.setDashedBorder(color: .systemGray5)
     }
@@ -50,18 +51,9 @@ private extension MealLabel{
         }
     }
     func configureView(){
-        var partString = ""
-        switch part{
-        case .breakfast:
-            partString = "아침"
-        case .lunch:
-            partString = "점심"
-        case .dinner:
-            partString = "저녁"
-        }
-        let str = NSMutableAttributedString(string: "\(partString)")
-        str.setColorForText(textToFind: partString, withColor: SMUPAsset.smupMain2.color)
-        str.setFontForText(textToFind: partString, withFont: UIFont(font: SMUPFontFamily.Inter.bold, size: 24) ?? .init())
+        let str = NSMutableAttributedString(string: part.rawValue)
+        str.setColorForText(textToFind: part.rawValue, withColor: SMUPAsset.smupMain2.color)
+        str.setFontForText(textToFind: part.rawValue, withFont: UIFont(font: SMUPFontFamily.Inter.bold, size: 24) ?? .init())
         contentLabel.attributedText = str
     }
 }

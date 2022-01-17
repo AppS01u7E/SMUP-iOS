@@ -45,11 +45,12 @@ final class SelectedDateLabel: UILabel {
         if selectedDate.isToday{
             self.text = "Today"
         }
-        else if selectedDate.isInPast{
-            self.text = "\(Date().day - selectedDate.day)일 전"
+        else if selectedDate.isBeforeDate(Date(), granularity: .day){
+            self.text = "\(Date().difference(in: .day, from: selectedDate) ?? 0)일 전"
+            
         }
-        else if selectedDate.isInFuture{
-            self.text = "\(selectedDate.day - Date().day)일 후"
+        else if selectedDate.isAfterDate(Date(), granularity: .day){
+            self.text = "\((Date().difference(in: .day, from: selectedDate) ?? 0)+1)일 후"
         }
         
         self.detailDateLabel.text = formatter.string(from: selectedDate)

@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum MealPart{
-    case breakfast
-    case lunch
-    case dinner
+enum MealPart: String{
+    case breakfast = "아침"
+    case lunch = "점심"
+    case dinner = "저녁"
 }
