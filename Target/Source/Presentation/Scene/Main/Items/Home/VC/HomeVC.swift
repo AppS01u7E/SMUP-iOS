@@ -89,12 +89,12 @@ final class HomeVC: baseVC<HomeReactor>{
     
     override func bindView(reactor: HomeReactor) {
         beforeDayButton.rx.tap
-            .map { _ in Reactor.Action.minusDay }
+            .map { _ in Reactor.Action.beforeDayButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         afterDayButton.rx.tap
-            .map { _ in Reactor.Action.plusDay }
+            .map { _ in Reactor.Action.afterDayButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

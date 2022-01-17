@@ -21,8 +21,8 @@ final class HomeReactor: Reactor, Stepper{
     // MARK: - Reactor
     enum Action{
         case viewDidLoad
-        case plusDay
-        case minusDay
+        case afterDayButtonDidTap
+        case beforeDayButtonDidTap
     }
     enum Mutation{
         case setDate(Date)
@@ -46,9 +46,9 @@ extension HomeReactor{
             return .just(.setMeal(.init(breakfast: ["아침","아침ㅁ"],
                                         lunch: ["점심", "점심ㅁ"],
                                         dinner: ["저녁", "저녁ㅁ"])))
-        case .plusDay:
+        case .afterDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate + 1.days))
-        case .minusDay:
+        case .beforeDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate - 1.days))
         }
     }
