@@ -74,8 +74,7 @@ final class HomeVC: baseVC<HomeReactor>{
         
     }
     override func configureNavigation() {
-        self.navigationItem.title = "SMUP"
-        
+        self.navigationItem.setTitle(title: "SMUP")
         self.navigationItem.rightBarButtonItem = alarmButton
     }
     
