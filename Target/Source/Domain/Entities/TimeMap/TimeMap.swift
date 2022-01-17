@@ -6,11 +6,17 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-struct TimeMap {
+import RxDataSources
+
+struct TimeMap: Codable{
     let perio: Int
-    let content: String
-    enum CodingKeys: String, CodingKey{
-        case perio = "PERIO"
-        case content = "ITRT_CNTNT"
+    let name: String
+    let content: [String]
+    let reference: String
+}
+
+extension TimeMap: IdentifiableType, Equatable{
+    var identity: String{
+        return UUID().uuidString
     }
 }

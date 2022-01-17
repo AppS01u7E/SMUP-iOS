@@ -19,6 +19,14 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
+    private let selectedDate: Date
+    
+    private let selectedDateLabel = UILabel().then {
+        $0.textColor = .black.withAlphaComponent(0.47)
+        $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 16)
+        $0.numberOfLines = 0
+    }
+    
     private let weekDayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -29,32 +37,30 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         $0.collectionViewLayout = layout
     }
     
-    private let scheduleTableView = UITableView()
+    private let scheduleTableView = UITableView().then {
+        $0.register(ScheduleTableViewCell.self, forCellReuseIdentifier: ScheduleTableViewCell.reusableID)
+        $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 400
+        $0.separatorStyle = .none
+        $0.showsVerticalScrollIndicator = false
+    }
+    
+    // MARK: - Lifecycle
+    init(selectedDate: Date){
+        self.selectedDate = selectedDate
+        super.init()
+        self.configSelectedDateLabel()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - UI
     override func setUp() {
+        bind(reactor: reactor)
         weekDayCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
-    }
-    override func addView() {
-        view.addSubViews(mainView)
-        mainView.addSubViews(weekDayCollectionView)
-    }
-    override func setLayout() {
-        mainView.snp.makeConstraints {
-            $0.height.equalTo(bound.height*0.8205)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        weekDayCollectionView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.07)
-            $0.height.equalTo(bound.height*0.1)
-        }
-    }
-    override func configureVC() {
-        self.view.backgroundColor = .systemGray5
-    }
-    override func configureNavigation() {
         let items: [TimeMapWeekSection] = [
             .init(header: "", items: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday])
         ]
@@ -68,12 +74,59 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         Observable.just(items)
             .bind(to: weekDayCollectionView.rx.items(dataSource: timeMapDatasource))
             .disposed(by: disposeBag)
-        bind(reactor: reactor)
+    }
+    override func addView() {
+        view.addSubViews(mainView, selectedDateLabel)
+        mainView.addSubViews(weekDayCollectionView, scheduleTableView)
+    }
+    override func setLayout() {
+        mainView.snp.makeConstraints {
+            $0.height.equalTo(bound.height*0.8205)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        selectedDateLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(23)
+            $0.bottom.equalTo(mainView.snp.top).offset(-8)
+        }
+        weekDayCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(50)
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.07)
+            $0.height.equalTo(bound.height*0.1)
+        }
+        scheduleTableView.snp.makeConstraints {
+            $0.top.equalTo(weekDayCollectionView.snp.bottom).offset(bound.height*0.078)
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.07)
+            $0.bottom.equalToSuperview()
+        }
+    }
+    override func configureVC() {
+        self.view.backgroundColor = .systemGray5
+    }
+    override func configureNavigation() {
+        
     }
     
     // MARK: - Reactor
+    override func bindAction(reactor: TimeMapReactor) {
+        self.rx.viewDidAppear
+            .map { _ in Reactor.Action.viewDidAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
     override func bindState(reactor: TimeMapReactor) {
+        let sharedState = reactor.state.share(replay: 1)
         
+        let timeMapDataSource = RxTableViewSectionedAnimatedDataSource<TimeMapScheduleSection>{ ds, tv, ip, item in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: ScheduleTableViewCell.reusableID, for: ip) as? ScheduleTableViewCell else { return .init() }
+            cell.model = item
+            return cell
+        }
+        
+        sharedState
+            .map(\.schedules)
+            .map{ [TimeMapScheduleSection(header: "", items: $0)]}
+            .bind(to: scheduleTableView.rx.items(dataSource: timeMapDataSource))
+            .disposed(by: disposeBag)
     }
     
     override func bindView(reactor: TimeMapReactor) {
@@ -99,5 +152,15 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
 extension TimeMapVC: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: bound.width*0.09, height: bound.height*0.09)
+    }
+}
+
+// MARK: - Method
+private extension TimeMapVC{
+    func configSelectedDateLabel(){
+        let str = NSMutableAttributedString(string: selectedDate.toString(.custom("yyyy년\nMM월 dd일")))
+        str.setColorForText(textToFind: selectedDate.toString(.custom("yyyy년")), withColor: .black)
+        str.setFontForText(textToFind: selectedDate.toString(.custom("yyyy년")), withFont: .init(font: SMUPFontFamily.Inter.semiBold, size: 20) ?? .init())
+        selectedDateLabel.attributedText = str
     }
 }

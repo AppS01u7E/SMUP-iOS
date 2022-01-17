@@ -34,7 +34,7 @@ enum SMUPStep: Step{
     case mySchoolIsRequired
     
     // TimeMap
-    case timeMapIsRequired
+    case timeMapIsRequired(selectedDate: Date)
     
     // Settings
     case settingIsRequired

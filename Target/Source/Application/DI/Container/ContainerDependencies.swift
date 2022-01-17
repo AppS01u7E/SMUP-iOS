@@ -46,7 +46,6 @@ extension Container{
     private func registerStepper() {
         autoregister(SignInStepper.self, initializer: SignInStepper.init)
         autoregister(HomeStepper.self, initializer: HomeStepper.init)
-        autoregister(TimeMapStepper.self, initializer: TimeMapStepper.init)
         autoregister(ChattingStepper.self, initializer: ChattingStepper.init)
         autoregister(SOOMStepper.self, initializer: SOOMStepper.init)
         autoregister(SettingStepper.self, initializer: SettingStepper.init)
@@ -58,7 +57,6 @@ extension Container{
     private func registerFlow() {
         autoregister(SignInFlow.self, initializer: SignInFlow.init)
         autoregister(HomeFlow.self, initializer: HomeFlow.init)
-        autoregister(TimeMapFlow.self, initializer: TimeMapFlow.init)
         autoregister(ChattingFlow.self, initializer: ChattingFlow.init)
         autoregister(SOOMFlow.self, initializer: SOOMFlow.init)
         autoregister(SettingFlow.self, initializer: SettingFlow.init)

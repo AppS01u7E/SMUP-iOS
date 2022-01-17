@@ -30,13 +30,19 @@ final class MealLabel: UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - LayoutSubview
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.setDashedBorder(color: .systemGray5)
+    }
+    
     // MARK: - OpenMethod
     public func setDetailMeal(content: String){
         let str = NSMutableAttributedString(string: "\(part.rawValue)\n\(content)")
         str.setColorForText(textToFind: part.rawValue, withColor: SMUPAsset.smupMain2.color)
         str.setFontForText(textToFind: part.rawValue, withFont: UIFont(font: SMUPFontFamily.Inter.bold, size: 24) ?? .init())
         self.contentLabel.attributedText = str
-        self.setDashedBorder(color: .systemGray5)
+        
     }
 }
 

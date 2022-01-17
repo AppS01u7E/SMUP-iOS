@@ -52,7 +52,7 @@ extension HomeReactor{
         case .beforeDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate - 1.days))
         case .scheduleButtonDidTap:
-            steps.accept(SMUPStep.timeMapIsRequired)
+            steps.accept(SMUPStep.timeMapIsRequired(selectedDate: currentState.selectedDate))
             return .empty()
         }
     }

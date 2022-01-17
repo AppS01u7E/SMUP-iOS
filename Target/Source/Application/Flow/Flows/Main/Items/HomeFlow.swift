@@ -8,6 +8,7 @@
 
 import RxFlow
 import RxRelay
+import Foundation
 
 struct HomeStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
@@ -37,8 +38,8 @@ final class HomeFlow: Flow{
         switch step{
         case .homeIsRequired:
             return coordinateToHome()
-        case .timeMapIsRequired:
-            return navigateToTimeMap()
+        case let .timeMapIsRequired(date):
+            return navigateToTimeMap(selectedDate: date)
         default:
             return .none
         }
@@ -51,8 +52,8 @@ private extension HomeFlow{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
-    func navigateToTimeMap() -> FlowContributors{
-        let vc = TimeMapVC()
+    func navigateToTimeMap(selectedDate: Date) -> FlowContributors{
+        let vc = TimeMapVC(selectedDate: selectedDate)
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }

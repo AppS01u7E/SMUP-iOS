@@ -70,13 +70,11 @@ final class TimeMapWeekCell: baseCollectionViewCell<WeekDay> {
     
     // MARK: - OpenMethod
     public func didSelectItem() {
-        print("sel")
         self.backgroundColor = .black
         self.weekLabel.textColor = .white
         self.dayLabel.textColor = .white
     }
     public func didDeSelectItem(){
-        print("Desel")
         self.backgroundColor = .clear
         self.weekLabel.textColor = .black
         self.dayLabel.textColor = .lightGray
