@@ -8,7 +8,7 @@
 
 import RxDataSources
 
-struct TimeMap: Codable{
+struct TimeMap: ModelType{
     let perio: Int
     let name: String
     let content: [String]

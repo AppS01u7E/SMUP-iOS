@@ -33,7 +33,7 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
     
     // MARK: - UI
     override func addView() {
-        
+        view.addSubViews(transparentView)
     }
     override func setLayout() {
         
