@@ -19,6 +19,7 @@ final class TimeMapReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
+        case viewDidLoad
     }
     enum Mutation{
     }
@@ -33,6 +34,9 @@ final class TimeMapReactor: Reactor, Stepper{
 extension TimeMapReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
+        case .viewDidLoad:
+            // TODO: viewDidLoad, maybe API
+            return .empty()
         default:
             return .empty()
         }
