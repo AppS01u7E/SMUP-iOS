@@ -11,11 +11,6 @@ import SwiftDate
 
 extension Date{
     func isInPerio(perio: Int) -> Bool{
-        print( perio.convertStartTime().toDate("HH:mm")!.date)
-        print( perio.convertEndTime().toDate("HH:mm")!.date)
-        print(self.resetDate())
-        print(perio.convertStartTime().toDate("HH:mm")!.date <= self.resetDate() &&
-              perio.convertEndTime().toDate("HH:mm")!.date >= self.resetDate())
         return self.resetDate().isInRange(date: perio.convertStartTime().toDate("HH:mm")!.date, and: perio.convertEndTime().toDate("HH:mm")!.date)
         
     }

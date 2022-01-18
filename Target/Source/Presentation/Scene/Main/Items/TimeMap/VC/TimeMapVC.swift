@@ -68,6 +68,16 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if selectedDate.weekday-2 == -1{
+            weekDayCollectionView.selectItem(at: .init(row: 6, section: 0), animated: true, scrollPosition: .centeredVertically)
+        }else{
+            weekDayCollectionView.selectItem(at: .init(row: selectedDate.weekday-2, section: 0), animated: true, scrollPosition: .centeredVertically)
+        }
+        
+        
+    }
+    
     // MARK: - UI
     override func setUp() {
         bind(reactor: reactor)
@@ -86,6 +96,8 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
         Observable.just(items)
             .bind(to: weekDayCollectionView.rx.items(dataSource: timeMapDatasource))
             .disposed(by: disposeBag)
+        
+        
     }
     override func addView() {
         view.addSubViews(mainView, selectedDateLabel)
