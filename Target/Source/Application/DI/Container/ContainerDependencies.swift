@@ -23,6 +23,7 @@ extension Container{
         autoregister(SignInVC.self, initializer: SignInVC.init)
         autoregister(HomeVC.self, initializer: HomeVC.init)
         autoregister(TimeMapVC.self, initializer: TimeMapVC.init)
+        autoregister(TimeMapDetailVC.self, initializer: TimeMapDetailVC.init)
         autoregister(ChattingVC.self, initializer: ChattingVC.init)
         autoregister(SOOMVC.self, initializer: SOOMVC.init)
         autoregister(MainSettingVC.self, initializer: MainSettingVC.init)
@@ -35,6 +36,7 @@ extension Container{
         autoregister(SignInReactor.self, initializer: SignInReactor.init)
         autoregister(HomeReactor.self, initializer: HomeReactor.init)
         autoregister(TimeMapReactor.self, initializer: TimeMapReactor.init)
+        autoregister(TimeMapDetailReactor.self, initializer: TimeMapDetailReactor.init)
         autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(SOOMReactor.self, initializer: SOOMReactor.init)
         autoregister(MainSettingReactor.self, initializer: MainSettingReactor.init)
@@ -46,7 +48,6 @@ extension Container{
     private func registerStepper() {
         autoregister(SignInStepper.self, initializer: SignInStepper.init)
         autoregister(HomeStepper.self, initializer: HomeStepper.init)
-        autoregister(TimeMapStepper.self, initializer: TimeMapStepper.init)
         autoregister(ChattingStepper.self, initializer: ChattingStepper.init)
         autoregister(SOOMStepper.self, initializer: SOOMStepper.init)
         autoregister(SettingStepper.self, initializer: SettingStepper.init)
@@ -58,7 +59,6 @@ extension Container{
     private func registerFlow() {
         autoregister(SignInFlow.self, initializer: SignInFlow.init)
         autoregister(HomeFlow.self, initializer: HomeFlow.init)
-        autoregister(TimeMapFlow.self, initializer: TimeMapFlow.init)
         autoregister(ChattingFlow.self, initializer: ChattingFlow.init)
         autoregister(SOOMFlow.self, initializer: SOOMFlow.init)
         autoregister(SettingFlow.self, initializer: SettingFlow.init)

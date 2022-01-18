@@ -9,6 +9,7 @@ import UIKit
 import ReactorKit
 import Then
 import SnapKit
+import Swinject
 
 class baseVC<T: Reactor>: UIViewController{
     let bound = UIScreen.main.bounds
@@ -27,14 +28,14 @@ class baseVC<T: Reactor>: UIViewController{
     
     @Inject var reactor: T
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     init(reactor: T){
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
+    
+    init() { super.init(nibName: nil, bundle: nil) }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
