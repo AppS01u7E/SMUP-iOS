@@ -1,5 +1,5 @@
 //
-//  ChattingReactor.swift
+//  ChatListReactor.swift
 //  SMUP
 //
 //  Created by 최형우 on 2022/01/14.
@@ -11,7 +11,7 @@ import ReactorKit
 import RxFlow
 import RxCocoa
 
-final class ChattingReactor: Reactor, Stepper{
+final class ChatListReactor: Reactor, Stepper{
     // MARK: - Properties
     var steps: PublishRelay<Step> = .init()
     
@@ -30,7 +30,7 @@ final class ChattingReactor: Reactor, Stepper{
 }
 
 // MARK: - Mutate
-extension ChattingReactor{
+extension ChatListReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
         default:
@@ -40,7 +40,7 @@ extension ChattingReactor{
 }
 
 // MARK: - Reduce
-extension ChattingReactor{
+extension ChatListReactor{
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
@@ -52,6 +52,6 @@ extension ChattingReactor{
 
 
 // MARK: - Method
-private extension ChattingReactor{
+private extension ChatListReactor{
     
 }

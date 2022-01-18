@@ -89,11 +89,6 @@ final class HomeVC: baseVC<HomeReactor>{
         (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(false)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(true)
-    }
-    
     
     // MARK: - Reactor
     override func bindAction(reactor: HomeReactor) {

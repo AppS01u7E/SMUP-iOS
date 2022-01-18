@@ -13,7 +13,7 @@ struct ChattingStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
     
     var initialStep: Step{
-        return SMUPStep.chattingIsRequired
+        return SMUPStep.chatListIsRequired
     }
 }
 
@@ -22,7 +22,7 @@ final class ChattingFlow: Flow{
     var root: Presentable{
         return self.rootVC
     }
-    @Inject private var vc: ChattingVC
+    @Inject private var vc: ChatListVC
     @Inject var stepper: ChattingStepper
     private let rootVC = UINavigationController()
     
@@ -35,8 +35,8 @@ final class ChattingFlow: Flow{
     func navigate(to step: Step) -> FlowContributors {
         guard let step = step.asSMUPStep else { return .none }
         switch step{
-        case .chattingIsRequired:
-            return coordinateToChatting()
+        case .chatListIsRequired:
+            return coordinateToChatList()
         default:
             return .none
         }
@@ -45,7 +45,7 @@ final class ChattingFlow: Flow{
 
 // MARK: - Method
 private extension ChattingFlow{
-    func coordinateToChatting() -> FlowContributors{
+    func coordinateToChatList() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }

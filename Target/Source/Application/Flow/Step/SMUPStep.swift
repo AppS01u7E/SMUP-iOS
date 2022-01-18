@@ -52,7 +52,8 @@ enum SMUPStep: Step{
     // MARK: - Common Tab
     
     // Chatting
-    case chattingIsRequired
+    case chatListIsRequired
+    case chattingIsRequired(withID: String)
     
     
 }
