@@ -90,10 +90,10 @@ final class ScheduleTableViewCell: baseTableViewCell<TimeMap>{
         str.setColorForText(textToFind: perio, withColor: .systemGray3)
         str.setFontForText(textToFind: perio, withFont: .init(font: SMUPFontFamily.Inter.bold, size: 13) ?? .init())
         
-        str.setColorForText(textToFind: start, withColor: .black)
+        str.setColorForText(textToFind: start, withColor: Date().isInPerio(perio: model.perio) ? SMUPAsset.smupMain3.color : .black)
         str.setFontForText(textToFind: start, withFont: .init(font: SMUPFontFamily.Inter.semiBold, size: 16) ?? .init())
         
-        str.setColorForText(textToFind: end, withColor: .systemGray4)
+        str.setColorForText(textToFind: end, withColor: Date().isInPerio(perio: model.perio) ? UIColor(red: 0.839, green: 0.718, blue: 1, alpha: 1) : .systemGray4)
         str.setFontForText(textToFind: end, withFont: .init(font: SMUPFontFamily.Inter.medium, size: 12) ?? .init())
         timeLabel.attributedText = str
         
