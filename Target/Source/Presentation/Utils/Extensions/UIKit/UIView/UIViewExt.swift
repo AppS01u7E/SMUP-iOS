@@ -38,6 +38,7 @@ extension UIView{
     }
     func applyUnderline(){
         let view = UIView()
+        view.backgroundColor = .gray
         addSubViews(view)
         view.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()

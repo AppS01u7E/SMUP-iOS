@@ -41,6 +41,6 @@ private extension SearchTextField{
         }
     }
     func configureTF(){
-        
+        self.applyUnderline()
     }
 }

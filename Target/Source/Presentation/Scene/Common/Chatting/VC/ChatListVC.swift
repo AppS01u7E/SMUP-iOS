@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import RxCocoa
 import RxDataSources
 
 final class ChatListVC: baseVC<ChatListReactor>{
@@ -52,12 +53,17 @@ final class ChatListVC: baseVC<ChatListReactor>{
             .disposed(by: disposeBag)
     }
     override func bindView(reactor: ChatListReactor) {
-        
+        searchTextField.rx.text
+            .orEmpty
+            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.updateQuery($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     override func bindState(reactor: ChatListReactor) {
         let sharedState = reactor.state.share(replay: 1).observe(on: MainScheduler.asyncInstance)
         
-        let dataSrouces = RxTableViewSectionedAnimatedDataSource<ChatListSection>{ ds, tv, ip, item in
+        let dataSrouces = RxTableViewSectionedReloadDataSourceg<ChatListSection>{ ds, tv, ip, item in
             guard let cell = tv.dequeueReusableCell(withIdentifier: ChatListCell.reusableID, for: ip) as? ChatListCell else { return .init() }
             cell.model = item
             return cell
@@ -65,6 +71,12 @@ final class ChatListVC: baseVC<ChatListReactor>{
         
         sharedState
             .map(\.chatLists)
+            .map{
+                if reactor.currentState.query != ""{
+                    return $0.filter{ $0.name.contains(reactor.currentState.query) }
+                }
+                return $0
+            }
             .map { [ChatListSection(header: "", items: $0)] }
             .bind(to: chatListTableView.rx.items(dataSource: dataSrouces))
             .disposed(by: disposeBag)

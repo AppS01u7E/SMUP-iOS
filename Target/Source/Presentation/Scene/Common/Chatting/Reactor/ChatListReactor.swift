@@ -21,12 +21,15 @@ final class ChatListReactor: Reactor, Stepper{
     // MARK: - Reactor
     enum Action{
         case viewDidAppear
+        case updateQuery(String)
     }
     enum Mutation{
         case setChatList([ChatList])
+        case setQuery(String)
     }
     struct State{
         var chatLists: [ChatList] = []
+        var query = ""
     }
     
     var initialState: State = State()
@@ -39,6 +42,8 @@ extension ChatListReactor{
         switch action{
         case .viewDidAppear:
             return .just(.setChatList(getDummyChatList()))
+        case let .updateQuery(q):
+            return .just(.setQuery(q))
         default:
             return .empty()
         }
@@ -52,6 +57,8 @@ extension ChatListReactor{
         switch mutation {
         case let .setChatList(list):
             newState.chatLists = list
+        case let .setQuery(q):
+            newState.query = q
         }
         return newState
     }
