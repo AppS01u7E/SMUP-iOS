@@ -9,6 +9,7 @@
 import RxDataSources
 
 struct ChatList: ModelType{
+    let id: String
     let profileImageUrl: String
     let name: String
     let recentDate: Date

@@ -21,6 +21,13 @@ final class ChatListVC: baseVC<ChatListReactor>{
         $0.rowHeight = 72
     }
     
+    // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(false)
+        (self.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(false)
+    }
+    
     // MARK: - UI
     override func addView() {
         view.addSubViews(searchTextField, chatListTableView)
@@ -59,6 +66,12 @@ final class ChatListVC: baseVC<ChatListReactor>{
             .map { Reactor.Action.updateQuery($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        chatListTableView.rx.modelSelected(ChatList.self)
+            .map { Reactor.Action.chattingDidTap($0.id) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+            
     }
     override func bindState(reactor: ChatListReactor) {
         let sharedState = reactor.state.share(replay: 1).observe(on: MainScheduler.asyncInstance)

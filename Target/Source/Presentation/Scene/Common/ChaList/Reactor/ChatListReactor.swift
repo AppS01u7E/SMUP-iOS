@@ -22,6 +22,7 @@ final class ChatListReactor: Reactor, Stepper{
     enum Action{
         case viewDidAppear
         case updateQuery(String)
+        case chattingDidTap(String)
     }
     enum Mutation{
         case setChatList([ChatList])
@@ -44,6 +45,9 @@ extension ChatListReactor{
             return .just(.setChatList(getDummyChatList()))
         case let .updateQuery(q):
             return .just(.setQuery(q))
+        case let .chattingDidTap(id):
+            steps.accept(SMUPStep.chattingIsRequired(withID: id))
+            return .empty()
         default:
             return .empty()
         }
@@ -69,9 +73,9 @@ extension ChatListReactor{
 private extension ChatListReactor{
     func getDummyChatList() -> [ChatList] {
         return [
-            .init(profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "asdf", recentDate: Date(), recentMessage: "fdzz", alarmCount: 1),
-            .init(profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "김성훈", recentDate: Date(), recentMessage: "일하셈", alarmCount: 0),
-            .init(profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLQMv0jnwUZ6pwWFbRuJtu26dj9VyKz8JY2wbzi-3aI=s88-c-k-c0x00ffffff-no-rj", name: "ㅁㄴㅇㄹ", recentDate: (Date() - 1.days), recentMessage: "ㅇ?", alarmCount: 2)
+            .init(id: "asdf", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "asdf", recentDate: Date(), recentMessage: "fdzz", alarmCount: 1),
+            .init(id: "FDSA", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "김성훈", recentDate: Date(), recentMessage: "일하셈", alarmCount: 0),
+            .init(id: "ASFW", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLQMv0jnwUZ6pwWFbRuJtu26dj9VyKz8JY2wbzi-3aI=s88-c-k-c0x00ffffff-no-rj", name: "ㅁㄴㅇㄹ", recentDate: (Date() - 1.days), recentMessage: "ㅇ?", alarmCount: 2)
         ]
     }
 }

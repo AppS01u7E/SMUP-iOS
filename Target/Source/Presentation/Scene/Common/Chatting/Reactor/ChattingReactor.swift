@@ -20,10 +20,15 @@ final class ChattingReactor: Reactor, Stepper{
     // MARK: - Reactor
     enum Action{
         case `init`(String)
+        case updateContent(String)
     }
     enum Mutation{
+        case setContent(String)
+        case setMessages([Message])
     }
     struct State{
+        var content: String = ""
+        var messages: [Message] = []
     }
     
     var initialState: State = State()
@@ -36,6 +41,8 @@ extension ChattingReactor{
         switch action{
         case let .`init`(id):
             return .empty()
+        case let .updateContent(con):
+            return .just(.setContent(con))
         default:
             return .empty()
         }
@@ -47,7 +54,10 @@ extension ChattingReactor{
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-            
+        case let .setContent(con):
+            newState.content = con
+        case let .setMessages(msgs):
+            newState.messages = msgs
         }
         return newState
     }
