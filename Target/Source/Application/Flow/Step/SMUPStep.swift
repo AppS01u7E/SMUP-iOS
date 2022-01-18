@@ -53,5 +53,6 @@ enum SMUPStep: Step{
     // Chatting
     case chattingIsRequired
     
-    
+    // Alarm
+    case AlarmIsRequired
 }
