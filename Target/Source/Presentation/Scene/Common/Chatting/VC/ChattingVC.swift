@@ -19,6 +19,11 @@ final class ChattingVC: MessagesViewController{
     
     var disposeBag: DisposeBag = .init()
     
+    private let plusButton = UIButton().then {
+        $0.setImage(.init(systemName: "plus.circle")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)), for: .normal)
+        
+    }
+    
     // MARK: - Init
     init(ID: String){
         self.id = ID

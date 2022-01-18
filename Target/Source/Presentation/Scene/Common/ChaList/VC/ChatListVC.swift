@@ -50,6 +50,8 @@ final class ChatListVC: baseVC<ChatListReactor>{
     }
     override func configureNavigation() {
         self.navigationController?.isNavigationBarHidden = true
+        
+        
     }
     
     // MARK: - Reactor
@@ -68,7 +70,13 @@ final class ChatListVC: baseVC<ChatListReactor>{
             .disposed(by: disposeBag)
         
         chatListTableView.rx.modelSelected(ChatList.self)
-            .map { Reactor.Action.chattingDidTap($0.id) }
+            .withUnretained(self)
+            .do(onNext: { owner, item in
+                let back: UIBarButtonItem = .init(title: item.name, style: .plain, target: owner, action: nil)
+                back.tintColor = .black
+                owner.navigationItem.backBarButtonItem = back
+            })
+            .map { Reactor.Action.chattingDidTap($0.1.id) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
             
