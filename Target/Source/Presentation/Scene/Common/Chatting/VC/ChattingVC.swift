@@ -24,6 +24,9 @@ final class ChattingVC: MessagesViewController{
     private let plusButton = InputBarButtonItem().then {
         $0.image = .init(systemName: "plus.circle")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 40, height: 40))
     }
+    
+    private let sideButton = UIBarButtonItem(image: .init(systemName: "list.bullet")?.tintColor(.black), style: .plain, target: self, action: nil)
+    
     // MARK: - Init
     init(ID: String){
         self.id = ID
@@ -63,9 +66,10 @@ private extension ChattingVC{
         messageInputBar.setStackViewItems([plusButton], forStack: .left, animated: false)
         removeOutgoingMessageAvatar()
         configureInputBar()
+        bind(reactor: reactor)
     }
     func configureNavigation(){
-        self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "list.bullet"), style: .plain, target: self, action: nil)
+        self.navigationItem.rightBarButtonItem = sideButton
     }
     func removeOutgoingMessageAvatar() {
         guard let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout else { return }
@@ -158,6 +162,11 @@ extension ChattingVC: ReactorKit.View{
             .map { Reactor.Action.updateContent($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        sideButton.rx.tap
+            .map { Reactor.Action.sideButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     func bindState(reactor: ChattingReactor){
         
@@ -166,5 +175,3 @@ extension ChattingVC: ReactorKit.View{
         
     }
 }
-
-extension InputBarButtonItem: Then {}

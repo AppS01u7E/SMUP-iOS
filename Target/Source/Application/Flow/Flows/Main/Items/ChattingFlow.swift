@@ -7,7 +7,9 @@
 //
 
 import RxFlow
+import SideMenu
 import RxRelay
+import UIKit
 
 struct ChattingStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
@@ -39,6 +41,9 @@ final class ChattingFlow: Flow{
             return coordinateToChatList()
         case let .chattingIsRequired(ID):
             return navigateToChatting(ID: ID)
+        case let .chattingSettingIsRequired(reactor):
+            print("ASF")
+            return presentToChattingSetting(reactor: reactor)
         default:
             return .none
         }
@@ -58,5 +63,20 @@ private extension ChattingFlow{
         self.rootVC.isNavigationBarHidden = false
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func presentToChattingSetting(reactor: ChattingReactor) -> FlowContributors{
+        let vc = SideMenuNavigationController(rootViewController: ChattingSettingSideVC(reactor: reactor))
+        vc.statusBarEndAlpha = 0
+        vc.dismissOnPresent = true
+        vc.dismissOnPush = true
+        vc.enableTapToDismissGesture = true
+        vc.enableSwipeToDismissGesture = true
+        vc.menuWidth = UIScreen.main.bounds.width*0.6859
+        vc.presentationStyle = .menuSlideIn
+        SideMenuManager.default.rightMenuNavigationController = vc
+        SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: false)
+        let presentingVC = SideMenuManager.default.rightMenuNavigationController ?? .init(nibName: nil, bundle: nil)
+        self.rootVC.present(presentingVC, animated: true, completion: nil)
+        return .one(flowContributor: .contribute(withNextPresentable: presentingVC, withNextStepper: reactor))
     }
 }

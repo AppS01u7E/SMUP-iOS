@@ -21,6 +21,7 @@ final class ChattingReactor: Reactor, Stepper{
     enum Action{
         case `init`(String)
         case updateContent(String)
+        case sideButtonDidTap
     }
     enum Mutation{
         case setContent(String)
@@ -43,6 +44,9 @@ extension ChattingReactor{
             return .empty()
         case let .updateContent(con):
             return .just(.setContent(con))
+        case .sideButtonDidTap:
+            steps.accept(SMUPStep.chattingSettingIsRequired(reactor: self))
+            return .empty()
         }
     }
 }
