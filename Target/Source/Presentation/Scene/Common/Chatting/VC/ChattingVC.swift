@@ -9,6 +9,8 @@
 import ReactorKit
 import MessageKit
 import UIKit
+import InputBarAccessoryView
+import Then
 
 final class ChattingVC: MessagesViewController{
     // MARK: - Properties
@@ -19,11 +21,9 @@ final class ChattingVC: MessagesViewController{
     
     var disposeBag: DisposeBag = .init()
     
-    private let plusButton = UIButton().then {
-        $0.setImage(.init(systemName: "plus.circle")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)), for: .normal)
-        
+    private let plusButton = InputBarButtonItem().then {
+        $0.image = .init(systemName: "plus.circle")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 40, height: 40))
     }
-    
     // MARK: - Init
     init(ID: String){
         self.id = ID
@@ -58,10 +58,28 @@ private extension ChattingVC{
         messagesCollectionView.messagesLayoutDelegate = self
     }
     func configureVC(){
-        
+        messageInputBar.leftStackView.alignment = .center
+        messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
+        messageInputBar.setStackViewItems([plusButton], forStack: .left, animated: false)
+        removeOutgoingMessageAvatar()
+        configureInputBar()
     }
     func configureNavigation(){
-        
+        self.navigationItem.rightBarButtonItem = .init(image: .init(systemName: "list.bullet"), style: .plain, target: self, action: nil)
+    }
+    func removeOutgoingMessageAvatar() {
+        guard let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout else { return }
+        layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+        layout.setMessageOutgoingAvatarSize(.zero)
+        let outgoingLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15))
+        layout.setMessageOutgoingMessageTopLabelAlignment(outgoingLabelAlignment)
+    }
+    func configureInputBar(){
+        messageInputBar.sendButton.setTitle("", for: .normal)
+        messageInputBar.sendButton.setImage(.init(systemName: "paperplane")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 15, height: 15)), for: .normal)
+        messageInputBar.inputTextView.placeholder = "입력해주세요..."
+        messageInputBar.inputTextView.backgroundColor = .systemGray6
+        messageInputBar.inputTextView.layer.cornerRadius = 5
     }
 }
 
@@ -148,3 +166,5 @@ extension ChattingVC: ReactorKit.View{
         
     }
 }
+
+extension InputBarButtonItem: Then {}

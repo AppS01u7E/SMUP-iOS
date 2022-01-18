@@ -43,8 +43,6 @@ extension ChattingReactor{
             return .empty()
         case let .updateContent(con):
             return .just(.setContent(con))
-        default:
-            return .empty()
         }
     }
 }
