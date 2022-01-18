@@ -17,6 +17,7 @@ final class SelectedDateLabel: UILabel {
         $0.textColor = .gray
         $0.text = "ASDF"
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
+        $0.textAlignment = .center
     }
     
     private var selectedDate = Date()

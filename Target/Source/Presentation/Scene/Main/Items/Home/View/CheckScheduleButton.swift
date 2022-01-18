@@ -30,7 +30,6 @@ final class CheckScheduleButton: UIButton {
         self.buttonTtitleLabel.text = title
         addView()
         setLayout()
-        
     }
     
     override func layoutSubviews() {
