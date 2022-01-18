@@ -36,6 +36,8 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
         $0.register(TimeMapDetailCell.self, forCellWithReuseIdentifier: TimeMapDetailCell.reusableID)
     }
     
+    private let nextScheduleButton = UIButton()
+    
     
     // MARK: - Init
     init(schedules: [TimeMap], current: Int){

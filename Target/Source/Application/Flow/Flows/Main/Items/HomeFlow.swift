@@ -59,6 +59,7 @@ private extension HomeFlow{
     }
     func navigateToTimeMap(selectedDate: Date) -> FlowContributors{
         let vc = TimeMapVC(selectedDate: selectedDate)
+        (self.rootVC.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(true)
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }

@@ -13,7 +13,7 @@ struct ChattingStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
     
     var initialStep: Step{
-        return SMUPStep.chattingIsRequired
+        return SMUPStep.chatListIsRequired
     }
 }
 
