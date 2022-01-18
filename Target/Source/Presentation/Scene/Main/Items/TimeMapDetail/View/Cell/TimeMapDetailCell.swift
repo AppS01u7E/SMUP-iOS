@@ -10,6 +10,9 @@ import UIKit
 import Then
 import SnapKit
 
+protocol TimeMapDetailCellDelegate: AnyObject{
+    func goDirectButtonDidTap()
+}
 final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
     // MARK: - Properties
     private let dateLabel = UILabel().then {
@@ -48,6 +51,8 @@ final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
         $0.semanticContentAttribute = .forceRightToLeft
     }
     
+    weak var delegate: TimeMapDetailCellDelegate?
+    
     // MARK: - UI
     override func addView() {
         dateStack.addArrangeSubviews(dateLabel, perioLabel)
@@ -80,6 +85,13 @@ final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
         self.layer.cornerRadius = 15
         self.clipsToBounds = true
         self.backgroundColor = .clear
+        
+        goDirectButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { `self`, _ in
+                `self`.delegate?.goDirectButtonDidTap()
+            })
+            .disposed(by: disposeBag)
     }
     override func bind(_ model: TimeMap) {
         dateLabel.text = model.date.toString(.custom("yyyy년 MM월 dd일"))

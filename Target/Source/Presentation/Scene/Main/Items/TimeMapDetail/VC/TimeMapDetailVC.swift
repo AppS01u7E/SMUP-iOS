@@ -36,11 +36,6 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
         $0.register(TimeMapDetailCell.self, forCellWithReuseIdentifier: TimeMapDetailCell.reusableID)
     }
     
-    private var dataSource = RxCollectionViewSectionedAnimatedDataSource<TimeMapDetailSection>{ ds, tv, ip, item in
-        guard let cell = tv.dequeueReusableCell(withReuseIdentifier: TimeMapDetailCell.reusableID, for: ip) as? TimeMapDetailCell else { return .init() }
-        cell.model = item
-        return cell
-    }
     
     // MARK: - Init
     init(schedules: [TimeMap], current: Int){
@@ -98,6 +93,13 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
     override func bindState(reactor: TimeMapDetailReactor) {
         let sharedState = reactor.state.share(replay: 2)
         
+        var dataSource = RxCollectionViewSectionedAnimatedDataSource<TimeMapDetailSection>{ ds, tv, ip, item in
+            guard let cell = tv.dequeueReusableCell(withReuseIdentifier: TimeMapDetailCell.reusableID, for: ip) as? TimeMapDetailCell else { return .init() }
+            cell.delegate = self
+            cell.model = item
+            return cell
+        }
+        
         sharedState
             .map(\.schedulse)
             .map{ [TimeMapDetailSection(header: "", items: $0)]}
@@ -111,5 +113,11 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
 extension TimeMapDetailVC: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: bound.width*0.841, height: bound.height*0.702)
+    }
+}
+
+extension TimeMapDetailVC: TimeMapDetailCellDelegate{
+    func goDirectButtonDidTap() {
+        print("DEBUG")
     }
 }
