@@ -8,23 +8,20 @@
 
 import RxDataSources
 
-enum TimeMapDetailSection{
-    case first([TimeMapDetailSectionItem])
+struct TimeMapDetailSection{
+    let header: String
+    var items: [Item]
 }
 
-enum TimeMapDetailSectionItem{
-    case main(TimeMapDetailCellReactor)
-}
-
-extension TimeMapDetailSection: SectionModelType{
-    var items: [TimeMapDetailSectionItem]{
-        switch self{
-        case let .first(item): return item
-        }
+extension TimeMapDetailSection: AnimatableSectionModelType{
+    typealias Item = TimeMap
+    
+    init(original: TimeMapDetailSection, items: [TimeMap]) {
+        self = original
+        self.items = items
     }
-    init(original: TimeMapDetailSection, items: [TimeMapDetailSectionItem]) {
-        switch original{
-        case .first: self = .first(items)
-        }
+    
+    var identity: String{
+        return UUID().uuidString
     }
 }

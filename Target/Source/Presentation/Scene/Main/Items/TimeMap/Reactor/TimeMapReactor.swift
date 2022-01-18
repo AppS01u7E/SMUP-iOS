@@ -10,6 +10,7 @@ import Foundation
 import ReactorKit
 import RxFlow
 import RxCocoa
+import SwiftDate
 
 final class TimeMapReactor: Reactor, Stepper{
     // MARK: - Properties
@@ -20,6 +21,7 @@ final class TimeMapReactor: Reactor, Stepper{
     // MARK: - Reactor
     enum Action{
         case viewDidAppear
+        case scheduleDetailIsRequired(Int)
     }
     enum Mutation{
         case setSchedule([TimeMap])
@@ -37,16 +39,18 @@ extension TimeMapReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
         case .viewDidAppear:
-            print("ASDF")
-            return .just(.setSchedule([
-                .init(perio: 1, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 2, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 3, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 4, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 5, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 6, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
-                .init(perio: 7, name: "토익사관학교", content: ["이건 미친짓이야..!", "도망쳐.."], reference: "김성훈님이 1학년 2학 Chat에 공지하셨어요!"),
+            return Observable<Mutation>.just(Mutation.setSchedule([
+                .init(date: "2021년 12월 24일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 1, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 25일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 2, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 26일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 3, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 27일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 4, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 28일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 5, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 29일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 6, name: "토익사관학교", content: ["이건 미친짓이야..!"], reference: ""),
+                .init(date: "2021년 12월 30일".toDate("yyyy년 MM월 dd일")?.date ?? Date(), perio: 7, name: "토익사관학교", content: ["이건 미친짓이야..!", "도망쳐.."], reference: "김성훈님이 1학년 2학 Chat에 공지하셨어요!"),
             ]))
+        case let .scheduleDetailIsRequired(cur):
+            steps.accept(SMUPStep.timeMapDetailIsRequired(schedules: currentState.schedules, current: cur))
+            return .empty()
         }
     }
 }

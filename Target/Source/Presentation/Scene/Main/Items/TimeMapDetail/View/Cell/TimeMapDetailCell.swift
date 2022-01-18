@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
+final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
     // MARK: - Properties
     private let dateLabel = UILabel().then {
         $0.textAlignment = .center
@@ -27,7 +27,7 @@ final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
     
     private let contentLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 12)
+        $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 17)
     }
     
     private let referenceLabel = UILabel().then {
@@ -37,12 +37,14 @@ final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
     
     private let scrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = .white
     }
     
     private let goDirectButton = UIButton().then {
         $0.setTitle("보러 가기", for: .normal)
         $0.setTitleColor(SMUPAsset.smupMain2.color, for: .normal)
-        $0.setImage(.init(systemName: "chevron.forward.circle")?.tintColor(SMUPAsset.smupMain2.color), for: .normal)
+        $0.setImage(.init(systemName: "chevron.right.circle")?.tintColor(SMUPAsset.smupMain2.color).downSample(size: .init(width: 14, height: 14))
+                    , for: .normal)
         $0.semanticContentAttribute = .forceRightToLeft
     }
     
@@ -58,7 +60,7 @@ final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
         }
         dateStack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(bound.height*0.02)
+            $0.top.equalToSuperview().inset(bound.height*0.05)
         }
         contentLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -67,7 +69,7 @@ final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
         }
         referenceLabel.snp.makeConstraints {
             $0.top.equalTo(contentLabel.snp.bottom).offset(bound.height*0.02)
-            $0.leading.trailing.equalToSuperview().inset(3)
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.07)
         }
         goDirectButton.snp.makeConstraints {
             $0.bottom.trailing.equalToSuperview().inset(10)
@@ -76,10 +78,22 @@ final class TimeMapDetailCell: BaseCollectionViewCell<TimeMapDetailCellReactor>{
     }
     override func configureCell() {
         self.layer.cornerRadius = 15
-        self.backgroundColor = .white
+        self.clipsToBounds = true
+        self.backgroundColor = .clear
+    }
+    override func bind(_ model: TimeMap) {
+        dateLabel.text = model.date.toString(.custom("yyyy년 MM월 dd일"))
+        perioLabel.text = "\(model.perio.convertPerio()) \(model.name)"
+        let conStr = NSMutableAttributedString()
+        model.content.forEach{ con in
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(systemName: "circle.fill")?.tintColor(.systemGray3).downSample(size: .init(width: 5, height: 5))
+            conStr.append(.init(string: "\t\t"))
+            conStr.append(.init(attachment: imageAttachment))
+            conStr.append(.init(string: " \(con)\n"))
+        }
+        contentLabel.attributedText = conStr
+        referenceLabel.text = model.reference
     }
     
-    override func bindView(reactor: TimeMapDetailCellReactor) {
-        
-    }
 }

@@ -7,8 +7,10 @@
 //
 
 import RxDataSources
+import Foundation
 
 struct TimeMap: ModelType{
+    let date: Date
     let perio: Int
     let name: String
     let content: [String]

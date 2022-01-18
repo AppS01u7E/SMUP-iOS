@@ -20,6 +20,7 @@ final class TimeMapDetailReactor: Reactor, Stepper{
     // MARK: - Reactor
     enum Action{
         case `init`([TimeMap])
+        case transparentDidTap
     }
     enum Mutation{
         case setSchedule([TimeMap])
@@ -38,7 +39,8 @@ extension TimeMapDetailReactor{
         switch action{
         case let .`init`(items):
             return .just(.setSchedule(items))
-        default:
+        case .transparentDidTap:
+            steps.accept(SMUPStep.dismiss)
             return .empty()
         }
     }
