@@ -63,7 +63,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
     override func bindState(reactor: ChatListReactor) {
         let sharedState = reactor.state.share(replay: 1).observe(on: MainScheduler.asyncInstance)
         
-        let dataSrouces = RxTableViewSectionedReloadDataSourceg<ChatListSection>{ ds, tv, ip, item in
+        let dataSrouces = RxTableViewSectionedReloadDataSource<ChatListSection>{ ds, tv, ip, item in
             guard let cell = tv.dequeueReusableCell(withIdentifier: ChatListCell.reusableID, for: ip) as? ChatListCell else { return .init() }
             cell.model = item
             return cell
