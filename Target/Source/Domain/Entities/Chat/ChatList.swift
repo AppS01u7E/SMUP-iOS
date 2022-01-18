@@ -6,12 +6,18 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-import Foundation
+import RxDataSources
 
-struct ChatList{
+struct ChatList: ModelType{
     let profileImageUrl: String
     let name: String
     let recentDate: Date
     let recentMessage: String
     let alarmCount: Int
+}
+
+extension ChatList: IdentifiableType{
+    var identity: String{
+        return UUID().uuidString
+    }
 }
