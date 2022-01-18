@@ -142,6 +142,7 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
             return cell
         }
         
+        
         sharedState
             .map(\.schedules)
             .map{ [TimeMapScheduleSection(header: "", items: $0)]}
@@ -150,26 +151,6 @@ final class TimeMapVC: baseVC<TimeMapReactor>{
     }
     
     override func bindView(reactor: TimeMapReactor) {
-        self.weekDayCollectionView.rx.itemSelected
-            .withUnretained(self)
-            .map(\.1)
-            .subscribe(onNext: {
-                guard let cell = self.weekDayCollectionView.dequeueReusableCell(withReuseIdentifier: TimeMapWeekCell.reusableID, for: $0) as? TimeMapWeekCell else { return }
-                cell.backgroundColor = SMUPAsset.smupMain3.color
-                cell.didSelectItem()
-                
-            })
-            .disposed(by: disposeBag)
-        
-        self.weekDayCollectionView.rx.itemDeselected
-            .withUnretained(self)
-            .map(\.1)
-            .subscribe(onNext: {
-                guard let cell = self.weekDayCollectionView.dequeueReusableCell(withReuseIdentifier: TimeMapWeekCell.reusableID, for: $0) as? TimeMapWeekCell else { return }
-                cell.didDeSelectItem()
-            })
-            .disposed(by: disposeBag)
-        
         self.scheduleTableView.rx.itemSelected
             .map { Reactor.Action.scheduleDetailIsRequired($0.row) }
             .bind(to: reactor.action)

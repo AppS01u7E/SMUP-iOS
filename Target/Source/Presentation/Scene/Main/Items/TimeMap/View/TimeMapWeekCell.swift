@@ -27,6 +27,16 @@ final class TimeMapWeekCell: baseCollectionViewCell<WeekDay> {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 14)
     }
     
+    override var isSelected: Bool{
+        didSet{
+            if isSelected{
+                didSelectItem()
+            }else{
+                didDeSelectItem()
+            }
+        }
+    }
+    
     // MARK: - UI
     override func addView() {
         addSubViews(weekLabel, dayLabel, todayLabel)
@@ -38,6 +48,7 @@ final class TimeMapWeekCell: baseCollectionViewCell<WeekDay> {
         dayLabel.snp.makeConstraints {
             $0.top.equalTo(weekLabel.snp.bottom).offset(2)
             $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(5)
         }
         todayLabel.snp.makeConstraints {
             $0.bottom.equalTo(self.snp.top).offset(-3)
@@ -66,11 +77,12 @@ final class TimeMapWeekCell: baseCollectionViewCell<WeekDay> {
             weekLabel.text = "S"
             dayLabel.text = "7"
         }
+        
     }
     
     // MARK: - OpenMethod
     public func didSelectItem() {
-        self.backgroundColor = .black
+        backgroundColor = SMUPAsset.smupMain3.color
         self.weekLabel.textColor = .white
         self.dayLabel.textColor = .white
     }
