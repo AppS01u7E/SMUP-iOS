@@ -15,7 +15,7 @@ final class AlarmVC: baseVC<AlarmReactor>{
     private let alarmTableView = UITableView().then {
         $0.register(AlarmCell.self, forCellReuseIdentifier: AlarmCell.reusableID)
         $0.rowHeight = UIScreen.main.bounds.height*0.07924
-//        $0.allowsMultipleSelection = true
+        $0.allowsMultipleSelection = true
     }
     
     private let deleteButton = UIBarButtonItem(title: "삭제", style: .plain, target: self, action: nil).then {
