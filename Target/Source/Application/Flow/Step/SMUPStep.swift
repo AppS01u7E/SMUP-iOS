@@ -54,6 +54,7 @@ enum SMUPStep: Step{
     // Chatting
     case chatListIsRequired
     case chattingIsRequired(withID: String)
+    case chattingSettingIsRequired(reactor: ChattingReactor)
     
     // Alarm
     case alarmIsRequired

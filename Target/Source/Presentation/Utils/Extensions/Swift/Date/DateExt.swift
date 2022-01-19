@@ -18,4 +18,20 @@ extension Date{
     func resetDate() -> Date{
         return Date(year: 2000, month: 1, day: 1, hour: self.hour, minute: self.minute) + 9.hours
     }
+    
+    func convertKorea() -> Date{
+        return self + 9.hours
+    }
+    
+    func convertCustomString() -> String{
+        if self.isToday{
+            return self.convertKorea().toString(.custom("a hh:mm분"))
+        }
+        else if self.isYesterday{
+            return "어제"
+        }
+        else{
+            return self.convertKorea().toString(.custom("yyyy.MM.dd"))
+        }
+    }
 }

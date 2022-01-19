@@ -81,6 +81,10 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.timeMapsCollectionView.scrollToItem(at: .init(row: 2, section: 0), at: .centeredVertically, animated: true)
+    }
+    
     // MARK: - Reactor
     override func bindView(reactor: TimeMapDetailReactor) {
         bgView.rx.tapGesture()

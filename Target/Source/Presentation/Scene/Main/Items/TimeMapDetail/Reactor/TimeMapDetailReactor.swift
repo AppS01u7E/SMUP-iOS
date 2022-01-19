@@ -21,17 +21,12 @@ final class TimeMapDetailReactor: Reactor, Stepper{
     enum Action{
         case `init`([TimeMap])
         case transparentDidTap
-        case indexDidChange(Int)
-        case prevDidTap
-        case nextDidTap
     }
     enum Mutation{
         case setSchedule([TimeMap])
-        case setIndex(Int)
     }
     struct State{
         var schedulse: [TimeMap] = []
-        var currentIndex = 0
     }
     
     var initialState: State = State()
@@ -47,12 +42,6 @@ extension TimeMapDetailReactor{
         case .transparentDidTap:
             steps.accept(SMUPStep.dismiss)
             return .empty()
-        case let .indexDidChange(idx):
-            return .just(.setIndex(idx))
-        case .prevDidTap:
-            return .just(.setIndex(currentState.currentIndex-1))
-        case .nextDidTap:
-            return .just(.setIndex(currentState.currentIndex+1))
         }
     }
 }
@@ -64,8 +53,6 @@ extension TimeMapDetailReactor{
         switch mutation {
         case let .setSchedule(items):
             newState.schedulse = items
-        case let .setIndex(idx):
-            newState.currentIndex = idx
         }
         return newState
     }
