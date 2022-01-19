@@ -24,7 +24,7 @@ class PostCell : LBTAListCell<String> {
     let chatCount = UILabel(text: "4")
 //    let imageViewGrid = UIView(backgroundColor: .gray)
     
-    let photosGridController = ViewController()
+    let photosGridController = PhotosGridController()
 
     override func setupViews() {
         backgroundColor = .white
@@ -98,6 +98,7 @@ class StoryPhotoCell : LBTAListCell<String> {
         sublabel.textColor = .white
         sublabel.font = UIFont.systemFont(ofSize: CGFloat(11), weight: .regular)
         
+        backgroundColor = .red
         stack(hstack(imageView.withHeight(54).withWidth(34),stack(uiLabel,sublabel).padTop(12).padBottom(12), spacing: 5)).padLeft(8).padTop(7).padBottom(7).padRight(10)
         
         self.layer.cornerRadius = 10
@@ -117,7 +118,7 @@ class StoriesController : LBTAListController<StoryPhotoCell, String>, UICollecti
         super.viewDidLoad()
         
         setupDataSource()
-        
+ 
         self.items = ["123", "123", "123"]
         
     }
@@ -180,7 +181,7 @@ final class SOOMVC : LBTAListHeaderController<PostCell, String, StoryHeader>,UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionView.backgroundColor = .init(white: 0.9, alpha: 1)
         
-        return .init(width: view.frame.width, height: 440)
+        return .init(width: view.frame.width, height: 350)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -10,6 +10,9 @@ import UIKit
 
 struct MyModel {
     let color : UIColor
+//    let title : UILabel
+//    let profileIamgeUrl : UIImage
+//    let description : UILabel
     
     static func getMock() -> [Self] {
         
