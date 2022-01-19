@@ -30,6 +30,7 @@ target 'SMUP' do
   pod 'Hero', '~> 1.6.1'
   pod 'SideMenu', '~> 6.5.0'
   pod 'LBTATools'
+  pod 'Kingfisher', '~> 7.1.2'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'

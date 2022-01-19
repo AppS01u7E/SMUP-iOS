@@ -43,6 +43,8 @@ final class HomeFlow: Flow{
             return navigateToTimeMap(selectedDate: date)
         case let .timeMapDetailIsRequired(schedules, cur):
             return presentToTimeMapDetail(schedules: schedules, current: cur)
+        case .alarmIsRequired:
+            return navigateToAlarm()
         case .dismiss:
             return dismissVC()
         default:
@@ -68,6 +70,11 @@ private extension HomeFlow{
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
         self.rootVC.present(vc, animated: true, completion: nil)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func navigateToAlarm() -> FlowContributors{
+        let vc = AlarmVC()
+        self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
     func dismissVC() -> FlowContributors{
