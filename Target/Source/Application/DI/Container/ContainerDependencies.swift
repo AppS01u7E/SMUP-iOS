@@ -37,6 +37,7 @@ extension Container{
         autoregister(HomeReactor.self, initializer: HomeReactor.init)
         autoregister(TimeMapReactor.self, initializer: TimeMapReactor.init)
         autoregister(TimeMapDetailReactor.self, initializer: TimeMapDetailReactor.init)
+        autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(ChatListReactor.self, initializer: ChatListReactor.init)
         autoregister(SOOMReactor.self, initializer: SOOMReactor.init)
         autoregister(MainSettingReactor.self, initializer: MainSettingReactor.init)

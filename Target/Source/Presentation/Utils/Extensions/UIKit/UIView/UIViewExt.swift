@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension UIView{
     func addSubViews(_ subView: UIView...){
@@ -34,5 +35,15 @@ extension UIView{
         gradient.endPoint = endPoint
         gradient.frame = bounds
         self.layer.insertSublayer(gradient, at: 0)
+    }
+    func applyUnderline(){
+        let view = UIView()
+        view.backgroundColor = .gray
+        addSubViews(view)
+        view.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1)
+            $0.top.equalTo(self.snp.bottom)
+        }
     }
 }
