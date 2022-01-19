@@ -98,7 +98,6 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
             .map { _ in Reactor.Action.transparentDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
     }
     
     override func bindState(reactor: TimeMapDetailReactor) {
@@ -117,12 +116,11 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
             .bind(to: timeMapsCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        
     }
 }
 
 // MARK: - Extension
-extension TimeMapDetailVC: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+extension TimeMapDetailVC: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: bound.width*0.841, height: bound.height*0.702)
     }
