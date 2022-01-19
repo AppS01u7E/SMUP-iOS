@@ -20,13 +20,21 @@ final class SearchVC: baseVC<SearchReactor>{
         $0.register(SoomCategoryCollectionViewCell.self, forCellWithReuseIdentifier: SoomCategoryCollectionViewCell.reusableID)
         $0.collectionViewLayout = layout
     }
+    private let separatorView = UIView().then {
+        $0.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.941, alpha: 1)
+    }
+    private let g = UITableView().then {
+        $0.register(SoomCell.self, forCellReuseIdentifier: SoomCell.reusableID)
+        $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 300
+    }
     
     // MARK: - UI
     override func setUp() {
         categoryCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     override func addView() {
-        view.addSubViews(searchTextField, categoryCollectionView)
+        view.addSubViews(searchTextField, categoryCollectionView, separatorView, soomTableView)
     }
     override func setLayout() {
         searchTextField.snp.makeConstraints {
@@ -39,6 +47,16 @@ final class SearchVC: baseVC<SearchReactor>{
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.036)
             $0.top.equalTo(searchTextField.snp.bottom).offset(13)
             $0.height.equalTo(bound.width*0.23)
+        }
+        separatorView.snp.makeConstraints {
+            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(bound.height*0.02236)
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.036)
+            $0.height.equalTo(1)
+        }
+        soomTableView.snp.makeConstraints {
+            $0.top.equalTo(separatorView.snp.bottom).offset(bound.height*0.02236)
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.0966)
+            $0.bottom.equalToSuperview()
         }
     }
     override func configureVC() {

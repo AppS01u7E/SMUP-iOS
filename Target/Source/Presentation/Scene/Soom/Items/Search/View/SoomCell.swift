@@ -44,20 +44,21 @@ final class SoomCell: baseTableViewCell<Soom>{
         $0.spacing = 8
         $0.alignment = .leading
     }
-    
-    override func awakeFromNib() {
-        
-    }
+    private let deco = SoomDeco()
     
     // MARK: - UI
     override func addView() {
         buttonStack.addArrangeSubviews(postButton, chatButton)
         mainStack.addArrangeSubviews(titleLabel, descriptionsLabel, buttonStack)
-        addSubViews(mainStack)
+        addSubViews(mainStack, deco)
     }
     override func setLayout() {
         mainStack.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(18)
+        }
+        deco.snp.makeConstraints {
+            $0.centerY.equalTo(self.snp.top)
+            $0.centerX.equalTo(self.snp.trailing)
         }
     }
     override func configureCell() {
