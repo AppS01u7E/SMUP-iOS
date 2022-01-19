@@ -17,11 +17,14 @@ class PostCell : LBTAListCell<String> {
     let nameLabel = UILabel(text: "1학년 4반")
     let dataLabel = UILabel(text: "28분 전")
     let postTextLabel = UILabel(text: "다음 주 운영체제 프로젝트 마감입니다!")
+    let ellipsis = UIButton()
     let heart = UIButton()
+    let heartCount = UILabel(text: "12")
     let chat = UIButton()
+    let chatCount = UILabel(text: "4")
 //    let imageViewGrid = UIView(backgroundColor: .gray)
     
-    let photosGridController = PhotosGridController()
+    let photosGridController = ViewController()
 
     override func setupViews() {
         backgroundColor = .white
@@ -30,16 +33,25 @@ class PostCell : LBTAListCell<String> {
         nameLabel.font = UIFont.systemFont(ofSize: CGFloat(10), weight: .semibold)
         dataLabel.font = UIFont.systemFont(ofSize: CGFloat(9), weight: .regular)
         postTextLabel.font = UIFont.systemFont(ofSize: CGFloat(12), weight: .regular)
-        heart.setImage(UIImage(systemName: "heart"), for: .normal)
-        chat.setImage(UIImage(systemName: "message"), for: .normal)
-        
+        ellipsis.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        ellipsis.tintColor = .gray
+        heart.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        heart.contentMode = .scaleToFill
+        heart.imageView?.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
+        heart.tintColor = UIColor(red: 200/255.0, green: 129/255.0, blue: 255/255.0, alpha: 1)
+        heartCount.textColor = UIColor(red: 200/255.0, green: 129/255.0, blue: 255/255.0, alpha: 1)
+        chat.setImage(UIImage(systemName: "bubble.left"), for: .normal)
+        chat.imageView?.layer.transform = CATransform3DMakeScale(1.3, 1.3, 1.3)
+        chat.tintColor = UIColor(red: 157/255.0, green: 157/255.0, blue: 157/255.0, alpha: 1)
+        chatCount.textColor = UIColor(red: 157/255.0, green: 157/255.0, blue: 157/255.0, alpha: 1)
+
         
         stack(hstack(imageView.withWidth(46).withHeight(46),
-                     stack(nameLabel, dataLabel).padTop(6).padBottom(6),
+                     stack(nameLabel, dataLabel).padTop(6).padBottom(6),stack(ellipsis).padLeft(240),
                      spacing: 12).padTop(12),
                 postTextLabel,
                 photosGridController.view,
-                hstack(heart,chat),
+              hstack(heart, heartCount,chat,chatCount, spacing: 7).padRight(300),
               spacing: 11).padLeft(12).padRight(12).padBottom(9)
     }
 }
@@ -66,6 +78,16 @@ class StoryPhotoCell : LBTAListCell<String> {
     let sublabel = UILabel(text: "동아리를 설명...")
     let imageView = UIImageView(backgroundColor: .white)
     let button = UIButton()
+
+    lazy var containerView: UIView = {
+        let view = UIView()
+
+        return view
+    }()
+    
+    var mymodel : MyModel? {
+        didSet { bind() }
+    }
     
     override func setupViews() {
         
@@ -76,24 +98,35 @@ class StoryPhotoCell : LBTAListCell<String> {
         sublabel.textColor = .white
         sublabel.font = UIFont.systemFont(ofSize: CGFloat(11), weight: .regular)
         
-        backgroundColor = UIColor(red: 119/255.0, green: 213/255.0, blue: 243/255.0, alpha: 1)
-        
         stack(hstack(imageView.withHeight(54).withWidth(34),stack(uiLabel,sublabel).padTop(12).padBottom(12), spacing: 5)).padLeft(8).padTop(7).padBottom(7).padRight(10)
         
         self.layer.cornerRadius = 10
         
     }
+    
+    private func bind() {
+        containerView.backgroundColor = mymodel?.color
+    }
 }
 
 class StoriesController : LBTAListController<StoryPhotoCell, String>, UICollectionViewDelegateFlowLayout {
     
+    var dataSource : [MyModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupDataSource()
+        
         self.items = ["123", "123", "123"]
         
     }
+    private func setupDataSource() {
+        dataSource = MyModel.getMock()
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return .init(width: 128, height: 68)
     }
     
@@ -134,6 +167,14 @@ final class SOOMVC : LBTAListHeaderController<PostCell, String, StoryHeader>,UIC
         self.items = ["hello","world", "1", "2"]
         view.backgroundColor = .white
         self.navigationItem.rightBarButtonItem = alarmButton
+        self.navigationController?.navigationBar.backgroundColor = .white
+        let statusBar = UIView()
+
+        statusBar.frame = UIApplication.shared.statusBarFrame
+
+        statusBar.backgroundColor = .white
+
+        UIApplication.shared.keyWindow?.addSubview(statusBar)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
