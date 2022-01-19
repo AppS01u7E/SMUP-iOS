@@ -8,7 +8,7 @@
 
 import RxDataSources
 
-struct AlarmSection: SectionModelType{
+struct AlarmSection: AnimatableSectionModelType{
     let header: String
     var items: [Alarm]
 }
@@ -19,5 +19,8 @@ extension AlarmSection{
     init(original: AlarmSection, items: [Alarm]) {
         self = original
         self.items = items
+    }
+    var identity: String{
+        return UUID().uuidString
     }
 }

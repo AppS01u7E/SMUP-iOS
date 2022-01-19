@@ -9,6 +9,7 @@
 import UIKit
 import RxDataSources
 import RxSwift
+import RxGesture
 
 final class AlarmVC: baseVC<AlarmReactor>{
     // MARK: - Properties
@@ -23,6 +24,9 @@ final class AlarmVC: baseVC<AlarmReactor>{
     }
     
     // MARK: - UI
+    override func setUp() {
+        self.alarmTableView.rx.setDelegate(self).disposed(by: disposeBag)
+    }
     override func addView() {
         view.addSubViews(alarmTableView)
     }
@@ -74,10 +78,41 @@ final class AlarmVC: baseVC<AlarmReactor>{
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        self.alarmTableView.rx.itemDeleted
-            .subscribe(onNext: {
-                print($0)
-            })
+        alarmTableView.rx.itemDeleted
+            .asObservable()
+            .map(\.row)
+            .map(Reactor.Action.deleteOneAlarm)
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - Extension
+extension AlarmVC: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .normal, title: "삭제") { [weak self] _, _, completion in
+            guard let self = self else { return }
+            Observable.just(indexPath.row)
+                .map { Reactor.Action.deleteOneAlarm($0) }
+                .bind(to: self.reactor.action)
+                .disposed(by: self.disposeBag)
+            completion(true)
+        }
+        delete.image = UIImage(systemName: "xmark")?.tintColor(.white)
+        delete.backgroundColor = UIColor(red: 0.779, green: 0.779, blue: 0.779, alpha: 1)
+        
+        let check = UIContextualAction(style: .destructive, title: "체크") { [weak self]_ , _, completion in
+            guard let self = self else { return }
+            self.alarmTableView.selectRow(at: indexPath, animated: true, scrollPosition: .middle)
+            self.alarmTableView.delegate?.tableView?(self.alarmTableView, didSelectRowAt: indexPath)
+            completion(false)
+        }
+        check.image = UIImage(systemName: "graduationcap")?.tintColor(.white)
+        check.backgroundColor = UIColor(red: 0.878, green: 0.804, blue: 0.973, alpha: 1)
+        
+        let config = UISwipeActionsConfiguration(actions: [delete, check])
+        
+        return config
     }
 }

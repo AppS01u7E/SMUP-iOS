@@ -22,12 +22,12 @@ final class AlarmReactor: Reactor, Stepper{
     enum Action{
         case viewDidAppear
         case deleteButtonDidTap([Int])
-        case deleteOneAlarm(String)
+        case deleteOneAlarm(Int)
     }
     enum Mutation{
         case setAlarm([Alarm])
         case deleteAlarms([Int])
-        case deleteOneAlarm(String)
+        case deleteOneAlarm(Int)
     }
     struct State{
         var alarms: [Alarm] = []
@@ -63,7 +63,7 @@ extension AlarmReactor{
                 newState.alarms.remove(at: item)
             }
         case let .deleteOneAlarm(id):
-            newState.alarms.removeAll(where: { $0.id == id })
+            newState.alarms.remove(at: id)
         }
         return newState
     }
