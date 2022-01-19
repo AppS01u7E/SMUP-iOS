@@ -7,5 +7,7 @@
 //
 
 final class SearchVC: baseVC<SearchReactor>{
+    // MARK: - Properties
+    private let searchTextField = SearchTextField(placeholder: "검색하실 SOOM 이름을 입력해주세요.")
     
 }
