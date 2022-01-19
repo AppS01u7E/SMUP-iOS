@@ -29,6 +29,7 @@ target 'SMUP' do
   pod 'AnimatedCollectionViewLayout', '~> 1.1.0'
   pod 'Hero', '~> 1.6.1'
   pod 'SideMenu', '~> 6.5.0'
+  pod 'LBTATools'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
