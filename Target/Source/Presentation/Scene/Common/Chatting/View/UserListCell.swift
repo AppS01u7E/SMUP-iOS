@@ -13,7 +13,10 @@ import Kingfisher
 
 final class UserListCell: baseTableViewCell<dummyUser>{
     // MARK: - Properties
-    private let profileImageView = UIImageView()
+    private let profileImageView = UIImageView().then {
+        $0.layer.cornerRadius = 15
+        $0.clipsToBounds = true
+    }
     private let nameLabel = UILabel()
     private let banButton = UIButton().then {
         $0.titleLabel?.textAlignment = .right
