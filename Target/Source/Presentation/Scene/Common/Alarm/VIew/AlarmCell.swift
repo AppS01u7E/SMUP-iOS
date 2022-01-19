@@ -8,4 +8,6 @@
 
 import UIKit
 
-final class AlarmCell: baseTableViewCell<
+final class AlarmCell: baseTableViewCell<Alarm>{
+    
+}
