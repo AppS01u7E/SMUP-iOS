@@ -26,10 +26,16 @@ final class ChattingReactor: Reactor, Stepper{
     enum Mutation{
         case setContent(String)
         case setMessages([Message])
+        case setUsers([dummyUser])
+        case setDrawer([String])
+        case setId(String)
     }
     struct State{
         var content: String = ""
         var messages: [Message] = []
+        var users: [dummyUser] = []
+        var drawers: [String] = []
+        var id: String = ""
     }
     
     var initialState: State = State()
@@ -41,12 +47,18 @@ extension ChattingReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
         case let .`init`(id):
-            return .just(.setMessages(getDummy(id: id)))
+            return .concat([
+                .just(.setMessages(getChatDummy(id: id))),
+                .just(.setId(id))
+            ])
         case let .updateContent(con):
             return .just(.setContent(con))
         case .sideButtonDidTap:
             steps.accept(SMUPStep.chattingSettingIsRequired(reactor: self))
-            return .empty()
+            return .concat([
+                .just(.setUsers(getMemberDummy(id: currentState.id))),
+                .just(.setDrawer(getDrawerDummy(id: currentState.id)))
+            ])
         }
     }
 }
@@ -60,6 +72,12 @@ extension ChattingReactor{
             newState.content = con
         case let .setMessages(msgs):
             newState.messages = msgs
+        case let .setUsers(users):
+            newState.users = users
+        case let .setDrawer(urls):
+            newState.drawers = urls
+        case let .setId(id):
+            newState.id = id
         }
         return newState
     }
@@ -68,11 +86,22 @@ extension ChattingReactor{
 
 // MARK: - Method
 private extension ChattingReactor{
-    func getDummy(id: String) -> [Message]{
-        
+    func getChatDummy(id: String) -> [Message]{
         return [
             .init(content: "fdzz", sender: Sender(senderId: "unique", displayName: "baegteun")),
             .init(content: "fdzzzz")
+        ]
+    }
+    func getMemberDummy(id: String) -> [dummyUser]{
+        return [
+            .init(username: "baegteun", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=64&v=4"),
+            .init(username: "sunghun", profileImageUrl: "https://avatars.githubusercontent.com/u/81547954?v=4")
+        ]
+    }
+    func getDrawerDummy(id: String) -> [String]{
+        return [
+            "https://avatars.githubusercontent.com/u/81547954?v=4",
+            "https://avatars.githubusercontent.com/u/81547954?v=4"
         ]
     }
 }

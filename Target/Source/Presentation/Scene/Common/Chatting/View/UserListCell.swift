@@ -30,7 +30,7 @@ final class UserListCell: baseTableViewCell<dummyUser>{
     override func setLayout() {
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(bound.width*0.065)
+            $0.leading.equalToSuperview()
             $0.top.bottom.equalToSuperview().inset(4)
             $0.width.height.equalTo(30)
         }

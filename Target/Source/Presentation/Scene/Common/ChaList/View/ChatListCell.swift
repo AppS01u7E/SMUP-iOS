@@ -77,7 +77,7 @@ final class ChatListCell: baseTableViewCell<ChatList>{
         self.selectionStyle = .none
     }
     override func bind(_ model: ChatList) {
-        profileImageView.kf.setImage(with: URL(string: "https://yt3.ggpht.com/AfgoVr6e-UX_WNZQhTMrxklGO9TbYqRQLWqXcC-swruD_A4uoxV-3u9aoIXabh6FGptNQ4mmyww=s68-c-k-c0x00ffffff-no-rj") ?? .none,
+        profileImageView.kf.setImage(with: URL(string: model.profileImageUrl) ?? .none,
                                      placeholder: UIImage(),
                                      options: [.cacheMemoryOnly])
         nameLabel.text = model.name
