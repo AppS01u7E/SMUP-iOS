@@ -19,7 +19,7 @@ final class SearchReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
-        case viewDidAppear
+        case viewWillAppear
     }
     enum Mutation{
         case setSoom([Soom])
@@ -36,7 +36,7 @@ final class SearchReactor: Reactor, Stepper{
 extension SearchReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        case .viewDidAppear:
+        case .viewWillAppear:
             return .just(.setSoom(getSoomMock()))
         default:
             return .empty()

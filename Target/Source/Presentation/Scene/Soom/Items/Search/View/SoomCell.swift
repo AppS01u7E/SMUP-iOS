@@ -12,6 +12,11 @@ import SnapKit
 
 final class SoomCell: baseTableViewCell<Soom>{
     // MARK: - Properties
+    private let view = UIView().then {
+        $0.layer.cornerRadius = 17
+        $0.backgroundColor = .white
+    }
+    
     private let titleLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 13)
         $0.textColor = .black
@@ -24,15 +29,17 @@ final class SoomCell: baseTableViewCell<Soom>{
     private let postButton = UIButton().then {
         $0.setTitle("게시물 보기", for: .normal)
         $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 9)
         $0.backgroundColor = UIColor(red: 0.371, green: 0.371, blue: 0.371, alpha: 1)
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 5
         $0.clipsToBounds = true
     }
     private let chatButton = UIButton().then {
         $0.setTitle("채팅 하기", for: .normal)
         $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 9)
         $0.backgroundColor = UIColor(red: 0.371, green: 0.371, blue: 0.371, alpha: 1)
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 5
         $0.clipsToBounds = true
     }
     private let buttonStack = UIStackView().then {
@@ -44,25 +51,38 @@ final class SoomCell: baseTableViewCell<Soom>{
         $0.spacing = 8
         $0.alignment = .leading
     }
-    private let deco = SoomDeco()
+    
     
     // MARK: - UI
     override func addView() {
+        contentView.addSubViews(view)
         buttonStack.addArrangeSubviews(postButton, chatButton)
         mainStack.addArrangeSubviews(titleLabel, descriptionsLabel, buttonStack)
-        addSubViews(mainStack, deco)
+        view.addSubViews(mainStack)
     }
     override func setLayout() {
+        view.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(13)
+        }
+        postButton.snp.makeConstraints {
+            $0.width.equalTo(59)
+            $0.height.equalTo(11)
+        }
+        chatButton.snp.makeConstraints {
+            $0.width.equalTo(54)
+            $0.height.equalTo(11)
+        }
         mainStack.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(18)
         }
-        deco.snp.makeConstraints {
-            $0.centerY.equalTo(self.snp.top)
-            $0.centerX.equalTo(self.snp.trailing)
-        }
     }
     override func configureCell() {
-        self.layer.cornerRadius = 17
-        self.addShadow(offset: .init(width: 4, height: 4), color: .black, opacity: 1, radius: 20)
+        self.selectionStyle = .none
+        view.applyShadow(color: .lightGray, radius: 4, offSet: .init(width: 0, height: 2), opacity: 1)
+        
+    }
+    override func bind(_ model: Soom) {
+        titleLabel.text = model.name
+        descriptionsLabel.text = model.description
     }
 }

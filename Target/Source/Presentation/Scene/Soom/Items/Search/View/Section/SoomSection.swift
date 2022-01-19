@@ -10,7 +10,7 @@ import RxDataSources
 
 struct SoomSection: AnimatableSectionModelType{
     let header: String
-    let items: [Soom]
+    var items: [Soom]
 }
 
 extension SoomSection{

@@ -27,6 +27,7 @@ final class SearchVC: baseVC<SearchReactor>{
         $0.register(SoomCell.self, forCellReuseIdentifier: SoomCell.reusableID)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 300
+        $0.separatorStyle = .none
     }
     
     // MARK: - UI
@@ -56,7 +57,7 @@ final class SearchVC: baseVC<SearchReactor>{
         soomTableView.snp.makeConstraints {
             $0.top.equalTo(separatorView.snp.bottom).offset(bound.height*0.02236)
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.0966)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(bound.height*0.7589)
         }
     }
     override func configureVC() {
@@ -76,9 +77,26 @@ final class SearchVC: baseVC<SearchReactor>{
             .bind(to: categoryCollectionView.rx.items(dataSource: cateDS))
             .disposed(by: disposeBag)
         
+        self.rx.viewWillAppear
+            .map { _ in Reactor.Action.viewWillAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
     }
     override func bindState(reactor: SearchReactor) {
+        let sharedState = reactor.state.share(replay: 1)
+        
+        let soomDS = RxTableViewSectionedAnimatedDataSource<SoomSection>{ _, tv, ip, item in
+            guard let cell = tv.dequeueReusableCell(withIdentifier: SoomCell.reusableID, for: ip) as? SoomCell else { return .init() }
+            cell.model = item
+            return cell
+        }
+        
+        sharedState
+            .map(\.sooms)
+            .map { [SoomSection.init(header: "", items: $0)] }
+            .bind(to: soomTableView.rx.items(dataSource: soomDS))
+            .disposed(by: disposeBag)
         
     }
 }
