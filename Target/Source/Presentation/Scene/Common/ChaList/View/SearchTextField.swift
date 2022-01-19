@@ -16,9 +16,9 @@ final class SearchTextField: UITextField{
     }
     
     // MARK: - Init
-    init(placeholder: String){
+    init(placeholders: String){
         super.init(frame: .zero)
-        self.placeholder = placeholder
+        self.placeholder = placeholders
         addView()
         setLayout()
         configureTF()

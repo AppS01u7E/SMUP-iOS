@@ -15,7 +15,7 @@ import RxDataSources
 
 final class ChatListVC: baseVC<ChatListReactor>{
     // MARK: - Properties
-    private let searchTextField = SearchTextField(placeholder: "검색하실 채팅방을 입력해주세요.")
+    private let searchTextField = SearchTextField(placeholders: "검색하실 채팅방을 입력해주세요.")
     private let chatListTableView = UITableView().then {
         $0.register(ChatListCell.self, forCellReuseIdentifier: ChatListCell.reusableID)
         $0.rowHeight = 72

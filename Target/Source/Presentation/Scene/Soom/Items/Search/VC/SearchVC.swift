@@ -12,7 +12,7 @@ import RxSwift
 
 final class SearchVC: baseVC<SearchReactor>{
     // MARK: - Properties
-    private let searchTextField = SearchTextField(placeholder: "검색하실 SOOM 이름을 입력해주세요.")
+    private let searchTextField = SearchTextField(placeholders: "검색하실 SOOM 이름을 입력해주세요.")
     private let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal

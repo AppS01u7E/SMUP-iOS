@@ -61,10 +61,10 @@ final class ChattingSettingSideVC: baseVC<ChattingReactor>{
     
     private let bottomView = UIView()
     private let exitButton = UIButton().then {
-        $0.setImage(.init(systemName: "rectangle.portrait.and.arrow.right")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 10, height: 10)), for: .normal)
+        $0.setImage(.init(systemName: "rectangle.portrait.and.arrow.right")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 15, height: 15)), for: .normal)
     }
     private let alarmButton = UIButton().then {
-        $0.setImage(.init(systemName: "bell")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 10, height: 10)), for: .normal)
+        $0.setImage(.init(systemName: "bell")?.tintColor(.init(red: 0.588, green: 0.333, blue: 1, alpha: 1)).downSample(size: .init(width: 15, height: 15)), for: .normal)
     }
     private let bottomStack = UIStackView()
     
