@@ -8,6 +8,7 @@ PODS:
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
   - JJFloatingActionButton (2.5.0)
+  - LBTATools (1.0.12)
   - Kingfisher (7.1.2)
   - MessageKit (3.7.0):
     - InputBarAccessoryView (~> 5.4.0)
@@ -52,6 +53,7 @@ DEPENDENCIES:
   - FSCalendar (~> 2.8.2)
   - Hero (~> 1.6.1)
   - JJFloatingActionButton
+  - LBTATools
   - Kingfisher (~> 7.1.2)
   - MessageKit (~> 3.7.0)
   - Moya/RxSwift (~> 15.0.0)
@@ -78,6 +80,7 @@ SPEC REPOS:
     - Hero
     - InputBarAccessoryView
     - JJFloatingActionButton
+    - LBTATools
     - Kingfisher
     - MessageKit
     - Moya
@@ -105,6 +108,7 @@ SPEC CHECKSUMS:
   Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
@@ -124,6 +128,9 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
+PODFILE CHECKSUM: 8f0535d3822ff8fb95743c44f4a3432134bdfa17
+
 PODFILE CHECKSUM: 974c782df647789ac345fcdd90cb571f17b410e6
+
 
 COCOAPODS: 1.11.2
