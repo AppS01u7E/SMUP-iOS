@@ -74,8 +74,8 @@ private extension ChatListReactor{
     func getDummyChatList() -> [ChatList] {
         return [
             .init(id: "asdf", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "asdf", recentDate: Date(), recentMessage: "fdzz", alarmCount: 1),
-            .init(id: "FDSA", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "김성훈", recentDate: Date(), recentMessage: "일하셈", alarmCount: 0),
-            .init(id: "ASFW", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLQMv0jnwUZ6pwWFbRuJtu26dj9VyKz8JY2wbzi-3aI=s88-c-k-c0x00ffffff-no-rj", name: "ㅁㄴㅇㄹ", recentDate: (Date() - 1.days), recentMessage: "ㅇ?", alarmCount: 2)
+            .init(id: "FDSA", profileImageUrl: "https://tistory4.daumcdn.net/tistory/3812930/attach/1dd1ccd271264acdb363bd5a484b4b12", name: "김성훈", recentDate: Date(), recentMessage: "일하셈", alarmCount: 0),
+            .init(id: "ASFW", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=48&v=4", name: "ㅁㄴㅇㄹ", recentDate: (Date() - 1.days), recentMessage: "ㅇ?", alarmCount: 2)
         ]
     }
 }
