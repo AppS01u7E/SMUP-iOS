@@ -23,7 +23,7 @@ final class SearchVC: baseVC<SearchReactor>{
     private let separatorView = UIView().then {
         $0.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.941, alpha: 1)
     }
-    private let g = UITableView().then {
+    private let soomTableView = UITableView().then {
         $0.register(SoomCell.self, forCellReuseIdentifier: SoomCell.reusableID)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 300
