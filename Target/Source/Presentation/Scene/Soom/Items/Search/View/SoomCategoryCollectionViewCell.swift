@@ -30,6 +30,10 @@ final class SoomCategoryCollectionViewCell: baseCollectionViewCell<SoomCategory>
             $0.bottom.trailing.equalToSuperview().inset(7)
         }
     }
+    override func configureCell() {
+        self.layer.cornerRadius = 18
+        self.clipsToBounds = true
+    }
     override func bind(_ model: SoomCategory) {
         self.backgroundColor = model.color
         majorLabel.text = model.major.rawValue
@@ -44,6 +48,6 @@ final class SoomCategoryCollectionViewCell: baseCollectionViewCell<SoomCategory>
         case .game:
             image = UIImage(systemName: "gamecontroller") ?? .init()
         }
-        iconImageView.image = image.tintColor(.white).downSample(size: .init(width: 12, height: 12))
+        iconImageView.image = image.tintColor(.white).downSample(size: .init(width: 20, height: 20))
     }
 }

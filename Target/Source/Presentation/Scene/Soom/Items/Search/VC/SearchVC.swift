@@ -16,7 +16,7 @@ final class SearchVC: baseVC<SearchReactor>{
     private let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        
+        $0.showsHorizontalScrollIndicator = false
         $0.register(SoomCategoryCollectionViewCell.self, forCellWithReuseIdentifier: SoomCategoryCollectionViewCell.reusableID)
         $0.collectionViewLayout = layout
     }
@@ -31,13 +31,14 @@ final class SearchVC: baseVC<SearchReactor>{
     override func setLayout() {
         searchTextField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(bound.height*0.023)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.11)
             $0.height.equalTo(40)
         }
         categoryCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(bound.width*0.036)
             $0.top.equalTo(searchTextField.snp.bottom).offset(13)
+            $0.height.equalTo(bound.width*0.23)
         }
     }
     override func configureVC() {
