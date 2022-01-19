@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class g: baseTableViewCell<Soom>{
+final class SoomCell: baseTableViewCell<Soom>{
     // MARK: - Properties
     private let titleLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 13)
