@@ -72,7 +72,7 @@ class StoryHeader : UICollectionReusableView {
     }
 }
 
-class StoryPhotoCell : LBTAListCell<String> {
+class StoryPhotoCell : LBTAListCell<SoomHeaderModel> {
     
     let uiLabel = UILabel(text: "info")
     let sublabel = UILabel(text: "동아리를 설명...")
@@ -85,8 +85,13 @@ class StoryPhotoCell : LBTAListCell<String> {
         return view
     }()
     
-    var mymodel : MyModel? {
-        didSet { bind() }
+    override var item: SoomHeaderModel!{
+        didSet{
+            uiLabel.text = item.title
+            sublabel.text = item.description
+            self.backgroundColor = item.color
+            // TODO: 
+        }
     }
     
     override func setupViews() {
@@ -104,25 +109,23 @@ class StoryPhotoCell : LBTAListCell<String> {
         
     }
     
-    private func bind() {
-        containerView.backgroundColor = mymodel?.color
-    }
 }
 
-class StoriesController : LBTAListController<StoryPhotoCell, String>, UICollectionViewDelegateFlowLayout {
+class StoriesController : LBTAListController<StoryPhotoCell, SoomHeaderModel>, UICollectionViewDelegateFlowLayout {
     
-    var dataSource : [MyModel] = []
+    var dataSource : [SoomHeaderModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupDataSource()
         
-        self.items = ["123", "123", "123"]
+        self.items = SoomHeaderModel.getMock()
+        
         
     }
     private func setupDataSource() {
-        dataSource = MyModel.getMock()
+        dataSource = SoomHeaderModel.getMock()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
