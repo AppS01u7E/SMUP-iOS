@@ -12,7 +12,6 @@ import Differentiator
 struct SoomCategory: Equatable{
     let major: Major
     let color: UIColor
-    let icon: UIImage
 }
 extension SoomCategory: IdentifiableType{
     var identity: String{

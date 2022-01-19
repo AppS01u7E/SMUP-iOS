@@ -9,7 +9,7 @@
 import RxDataSources
 
 struct SoomCategorySection: AnimatableSectionModelType{
-    let header: Stirng
+    let header: String
     var items: [SoomCategory]
 }
 
@@ -18,5 +18,8 @@ extension SoomCategorySection{
     init(original: SoomCategorySection, items: [SoomCategory]) {
         self = original
         self.items = items
+    }
+    var identity: String{
+        return UUID().uuidString
     }
 }
