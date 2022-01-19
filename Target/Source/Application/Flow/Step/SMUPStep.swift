@@ -34,7 +34,8 @@ enum SMUPStep: Step{
     case mySchoolIsRequired
     
     // TimeMap
-    case timeMapIsRequired
+    case timeMapIsRequired(selectedDate: Date)
+    case timeMapDetailIsRequired(schedules: [TimeMap], current: Int)
     
     // Settings
     case settingIsRequired
@@ -51,7 +52,8 @@ enum SMUPStep: Step{
     // MARK: - Common Tab
     
     // Chatting
-    case chattingIsRequired
+    case chatListIsRequired
+    case chattingIsRequired(withID: String)
     
     // Alarm
     case AlarmIsRequired

@@ -28,6 +28,7 @@ target 'SMUP' do
   pod 'RxGesture', '~> 4.0.3'
   pod 'AnimatedCollectionViewLayout', '~> 1.1.0'
   pod 'Hero', '~> 1.6.1'
+  pod 'SideMenu', '~> 6.5.0'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'

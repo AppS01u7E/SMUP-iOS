@@ -8,6 +8,8 @@
 
 import RxFlow
 import RxRelay
+import Foundation
+import UIKit
 
 struct HomeStepper: Stepper{
     let steps: PublishRelay<Step> = .init()
@@ -37,6 +39,12 @@ final class HomeFlow: Flow{
         switch step{
         case .homeIsRequired:
             return coordinateToHome()
+        case let .timeMapIsRequired(date):
+            return navigateToTimeMap(selectedDate: date)
+        case let .timeMapDetailIsRequired(schedules, cur):
+            return presentToTimeMapDetail(schedules: schedules, current: cur)
+        case .dismiss:
+            return dismissVC()
         default:
             return .none
         }
@@ -48,5 +56,22 @@ private extension HomeFlow{
     func coordinateToHome() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func navigateToTimeMap(selectedDate: Date) -> FlowContributors{
+        let vc = TimeMapVC(selectedDate: selectedDate)
+        (self.rootVC.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(true)
+        self.rootVC.pushViewController(vc, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func presentToTimeMapDetail(schedules: [TimeMap], current: Int) -> FlowContributors{
+        let vc = TimeMapDetailVC(schedules: schedules, current: current)
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        self.rootVC.present(vc, animated: true, completion: nil)
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+    }
+    func dismissVC() -> FlowContributors{
+        self.rootVC.visibleViewController?.dismiss(animated: true, completion: nil)
+        return .none
     }
 }

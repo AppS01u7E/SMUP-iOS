@@ -1,0 +1,78 @@
+//
+//  TimeMapDetailReactor.swift
+//  SMUP
+//
+//  Created by 최형우 on 2022/01/17.
+//  Copyright © 2022 baegteun. All rights reserved.
+//
+
+import Foundation
+import ReactorKit
+import RxFlow
+import RxCocoa
+
+final class TimeMapDetailReactor: Reactor, Stepper{
+    // MARK: - Properties
+    var steps: PublishRelay<Step> = .init()
+    
+    private let disposeBag = DisposeBag()
+    
+    // MARK: - Reactor
+    enum Action{
+        case `init`([TimeMap])
+        case transparentDidTap
+        case indexDidChange(Int)
+        case prevDidTap
+        case nextDidTap
+    }
+    enum Mutation{
+        case setSchedule([TimeMap])
+        case setIndex(Int)
+    }
+    struct State{
+        var schedulse: [TimeMap] = []
+        var currentIndex = 0
+    }
+    
+    var initialState: State = State()
+    
+}
+
+// MARK: - Mutate
+extension TimeMapDetailReactor{
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action{
+        case let .`init`(items):
+            return .just(.setSchedule(items))
+        case .transparentDidTap:
+            steps.accept(SMUPStep.dismiss)
+            return .empty()
+        case let .indexDidChange(idx):
+            return .just(.setIndex(idx))
+        case .prevDidTap:
+            return .just(.setIndex(currentState.currentIndex-1))
+        case .nextDidTap:
+            return .just(.setIndex(currentState.currentIndex+1))
+        }
+    }
+}
+
+// MARK: - Reduce
+extension TimeMapDetailReactor{
+    func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
+        switch mutation {
+        case let .setSchedule(items):
+            newState.schedulse = items
+        case let .setIndex(idx):
+            newState.currentIndex = idx
+        }
+        return newState
+    }
+}
+
+
+// MARK: - Method
+private extension TimeMapDetailReactor{
+    
+}

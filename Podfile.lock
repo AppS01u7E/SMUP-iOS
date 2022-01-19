@@ -37,6 +37,7 @@ PODS:
   - RxViewController (2.0.0):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
+  - SideMenu (6.5.0)
   - SnapKit (5.0.1)
   - SwiftDate (6.3.1)
   - Swinject (2.7.1)
@@ -59,6 +60,7 @@ DEPENDENCIES:
   - RxGesture (~> 4.0.3)
   - RxSwift (~> 6.2.0)
   - RxViewController (~> 2.0.0)
+  - SideMenu (~> 6.5.0)
   - SnapKit (~> 5.0.1)
   - SwiftDate (~> 6.3.1)
   - Swinject (~> 2.7)
@@ -84,6 +86,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxViewController
+    - SideMenu
     - SnapKit
     - SwiftDate
     - Swinject
@@ -109,6 +112,7 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
@@ -116,6 +120,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 19973ded68c20dc8ac5f5de89d83da50b85392a0
+PODFILE CHECKSUM: 644f82d6e76563d3d26964da259de97223f78a46
 
 COCOAPODS: 1.11.2

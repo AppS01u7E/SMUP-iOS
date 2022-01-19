@@ -72,6 +72,10 @@ final class MainTabbarVC: UITabBarController, Stepper {
             
         }
     }
+    
+    func setFlaotyButtonHidden(_ hide: Bool){
+        self.floaty.isHidden = hide
+    }
 }
 
 // MARK: - UI
