@@ -14,14 +14,19 @@ import Kingfisher
 final class SettingProfileView: UIView{
     // MARK: - Properties
     private let bound = UIScreen.main.bounds
-    private let profileImageView = UIImageView()
+    private let profileImageView = UIImageView().then {
+        $0.layer.cornerRadius = 44
+        $0.clipsToBounds = true
+    }
     private let usernameLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 18)
         $0.textColor = .white
+        $0.textAlignment = .center
     }
     private let schoolLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 16)
         $0.textColor = .white
+        $0.textAlignment = .center
     }
     
     private let stack = UIStackView().then {
@@ -65,6 +70,9 @@ private extension SettingProfileView{
         addSubViews(stack)
     }
     func setLayout(){
+        profileImageView.snp.makeConstraints {
+            $0.width.height.equalTo(88)
+        }
         stack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(bound.height*0.039)
