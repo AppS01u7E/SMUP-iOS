@@ -18,7 +18,7 @@ struct Channel{
 struct dummyUser: ModelType{
     let username: String
     let profileImageUrl: String
-    
+    let school: String
 }
 
 extension dummyUser: IdentifiableType{

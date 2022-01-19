@@ -94,8 +94,8 @@ private extension ChattingReactor{
     }
     func getMemberDummy(id: String) -> [dummyUser]{
         return [
-            .init(username: "baegteun", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=64&v=4"),
-            .init(username: "sunghun", profileImageUrl: "https://avatars.githubusercontent.com/u/81547954?v=4")
+            .init(username: "baegteun", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=64&v=4", school: "대덕소프트웨어마이스터고드학교"),
+            .init(username: "sunghun", profileImageUrl: "https://avatars.githubusercontent.com/u/81547954?v=4", school: "광주소프트웨어마이스터고등학교")
         ]
     }
     func getDrawerDummy(id: String) -> [String]{
