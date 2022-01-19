@@ -73,6 +73,7 @@ private extension ChattingFlow{
         vc.enableSwipeToDismissGesture = true
         vc.menuWidth = UIScreen.main.bounds.width*0.6859
         vc.presentationStyle = .menuSlideIn
+        vc.presentationStyle.presentingEndAlpha = 0.8
         SideMenuManager.default.rightMenuNavigationController = vc
         SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: false)
         let presentingVC = SideMenuManager.default.rightMenuNavigationController ?? .init(nibName: nil, bundle: nil)

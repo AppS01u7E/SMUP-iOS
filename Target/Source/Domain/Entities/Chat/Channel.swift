@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxDataSources
 
 struct Channel{
     let name: String
@@ -14,7 +15,14 @@ struct Channel{
     let resources: [UIImage]
 }
 
-struct dummyUser{
+struct dummyUser: ModelType{
     let username: String
     let profileImageUrl: String
+    
+}
+
+extension dummyUser: IdentifiableType{
+    var identity: String{
+        return UUID().uuidString
+    }
 }
