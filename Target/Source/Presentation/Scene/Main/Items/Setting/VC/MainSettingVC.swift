@@ -10,5 +10,16 @@ import UIKit
 
 final class MainSettingVC: baseVC<MainSettingReactor>{
     // MARK: - Properties
-    private let profileView = UIView()
+    private let profileView = SettingProfileView()
+    
+    // MARK: - UI
+    override func addView() {
+        
+    }
+    override func setLayout() {
+        
+    }
+    override func configureVC() {
+        
+    }
 }
