@@ -22,6 +22,15 @@ class PostCell : LBTAListCell<String> {
     let heartCount = UILabel(text: "12")
     let chat = UIButton()
     let chatCount = UILabel(text: "4")
+    let image = UIImageView(backgroundColor: .lightGray)
+    let nametext = UILabel(text: "Name")
+    let text = UILabel(text: "안녕하세요")
+    let time = UILabel(text: "50분")
+    let like = UILabel(text: "좋아요")
+    let comment = UILabel(text: "답글 달기")
+    let field = UITextField(frame: CGRect(x: 0, y: 0, width: 300, height: 35))
+    let post = UIButton()
+    let image2 = UIImageView(backgroundColor: .lightGray)
 //    let imageViewGrid = UIView(backgroundColor: .gray)
     
     let photosGridController = PhotosGridController()
@@ -44,6 +53,17 @@ class PostCell : LBTAListCell<String> {
         chat.imageView?.layer.transform = CATransform3DMakeScale(1.3, 1.3, 1.3)
         chat.tintColor = UIColor(red: 157/255.0, green: 157/255.0, blue: 157/255.0, alpha: 1)
         chatCount.textColor = UIColor(red: 157/255.0, green: 157/255.0, blue: 157/255.0, alpha: 1)
+        image.layer.cornerRadius = 17.5
+        nametext.font = UIFont.systemFont(ofSize: CGFloat(10), weight: .semibold)
+        text.font = UIFont.systemFont(ofSize: CGFloat(10), weight: .regular)
+        time.font = UIFont.systemFont(ofSize: CGFloat(9), weight: .regular)
+        like.font = UIFont.systemFont(ofSize: CGFloat(9), weight: .regular)
+        comment.font = UIFont.systemFont(ofSize: CGFloat(9), weight: .regular)
+        post.setImage(UIImage(systemName: "paperplane"), for: .normal)
+        post.tintColor = .lightGray
+        field.borderStyle = .roundedRect
+        field.attributedPlaceholder = NSAttributedString(string: "댓글을 입력해주세요", attributes: [.font: UIFont.systemFont(ofSize: 12, weight: .regular)])
+        image2.layer.cornerRadius = 17.5
 
         
         stack(hstack(imageView.withWidth(46).withHeight(46),
@@ -51,8 +71,8 @@ class PostCell : LBTAListCell<String> {
                      spacing: 12).padTop(12),
                 postTextLabel,
                 photosGridController.view,
-              hstack(heart, heartCount,chat,chatCount, spacing: 7).padRight(300),
-              spacing: 11).padLeft(12).padRight(12).padBottom(9)
+              hstack(heart, heartCount,chat,chatCount, spacing: 7).padRight(300), hstack(image.withWidth(35).withHeight(35), stack(nametext, text).padTop(5).padBottom(7), hstack(time,like,comment, spacing: 10).padTop(25).padRight(240).padBottom(-15).padLeft(-60),spacing: 18).padTop(10).padLeft(-3).padBottom(19), hstack(image2.withWidth(35).withHeight(35),field,post,spacing: 10).padLeft(-3),
+              spacing: 11).padLeft(12).padRight(12).padBottom(30)
     }
 }
 
@@ -90,7 +110,6 @@ class StoryPhotoCell : LBTAListCell<SoomHeaderModel> {
             uiLabel.text = item.title
             sublabel.text = item.description
             self.backgroundColor = item.color
-            // TODO: 
         }
     }
     
@@ -183,7 +202,7 @@ final class SOOMVC : LBTAListHeaderController<PostCell, String, StoryHeader>,UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionView.backgroundColor = .init(white: 0.9, alpha: 1)
         
-        return .init(width: view.frame.width, height: 350)
+        return .init(width: view.frame.width, height: 480)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
