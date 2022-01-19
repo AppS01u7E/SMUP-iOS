@@ -56,5 +56,5 @@ enum SMUPStep: Step{
     case chattingIsRequired(withID: String)
     
     // Alarm
-    case AlarmIsRequired
+    case alarmIsRequired
 }
