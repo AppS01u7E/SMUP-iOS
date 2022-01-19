@@ -78,6 +78,9 @@ final class SearchVC: baseVC<SearchReactor>{
         
         
     }
+    override func bindState(reactor: SearchReactor) {
+        
+    }
 }
 
 // MARK: - Extension
