@@ -41,7 +41,7 @@ extension ChattingReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
         case let .`init`(id):
-            return .empty()
+            return .just(.setMessages(getDummy(id: id)))
         case let .updateContent(con):
             return .just(.setContent(con))
         case .sideButtonDidTap:
@@ -68,7 +68,11 @@ extension ChattingReactor{
 
 // MARK: - Method
 private extension ChattingReactor{
-    func getDummy(id: String){
+    func getDummy(id: String) -> [Message]{
         
+        return [
+            .init(content: "fdzz", sender: Sender(senderId: "unique", displayName: "baegteun")),
+            .init(content: "fdzzzz")
+        ]
     }
 }

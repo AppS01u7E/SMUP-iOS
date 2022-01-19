@@ -7,10 +7,14 @@
 //
 
 import SideMenu
+import UIKit
 
 final class ChattingSettingSideVC: baseVC<ChattingReactor>{
     // MARK: - Properties
+    private let titleLabel = UILabel()
     
+    
+    // MARK: - UI
     override func configureVC() {
         self.view.backgroundColor = .systemBlue
     }

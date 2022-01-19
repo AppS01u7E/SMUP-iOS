@@ -126,8 +126,8 @@ extension ChattingVC: MessagesLayoutDelegate{
 extension ChattingVC: MessagesDisplayDelegate{
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        let cell = messagesCollectionView.dequeueReusableCell(MessageCollectionViewCell.self, for: indexPath)
-        cell.applyGradient(colors: [
+        let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath) as? TextMessageCell
+        cell?.applyGradient(colors: [
             UIColor(red: 0.529, green: 0.239, blue: 1, alpha: 1).cgColor,
             UIColor(red: 0.749, green: 0.592, blue: 1, alpha: 1).cgColor
         ], locations: [
@@ -137,8 +137,10 @@ extension ChattingVC: MessagesDisplayDelegate{
         return .init(red: 0.956, green: 0.956, blue: 0.956, alpha: 1)
     }
     
+    
+    
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
+        return .black
     }
     
     // 말풍선의 꼬리 모양 방향
@@ -169,7 +171,16 @@ extension ChattingVC: ReactorKit.View{
             .disposed(by: disposeBag)
     }
     func bindState(reactor: ChattingReactor){
+        let sharedState = reactor.state.share(replay: 1)
         
+        sharedState
+            .map(\.messages)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.messagesCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+            
     }
     func bindActions(reactor: ChattingReactor){
         

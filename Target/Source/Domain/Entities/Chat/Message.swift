@@ -16,7 +16,7 @@ struct Message: MessageType{
     }
     let content: String
     let sentDate: Date
-    let sender: SenderType
+    var sender: SenderType
     var kind: MessageKind{
         if let image = image{
             let media = ImageMediaItem(image: image, url: downloadURL)
@@ -29,8 +29,8 @@ struct Message: MessageType{
     var image: UIImage?
     var downloadURL: URL?
     
-    init(content: String){
-        sender = Sender(senderId: "TODO", displayName: "TODOOO")
+    init(content: String, sender: SenderType = Sender(senderId: "TODO", displayName: "TODOOO")){
+        self.sender = sender
         self.content = content
         sentDate = Date()
         id = nil
