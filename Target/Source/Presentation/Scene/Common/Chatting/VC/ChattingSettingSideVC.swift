@@ -28,7 +28,7 @@ final class ChattingSettingSideVC: baseVC<ChattingReactor>{
         $0.textColor = .black
     }
     
-    private let userListTableView = UserListTableView().then {
+    private let userListTableView = UITableView().then {
         $0.register(UserListCell.self, forCellReuseIdentifier: UserListCell.reusableID)
         $0.separatorStyle = .none
         $0.rowHeight = 38
@@ -128,7 +128,7 @@ final class ChattingSettingSideVC: baseVC<ChattingReactor>{
         userListTableView.snp.makeConstraints {
             $0.top.equalTo(memberLabel.snp.bottom).offset(bound.height*0.0111)
             $0.leading.trailing.equalTo(secondSeparatorLine)
-            $0.bottom.lessThanOrEqualToSuperview()
+            $0.height.lessThanOrEqualToSuperview()
         }
         
     }
