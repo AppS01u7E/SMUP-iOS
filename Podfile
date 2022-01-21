@@ -31,6 +31,7 @@ target 'SMUP' do
   pod 'SideMenu', '~> 6.5.0'
   pod 'LBTATools'
   pod 'Kingfisher', '~> 7.1.2'
+  pod 'KDCircularProgress', '~> 1.5.4'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'

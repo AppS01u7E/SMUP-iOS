@@ -8,6 +8,7 @@ PODS:
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
   - JJFloatingActionButton (2.5.0)
+  - KDCircularProgress (1.5.4)
   - Kingfisher (7.1.2)
   - LBTATools (1.0.12)
   - MessageKit (3.7.0):
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - FSCalendar (~> 2.8.2)
   - Hero (~> 1.6.1)
   - JJFloatingActionButton
+  - KDCircularProgress (~> 1.5.4)
   - Kingfisher (~> 7.1.2)
   - LBTATools
   - MessageKit (~> 3.7.0)
@@ -80,6 +82,7 @@ SPEC REPOS:
     - Hero
     - InputBarAccessoryView
     - JJFloatingActionButton
+    - KDCircularProgress
     - Kingfisher
     - LBTATools
     - MessageKit
@@ -108,6 +111,7 @@ SPEC CHECKSUMS:
   Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
   MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
@@ -128,6 +132,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 5b26e95110d55ed5d0d98054d169abb7f22a942d
+PODFILE CHECKSUM: 87a99f3d3dfa87f390e17c504d9f5763332a0972
 
 COCOAPODS: 1.11.2
