@@ -27,6 +27,20 @@ final class ClockView: UIView{
     }
     private let currentDateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 18)
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
+    private let separatorView = UIView().then {
+        $0.backgroundColor = UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1)
+    }
+    private let perioTimeLabel = UILabel().then {
+        $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 18)
+        $0.text = "start~end"
+    }
+    private let subjectLabel = UILabel().then {
+        $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 18)
+        $0.textColor = UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1)
+        $0.text = "과목"
     }
     
     private var task: Task!
@@ -35,7 +49,7 @@ final class ClockView: UIView{
         rootContainer.frame = self.bounds
         hourImageView.frame = rootContainer.bounds
         rootContainer.pin.all()
-        rootContainer.flex.layout(mode: .adjustHeight)
+        rootContainer.flex.layout()
     }
     
     // MARK: - Init
@@ -55,8 +69,10 @@ final class ClockView: UIView{
     public func start(){
         let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
         self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
+        self.currentDateLabel.text = Date().convertSchedule()
         task = Plan.after(0.second, repeating: 1.minutes).do {
             let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
+            self.currentDateLabel.text = Date().convertSchedule()
             self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
         }
     }
@@ -70,7 +86,12 @@ private extension ClockView{
         rootContainer.flex.define { flex in
             flex.addItem(hourImageView).width(bound.width*0.797).height(bound.width*0.797).define { flex in
                 flex.addItem(circularView).width(bound.width*0.797).height(bound.width*0.797).define { flex in
-                    flex.addItem(currentDateLabel).top(33%)
+                    flex.addItem().top(33%).height(33%).horizontally(0).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
+                        flex.addItem(currentDateLabel).horizontally(0)
+                        flex.addItem(separatorView).width(55%).height(3)
+                        flex.addItem(perioTimeLabel).horizontally(0)
+                        flex.addItem(subjectLabel).horizontally(0)
+                    }
                 }
             }
         }

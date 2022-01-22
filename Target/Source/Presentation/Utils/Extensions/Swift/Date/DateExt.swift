@@ -53,9 +53,8 @@ extension Date{
             str.append("지금은 5교시 수업중")
         }
         else{
-            return ""
+            str.append("지금은 n교시 수업중")
         }
-        
         return str
     }
     

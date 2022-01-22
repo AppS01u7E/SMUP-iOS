@@ -24,13 +24,13 @@ final class HomeVC: baseVC<HomeReactor>{
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
         $0.textColor = .systemGray4
         $0.textAlignment = .center
-        $0.text = "FDSA"
+        $0.text = "\(Date().convertKorea().toString(.custom("yyyy.MM.dd")))"
     }
     private let todayLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)
         $0.textColor = .black
         $0.textAlignment = .center
-        $0.text = "asdf"
+        $0.text = "Today"
     }
     
     private let segControl = UISegmentedControl(items: ["일정표","급식표"]).then {
