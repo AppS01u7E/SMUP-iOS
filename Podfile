@@ -34,6 +34,7 @@ target 'SMUP' do
   pod 'KDCircularProgress', '~> 1.5.4'
   pod 'PinLayout', '~> 1.10.0'
   pod 'FlexLayout', '~> 1.3.23'
+  pod 'Schedule', '~> 2.0'
 
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
