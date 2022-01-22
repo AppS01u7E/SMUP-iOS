@@ -20,9 +20,11 @@ final class HomeReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
-        case viewDidAppear
-        case plusDay
-        case minusDay
+        case viewDidLoad
+        case afterDayButtonDidTap
+        case beforeDayButtonDidTap
+        case scheduleButtonDidTap
+        case alarmButtonDidTap
     }
     enum Mutation{
         case setDate(Date)
@@ -41,15 +43,21 @@ final class HomeReactor: Reactor, Stepper{
 extension HomeReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        case .viewDidAppear:
+        case .viewDidLoad:
             // TODO: 대충 급식 가져오는 API 불러오는 단계 라이프사이클이라는 뜻
             return .just(.setMeal(.init(breakfast: ["아침","아침ㅁ"],
                                         lunch: ["점심", "점심ㅁ"],
                                         dinner: ["저녁", "저녁ㅁ"])))
-        case .plusDay:
+        case .afterDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate + 1.days))
-        case .minusDay:
+        case .beforeDayButtonDidTap:
             return .just(.setDate(currentState.selectedDate - 1.days))
+        case .scheduleButtonDidTap:
+            steps.accept(SMUPStep.timeMapIsRequired(selectedDate: currentState.selectedDate))
+            return .empty()
+        case .alarmButtonDidTap:
+            steps.accept(SMUPStep.alarmIsRequired)
+            return .empty()
         }
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import ReactorKit
 
 class baseTableViewCell<T>: UITableViewCell{
     let bound = UIScreen.main.bounds
@@ -30,4 +31,37 @@ class baseTableViewCell<T>: UITableViewCell{
         didSet { if let model = model { bind(model) } }
     }
     func bind(_ model: T){}
+}
+
+class BaseTableViewCell<T: Reactor>: UITableViewCell{
+    let bound = UIScreen.main.bounds
+    var disposeBag = DisposeBag()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addView()
+        setLayout()
+        configureCell()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addView(){}
+    func setLayout(){}
+    func configureCell(){}
+    
+    func bindView(reactor: T){}
+    func bindAction(reactor: T){}
+    func bindState(reactor: T){}
+}
+
+extension BaseTableViewCell: View{
+    func bind(reactor: T) {
+        bindView(reactor: reactor)
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
 }

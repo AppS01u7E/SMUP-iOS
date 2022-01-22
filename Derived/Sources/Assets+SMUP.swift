@@ -22,6 +22,7 @@ public enum SMUPAsset {
   public static let smupMain1 = SMUPColors(name: "SMUP_MAIN1")
   public static let smupMain2 = SMUPColors(name: "SMUP_MAIN2")
   public static let smupMain3 = SMUPColors(name: "SMUP_MAIN3")
+  public static let smupClock = SMUPImages(name: "SMUP_Clock")
   public static let smupSplash = SMUPImages(name: "SMUP_Splash")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

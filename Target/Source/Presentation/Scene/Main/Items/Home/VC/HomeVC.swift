@@ -76,25 +76,53 @@ final class HomeVC: baseVC<HomeReactor>{
     override func configureNavigation() {
         self.navigationItem.setTitle(title: "SMUP")
         self.navigationItem.rightBarButtonItem = alarmButton
+
+    }
+    
+    // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(false)
     }
     
     
     // MARK: - Reactor
     override func bindAction(reactor: HomeReactor) {
-        self.rx.viewDidAppear
-            .map { _ in Reactor.Action.viewDidAppear }
+        self.rx.viewDidLoad
+            .map { _ in Reactor.Action.viewDidLoad }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
     override func bindView(reactor: HomeReactor) {
         beforeDayButton.rx.tap
-            .map { _ in Reactor.Action.minusDay }
+            .map { _ in Reactor.Action.beforeDayButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         afterDayButton.rx.tap
-            .map { _ in Reactor.Action.plusDay }
+            .map { _ in Reactor.Action.afterDayButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        checkScheduleButton.rx.tap
+            .do(onNext: { [weak self] _ in
+                let back: UIBarButtonItem = .init(title: "시간표 및 일정", style: .plain, target: self, action: nil)
+                back.tintColor = .black
+                self?.navigationItem.backBarButtonItem = back
+            })
+            .map { _ in Reactor.Action.scheduleButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        alarmButton.rx.tap
+            .do(onNext: { [weak self] _ in
+                let back: UIBarButtonItem = .init(title: "", style: .plain, target: self, action: nil)
+                back.tintColor = .black
+                self?.navigationItem.backBarButtonItem = back
+            })
+            .map { _ in Reactor.Action.alarmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }

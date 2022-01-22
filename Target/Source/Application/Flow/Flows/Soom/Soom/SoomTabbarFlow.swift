@@ -56,7 +56,7 @@ private extension SoomTabbarFlow{
     func coordinateToSoomTabbar() -> FlowContributors{
         Flows.use(
             [
-                searchFlow, chatFlow, soomFlow, settingFlow
+                soomFlow, searchFlow, chatFlow, settingFlow
             ], when: .created
         ) { [unowned self] (roots) in
             

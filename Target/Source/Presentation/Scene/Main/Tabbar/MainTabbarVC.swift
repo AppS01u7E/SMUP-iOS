@@ -60,17 +60,18 @@ final class MainTabbarVC: UITabBarController, Stepper {
                 item.element.action = { _ in
                     self.steps.accept(SMUPStep.soomTabbarIsRequired)
                 }
-                item.element.buttonColor = SMUPAsset.smupFloaty.color
-                floaty.addItem(item.element)
             }else{
                 item.element.action = { _ in
                     self.didSelectFloatyItem(item.offset)
                 }
-                item.element.buttonColor = SMUPAsset.smupFloaty.color
-                floaty.addItem(item.element)
             }
-            
+            item.element.buttonColor = SMUPAsset.smupFloaty.color
+            floaty.addItem(item.element)
         }
+    }
+    
+    func setFlaotyButtonHidden(_ hide: Bool){
+        self.floaty.isHidden = hide
     }
 }
 

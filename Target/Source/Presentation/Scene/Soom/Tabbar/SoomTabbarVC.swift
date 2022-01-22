@@ -60,6 +60,9 @@ final class SoomTabbarVC: UITabBarController, Stepper {
             floaty.addItem(item.element)
         }
     }
+    func setFlaotyButtonHidden(_ hide: Bool){
+        self.floaty.isHidden = hide
+    }
 }
 
 // MARK: - UI
