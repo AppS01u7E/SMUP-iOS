@@ -3,7 +3,6 @@ PODS:
   - AnimatedCollectionViewLayout (1.1.0)
   - Differentiator (5.0.0)
   - FlexLayout (1.3.23)
-  - FSCalendar (2.8.2)
   - Hero (1.6.1)
   - InputBarAccessoryView (5.4.0):
     - InputBarAccessoryView/Core (= 5.4.0)
@@ -42,6 +41,7 @@ PODS:
   - RxViewController (2.0.0):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
+  - Schedule (2.1.0)
   - SideMenu (6.5.0)
   - SnapKit (5.0.1)
   - SwiftDate (6.3.1)
@@ -54,7 +54,6 @@ PODS:
 DEPENDENCIES:
   - AnimatedCollectionViewLayout (~> 1.1.0)
   - FlexLayout (~> 1.3.23)
-  - FSCalendar (~> 2.8.2)
   - Hero (~> 1.6.1)
   - JJFloatingActionButton
   - KDCircularProgress (~> 1.5.4)
@@ -70,6 +69,7 @@ DEPENDENCIES:
   - RxGesture (~> 4.0.3)
   - RxSwift (~> 6.2.0)
   - RxViewController (~> 2.0.0)
+  - Schedule (~> 2.0)
   - SideMenu (~> 6.5.0)
   - SnapKit (~> 5.0.1)
   - SwiftDate (~> 6.3.1)
@@ -83,7 +83,6 @@ SPEC REPOS:
     - AnimatedCollectionViewLayout
     - Differentiator
     - FlexLayout
-    - FSCalendar
     - Hero
     - InputBarAccessoryView
     - JJFloatingActionButton
@@ -101,6 +100,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxViewController
+    - Schedule
     - SideMenu
     - SnapKit
     - SwiftDate
@@ -114,7 +114,6 @@ SPEC CHECKSUMS:
   AnimatedCollectionViewLayout: 0c1a38c4be115c525c887be183fc91ef65737c5d
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   FlexLayout: 5b44c0538e7eaa2110e3160dfdfb74611676fb91
-  FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
@@ -132,6 +131,7 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
+  Schedule: 00e6d7bbdbdb000fd1f51a7d10e9f88a8c451fda
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
@@ -140,6 +140,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 827fbf056d7ab85afb42e59356c3375cb5f6b90e
+PODFILE CHECKSUM: c88d73583280a90845fa36beaabceb5e6673ceff
 
 COCOAPODS: 1.11.2

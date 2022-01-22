@@ -24,7 +24,6 @@ target 'SMUP' do
   pod 'Swinject', '~> 2.7'
   pod 'SwinjectAutoregistration', '~> 2.7'
   pod 'SwiftDate', '~> 6.3.1'
-  pod 'FSCalendar', '~> 2.8.2'
   pod 'RxGesture', '~> 4.0.3'
   pod 'AnimatedCollectionViewLayout', '~> 1.1.0'
   pod 'Hero', '~> 1.6.1'
