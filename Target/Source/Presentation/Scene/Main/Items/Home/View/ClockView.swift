@@ -11,6 +11,7 @@ import FlexLayout
 import PinLayout
 import KDCircularProgress
 import Then
+import Schedule
 
 final class ClockView: UIView{
     // MARK: - Properties
@@ -23,8 +24,12 @@ final class ClockView: UIView{
         $0.progressThickness = 0.4
         $0.startAngle = -90
         $0.trackColor = .systemGray5
-        $0.animate(toAngle: 60, duration: 0.5, completion: nil)
     }
+    private let currentDateLabel = UILabel().then {
+        $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 18)
+    }
+    
+    private var task: Task!
     
     override func layoutSubviews() {
         rootContainer.frame = self.bounds
@@ -47,8 +52,16 @@ final class ClockView: UIView{
     }
     
     // MARK: - OpenMethod
-    public func execute(_ time: Double){
-        
+    public func start(){
+        let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
+        self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
+        task = Plan.after(0.second, repeating: 1.minutes).do {
+            let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
+            self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
+        }
+    }
+    public func end(){
+        task.removeAllActions()
     }
 }
 
@@ -56,7 +69,9 @@ private extension ClockView{
     func setLayout(){
         rootContainer.flex.define { flex in
             flex.addItem(hourImageView).width(bound.width*0.797).height(bound.width*0.797).define { flex in
-                flex.addItem(circularView).width(bound.width*0.797).height(bound.width*0.797)
+                flex.addItem(circularView).width(bound.width*0.797).height(bound.width*0.797).define { flex in
+                    flex.addItem(currentDateLabel).top(33%)
+                }
             }
         }
     }

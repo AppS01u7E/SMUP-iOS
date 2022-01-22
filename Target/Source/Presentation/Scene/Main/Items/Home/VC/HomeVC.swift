@@ -74,6 +74,7 @@ final class HomeVC: baseVC<HomeReactor>{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(false)
+        clockView.start()
     }
     
     
