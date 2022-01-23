@@ -14,9 +14,9 @@ struct TimeMapDetailSection{
 }
 
 extension TimeMapDetailSection: AnimatableSectionModelType{
-    typealias Item = TimeMap
+    typealias Item = Schedule
     
-    init(original: TimeMapDetailSection, items: [TimeMap]) {
+    init(original: TimeMapDetailSection, items: [Schedule]) {
         self = original
         self.items = items
     }

@@ -13,7 +13,7 @@ import SnapKit
 protocol TimeMapDetailCellDelegate: AnyObject{
     func goDirectButtonDidTap()
 }
-final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
+final class TimeMapDetailCell: baseCollectionViewCell<Schedule>{
     // MARK: - Properties
     private let dateLabel = UILabel().then {
         $0.textAlignment = .center
@@ -93,7 +93,7 @@ final class TimeMapDetailCell: baseCollectionViewCell<TimeMap>{
             })
             .disposed(by: disposeBag)
     }
-    override func bind(_ model: TimeMap) {
+    override func bind(_ model: Schedule) {
         dateLabel.text = model.date.toString(.custom("yyyy년 MM월 dd일"))
         perioLabel.text = "\(model.perio.convertPerio()) \(model.name)"
         let conStr = NSMutableAttributedString()

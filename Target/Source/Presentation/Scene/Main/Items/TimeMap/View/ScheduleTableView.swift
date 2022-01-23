@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class ScheduleTableViewCell: baseTableViewCell<TimeMap>{
+final class ScheduleTableViewCell: baseTableViewCell<Schedule>{
     // MARK: - Properties
     private let view = UIView()
     private let timeLabel = UILabel().then {
@@ -81,7 +81,7 @@ final class ScheduleTableViewCell: baseTableViewCell<TimeMap>{
     override func configureCell() {
         self.layer.cornerRadius = 10
     }
-    override func bind(_ model: TimeMap) {
+    override func bind(_ model: Schedule) {
         let perio = model.perio.convertPerio()
         let start = model.perio.convertStartTime()
         let end = model.perio.convertEndTime()

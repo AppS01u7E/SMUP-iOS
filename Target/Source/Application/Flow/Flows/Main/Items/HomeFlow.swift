@@ -65,7 +65,7 @@ private extension HomeFlow{
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
-    func presentToTimeMapDetail(schedules: [TimeMap], current: Int) -> FlowContributors{
+    func presentToTimeMapDetail(schedules: [Schedule], current: Int) -> FlowContributors{
         let vc = TimeMapDetailVC(schedules: schedules, current: current)
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         vc.modalTransitionStyle = .crossDissolve

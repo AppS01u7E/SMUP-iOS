@@ -46,13 +46,6 @@ extension UIView{
             $0.top.equalTo(self.snp.bottom)
         }
     }
-    func addShadow(offset: CGSize, color: UIColor = .black, opacity: Float = 0.1, radius: CGFloat = 3.0) {
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = color.cgColor
-        self.layer.shadowOffset = offset
-        self.layer.shadowOpacity = opacity
-        self.layer.shadowRadius = radius
-    }
     func applyShadow(
             color: UIColor = .black,
             radius: CGFloat = 1,

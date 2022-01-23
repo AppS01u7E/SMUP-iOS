@@ -10,12 +10,12 @@ import RxDataSources
 
 struct TimeMapScheduleSection: AnimatableSectionModelType{
     let header: String
-    var items: [TimeMap]
+    var items: [Schedule]
 }
 
 extension TimeMapScheduleSection{
-    typealias Item = TimeMap
-    init(original: TimeMapScheduleSection, items: [TimeMap]) {
+    typealias Item = Schedule
+    init(original: TimeMapScheduleSection, items: [Schedule]) {
         self = original
         self.items = items
     }

@@ -19,6 +19,9 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     private let rootContainer = UIView()
+    private let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
     
     private let dateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
@@ -37,18 +40,21 @@ final class HomeVC: baseVC<HomeReactor>{
         $0.selectedSegmentTintColor = UIColor(red: 0.798, green: 0.596, blue: 1, alpha: 1)
         $0.selectedSegmentIndex = 0
     }
-    
     private let clockView = ClockView()
+    private let scheduleView = ScheduleView()
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        rootContainer.frame = view.bounds
-        rootContainer.flex.margin(view.safeAreaInsets)
+        
+        scrollView.pin.all()
+        rootContainer.pin.top().left().right().bottom()
         rootContainer.flex.layout()
+        scrollView.contentSize = rootContainer.frame.size
     }
     // MARK: - UI
     override func addView() {
-        view.addSubViews(rootContainer)
+        scrollView.addSubViews(rootContainer)
+        view.addSubViews(scrollView)
     }
     override func setLayout() {
         rootContainer.flex.alignItems(.center).define { flex in
@@ -58,6 +64,7 @@ final class HomeVC: baseVC<HomeReactor>{
             }
             flex.addItem(segControl).height(38).top(4%).width(67%)
             flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
+            flex.addItem(scheduleView).top(15%).width(76%).height(95)
         }
     }
     override func configureVC() {
@@ -96,6 +103,6 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     override func bindState(reactor: HomeReactor) {
-        
+        scheduleView.bind(.init(date: Date(), perio: 1, name: "프로그래밍", content: ["앱 프로그래밍 과제"], reference: "2학년 2반 Chat에서 김성훈님이 공지하셨습니다"))
     }
 }

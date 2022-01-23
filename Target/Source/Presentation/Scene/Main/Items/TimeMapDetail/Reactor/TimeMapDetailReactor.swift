@@ -19,14 +19,14 @@ final class TimeMapDetailReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
-        case `init`([TimeMap])
+        case `init`([Schedule])
         case transparentDidTap
     }
     enum Mutation{
-        case setSchedule([TimeMap])
+        case setSchedule([Schedule])
     }
     struct State{
-        var schedulse: [TimeMap] = []
+        var schedulse: [Schedule] = []
     }
     
     var initialState: State = State()
