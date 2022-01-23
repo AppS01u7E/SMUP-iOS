@@ -43,6 +43,19 @@ final class HomeVC: baseVC<HomeReactor>{
     private let clockView = ClockView()
     private let scheduleView = ScheduleView()
     
+    private let breakfastLabel = MealLabel(part: .breakfast).then {
+        $0.setDetailMeal(content: "fdzz")
+        $0.isHidden = true
+    }
+    private let lunchLabel = MealLabel(part: .lunch).then {
+        $0.setDetailMeal(content: "fdzz\nfdzz")
+        $0.isHidden = true
+    }
+    private let dinnerLabel = MealLabel(part: .dinner).then {
+        $0.setDetailMeal(content: "fdzz")
+        $0.isHidden = true
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -64,7 +77,12 @@ final class HomeVC: baseVC<HomeReactor>{
             }
             flex.addItem(segControl).height(38).top(4%).width(67%)
             flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
-            flex.addItem(scheduleView).top(15%).width(76%).height(95)
+            flex.addItem(scheduleView).top(15%).width(85%).height(95)
+            flex.addItem().top(10%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
+                flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
+                flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
+                flex.addItem(dinnerLabel).width(85%).minHeight(90).maxHeight(300)
+            }
         }
     }
     override func configureVC() {
@@ -105,10 +123,13 @@ final class HomeVC: baseVC<HomeReactor>{
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 if owner.segControl.selectedSegmentIndex == 0{
-                    [owner.clockView, owner.scheduleView].forEach{ $0.isHidden = false }
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
+                    [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.none); $0.isHidden = true }
                 }else{
-                    [owner.clockView, owner.scheduleView].forEach{ $0.isHidden = true }
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.none); $0.isHidden = true }
+                    [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.flex); $0.isHidden = false}
                 }
+                self.rootContainer.flex.layout()
             })
             .disposed(by: disposeBag)
     }
