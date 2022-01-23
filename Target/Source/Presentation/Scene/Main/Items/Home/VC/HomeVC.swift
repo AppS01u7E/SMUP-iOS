@@ -100,6 +100,17 @@ final class HomeVC: baseVC<HomeReactor>{
             .map { _ in Reactor.Action.alarmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        segControl.rx.controlEvent(.valueChanged)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                if owner.segControl.selectedSegmentIndex == 0{
+                    [owner.clockView, owner.scheduleView].forEach{ $0.isHidden = false }
+                }else{
+                    [owner.clockView, owner.scheduleView].forEach{ $0.isHidden = true }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindState(reactor: HomeReactor) {
