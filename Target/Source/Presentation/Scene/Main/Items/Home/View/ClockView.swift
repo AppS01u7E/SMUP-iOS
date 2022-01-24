@@ -20,6 +20,7 @@ final class ClockView: UIView{
     private let hourImageView = UIImageView()
     private let circularView = KDCircularProgress().then {
         $0.set(colors: UIColor(red: 0.665, green: 0.411, blue: 0.988, alpha: 1))
+        $0.glowAmount = 0
         $0.trackThickness = 0.4
         $0.progressThickness = 0.4
         $0.startAngle = -90
