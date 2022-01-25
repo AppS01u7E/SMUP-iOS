@@ -71,10 +71,11 @@ final class ClockView: UIView{
         let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
         self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
         self.currentDateLabel.text = Date().convertSchedule()
+        
         task = Plan.after(0.second, repeating: 1.minutes).do {
             let angle = 360 * (Date().getCurrentTimeinterval() / 43200)
-            self.currentDateLabel.text = Date().convertSchedule()
             self.circularView.animate(toAngle: angle, duration: 0.5, completion: nil)
+            self.currentDateLabel.text = Date().convertSchedule()
         }
     }
     public func end(){
