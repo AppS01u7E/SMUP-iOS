@@ -78,7 +78,7 @@ final class HomeVC: baseVC<HomeReactor>{
             flex.addItem(segControl).height(38).top(4%).width(67%)
             flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
             flex.addItem(scheduleView).top(15%).width(85%).height(95)
-            flex.addItem().top(10%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
+            flex.addItem().top(5%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
                 flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
                 flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
                 flex.addItem(dinnerLabel).width(85%).minHeight(90).maxHeight(300)
