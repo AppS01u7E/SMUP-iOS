@@ -21,8 +21,7 @@ jobs:
     - name: project Generate
       run: |
         rm -rf Podfile.lock
-        tuist generate
-        pod install
+        make generate
     - name: Tests
       run: |
         xcodebuild clean test -workspace SMUP.xcworkspace -scheme 'SMUPTest' -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=latest'
