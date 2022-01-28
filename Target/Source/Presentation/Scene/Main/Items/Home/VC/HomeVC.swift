@@ -9,65 +9,80 @@
 import UIKit
 import RxCocoa
 import RxViewController
+import PinLayout
+import FlexLayout
 
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
-    private let beforeDayButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.left")?.tintColor(.black),
-                    for: .normal)
-        
-    }
-    private let selectedDayLabel = SelectedDateLabel()
-    private let afterDayButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.right")?.tintColor(.black),
-                    for: .normal)
-    }
-    private let dayStack = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 35
-    }
-    
-    private let checkScheduleButton = CheckScheduleButton(title: "시간표 및 일정 확인")
-    
-    private let breakfastLabel = MealLabel(part: .breakfast)
-    private let lunchLabel = MealLabel(part: .lunch)
-    private let dinnerLabel = MealLabel(part: .dinner)
-    private let mealStack = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 25
-    }
-    
     private let alarmButton = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "bell")?.tintColor(.black)
     }
     
+    private let rootContainer = UIView()
+    private let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
+    
+    private let dateLabel = UILabel().then {
+        $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
+        $0.textColor = .systemGray4
+        $0.textAlignment = .center
+        $0.text = "\(Date().convertKorea().toString(.custom("yyyy.MM.dd")))"
+    }
+    private let todayLabel = UILabel().then {
+        $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)
+        $0.textColor = .black
+        $0.textAlignment = .center
+        $0.text = "Today"
+    }
+    
+    private let segControl = UISegmentedControl(items: ["일정표","급식표"]).then {
+        $0.selectedSegmentTintColor = UIColor(red: 0.798, green: 0.596, blue: 1, alpha: 1)
+        $0.selectedSegmentIndex = 0
+    }
+    private let clockView = ClockView()
+    private let scheduleView = ScheduleView()
+    
+    private let breakfastLabel = MealLabel(part: .breakfast).then {
+        $0.setDetailMeal(content: "fdzz")
+        $0.isHidden = true
+    }
+    private let lunchLabel = MealLabel(part: .lunch).then {
+        $0.setDetailMeal(content: "fdzz\nfdzz")
+        $0.isHidden = true
+    }
+    private let dinnerLabel = MealLabel(part: .dinner).then {
+        $0.setDetailMeal(content: "fdzz")
+        $0.isHidden = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scrollView.pin.all()
+        rootContainer.pin.top().left().right().bottom()
+        rootContainer.flex.layout()
+        scrollView.contentSize = rootContainer.frame.size
+    }
     // MARK: - UI
     override func addView() {
-        dayStack.addArrangeSubviews(beforeDayButton, selectedDayLabel, afterDayButton)
-        mealStack.addArrangeSubviews(breakfastLabel, lunchLabel, dinnerLabel)
-        view.addSubViews(dayStack, mealStack, checkScheduleButton)
+        scrollView.addSubViews(rootContainer)
+        view.addSubViews(scrollView)
     }
     override func setLayout() {
-        beforeDayButton.snp.makeConstraints {
-            $0.width.height.equalTo(48)
-        }
-        afterDayButton.snp.makeConstraints {
-            $0.width.height.equalTo(48)
-        }
-        dayStack.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(bound.height*0.1)
-            $0.centerX.equalToSuperview()
-        }
-        checkScheduleButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(dayStack.snp.bottom).offset(30)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.1277)
-            $0.height.equalTo(bound.height*0.1371)
-        }
-        mealStack.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.1277)
-            $0.top.equalTo(checkScheduleButton.snp.bottom).offset(30)
+        rootContainer.flex.alignItems(.center).define { flex in
+            flex.addItem().paddingTop(10).direction(.column).define { flex in
+                flex.addItem(dateLabel)
+                flex.addItem(todayLabel)
+            }
+            flex.addItem(segControl).height(38).top(4%).width(67%)
+            flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
+            flex.addItem(scheduleView).top(15%).width(85%).height(95)
+            flex.addItem().top(5%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
+                flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
+                flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
+                flex.addItem(dinnerLabel).width(85%).minHeight(90).maxHeight(300)
+            }
         }
     }
     override func configureVC() {
@@ -84,38 +99,16 @@ final class HomeVC: baseVC<HomeReactor>{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         (self.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(false)
+        clockView.start()
     }
     
     
     // MARK: - Reactor
     override func bindAction(reactor: HomeReactor) {
-        self.rx.viewDidLoad
-            .map { _ in Reactor.Action.viewDidLoad }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+        
     }
     
     override func bindView(reactor: HomeReactor) {
-        beforeDayButton.rx.tap
-            .map { _ in Reactor.Action.beforeDayButtonDidTap }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        afterDayButton.rx.tap
-            .map { _ in Reactor.Action.afterDayButtonDidTap }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        checkScheduleButton.rx.tap
-            .do(onNext: { [weak self] _ in
-                let back: UIBarButtonItem = .init(title: "시간표 및 일정", style: .plain, target: self, action: nil)
-                back.tintColor = .black
-                self?.navigationItem.backBarButtonItem = back
-            })
-            .map { _ in Reactor.Action.scheduleButtonDidTap }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
         alarmButton.rx.tap
             .do(onNext: { [weak self] _ in
                 let back: UIBarButtonItem = .init(title: "", style: .plain, target: self, action: nil)
@@ -125,42 +118,23 @@ final class HomeVC: baseVC<HomeReactor>{
             .map { _ in Reactor.Action.alarmButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        segControl.rx.controlEvent(.valueChanged)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                if owner.segControl.selectedSegmentIndex == 0{
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
+                    [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.none); $0.isHidden = true }
+                }else{
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.none); $0.isHidden = true }
+                    [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.flex); $0.isHidden = false}
+                }
+                self.rootContainer.flex.layout()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindState(reactor: HomeReactor) {
-        let sharedState = reactor.state.share(replay: 2)
-        
-        sharedState
-            .map(\.selectedDate)
-            .subscribe(onNext: { [weak self] in
-                self?.selectedDayLabel.bindDate(date: $0)
-            })
-            .disposed(by: disposeBag)
-        
-        let mealShared = sharedState.map(\.meal).share(replay: 3)
-        
-        mealShared
-            .map(\.breakfast)
-            .map { $0.joined(separator: " ") }
-            .subscribe(onNext: { [weak self] in
-                self?.breakfastLabel.setDetailMeal(content: $0)
-            })
-            .disposed(by: disposeBag)
-        
-        mealShared
-            .map(\.lunch)
-            .map { $0.joined(separator: " ") }
-            .subscribe(onNext: { [weak self] in
-                self?.lunchLabel.setDetailMeal(content: $0)
-            })
-            .disposed(by: disposeBag)
-        
-        mealShared
-            .map(\.dinner)
-            .map { $0.joined(separator: " ") }
-            .subscribe(onNext: { [weak self] in
-                self?.dinnerLabel.setDetailMeal(content: $0)
-            })
-            .disposed(by: disposeBag)
+        scheduleView.bind(.init(date: Date(), perio: 1, name: "프로그래밍", content: ["앱 프로그래밍 과제"], reference: "2학년 2반 Chat에서 김성훈님이 공지하셨습니다"))
     }
 }

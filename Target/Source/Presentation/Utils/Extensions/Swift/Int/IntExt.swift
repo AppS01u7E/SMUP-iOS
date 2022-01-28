@@ -18,7 +18,9 @@ extension Int{
         case 5: return "5교시"
         case 6: return "6교시"
         case 7: return "7교시"
-        default: return "점심시간"
+        case 20: return "점심시간"
+        case 21: return "저녁시간"
+        default: return ""
         }
     }
     func convertStartTime() -> String{

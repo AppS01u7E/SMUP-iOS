@@ -50,7 +50,7 @@ final class SettingProfileView: UIView{
         self.backgroundColor = SMUPAsset.smupMain3.color.withAlphaComponent(0.57)
         self.layer.cornerRadius = 15
         self.clipsToBounds = true
-        self.addShadow(offset: .init(width: 2, height: 2), color: .black, opacity: 0.1, radius: 2)
+        self.applyShadow(color: .black, radius: 2, offSet: .init(width: 2, height: 2), opacity: 0.1)
     }
     
     // MARK: - OpenMethod

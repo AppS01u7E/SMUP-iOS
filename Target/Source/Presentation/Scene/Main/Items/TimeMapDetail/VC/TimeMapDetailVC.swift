@@ -37,7 +37,7 @@ final class TimeMapDetailVC: baseVC<TimeMapDetailReactor>{
     }
     
     // MARK: - Init
-    init(schedules: [TimeMap], current: Int){
+    init(schedules: [Schedule], current: Int){
         self.currentIndex = current
         super.init()
         

@@ -1,5 +1,5 @@
 //
-//  MealView.swift
+//  MealLabel.swift
 //  SMUP
 //
 //  Created by 최형우 on 2022/01/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 import Then
-import SnapKit
+import PinLayout
 
 final class MealLabel: UIView{
     // MARK: - Init
@@ -33,6 +33,7 @@ final class MealLabel: UIView{
     // MARK: - LayoutSubview
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentLabel.pin.all(10)
         self.setDashedBorder(color: .systemGray5)
     }
     
@@ -52,9 +53,7 @@ private extension MealLabel{
         addSubViews(contentLabel)
     }
     func setLayout(){
-        contentLabel.snp.makeConstraints {
-            $0.top.leading.bottom.trailing.equalToSuperview().inset(15)
-        }
+        
     }
     func configureView(){
         let str = NSMutableAttributedString(string: part.rawValue)

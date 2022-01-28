@@ -24,10 +24,10 @@ final class TimeMapReactor: Reactor, Stepper{
         case scheduleDetailIsRequired(Int)
     }
     enum Mutation{
-        case setSchedule([TimeMap])
+        case setSchedule([Schedule])
     }
     struct State{
-        var schedules: [TimeMap] = []
+        var schedules: [Schedule] = []
     }
     
     var initialState: State = State()

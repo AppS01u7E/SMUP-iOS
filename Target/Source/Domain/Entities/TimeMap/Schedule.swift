@@ -9,7 +9,7 @@
 import RxDataSources
 import Foundation
 
-struct TimeMap: ModelType{
+struct Schedule: ModelType{
     let date: Date
     let perio: Int
     let name: String
@@ -17,7 +17,7 @@ struct TimeMap: ModelType{
     let reference: String
 }
 
-extension TimeMap: IdentifiableType, Equatable{
+extension Schedule: IdentifiableType, Equatable{
     var identity: String{
         return UUID().uuidString
     }
