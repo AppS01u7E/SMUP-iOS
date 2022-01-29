@@ -42,7 +42,6 @@ final class ChattingFlow: Flow{
         case let .chattingIsRequired(ID):
             return navigateToChatting(ID: ID)
         case let .chattingSettingIsRequired(reactor):
-            print("ASF")
             return presentToChattingSetting(reactor: reactor)
         default:
             return .none
@@ -58,8 +57,6 @@ private extension ChattingFlow{
     }
     func navigateToChatting(ID: String) -> FlowContributors{
         let vc = ChattingVC(ID: ID)
-        (self.rootVC.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(true)
-        (self.rootVC.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(true)
         self.rootVC.isNavigationBarHidden = false
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))

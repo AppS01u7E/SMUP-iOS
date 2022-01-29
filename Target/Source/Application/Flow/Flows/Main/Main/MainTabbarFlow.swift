@@ -14,9 +14,8 @@ final class MainTabbarFlow: Flow{
     // MARK: - TabIndex
     enum TabIndex: Int{
         case home = 0
-        case mySchool = 1
-        case chat
         case soom
+        case mySchool
         case setting
     }
     
@@ -55,36 +54,34 @@ final class MainTabbarFlow: Flow{
 private extension MainTabbarFlow{
     func coordinateToMainTabbar() -> FlowContributors{
         Flows.use(
-            [
-                homeFlow, mySchoolFlow, chatFlow, settingFlow
-            ], when: .created
-        ) { [unowned self] (roots) in
+            homeFlow, mySchoolFlow, settingFlow
+            , when: .created
+        ) { [unowned self] (root1: UINavigationController,
+                            root2: UINavigationController,
+                            root3: UINavigationController) in
             
-            let homeFloaty = JJActionItem()
-            homeFloaty.buttonImage = UIImage(systemName: "house")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let homeImage = UIImage(systemName: "house")
+            let soomImage = UIImage(systemName: "rectangle.on.rectangle")
+            let schoolImage = UIImage(systemName: "graduationcap")
+            let settingImage = UIImage(systemName: "person")
             
-            let mySchoolFloaty = JJActionItem()
-            mySchoolFloaty.buttonImage = UIImage(systemName: "graduationcap")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let homeItem = UITabBarItem(title: nil, image: homeImage, tag: 0)
+            let soomItem = UITabBarItem(title: nil, image: soomImage, tag: 1)
+            let schoolItem = UITabBarItem(title: nil, image: schoolImage, tag: 2)
+            let settingItem = UITabBarItem(title: nil, image: settingImage, tag: 3)
             
-            let chatFloaty = JJActionItem()
-            chatFloaty.buttonImage = UIImage(systemName: "message")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            let soom = UIViewController()
+            root1.tabBarItem = homeItem
+            soom.tabBarItem = soomItem
+            root2.tabBarItem = schoolItem
+            root3.tabBarItem = settingItem
             
-            let settingFloaty = JJActionItem()
-            settingFloaty.buttonImage = UIImage(systemName: "person")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            
-            let soomFloaty = JJActionItem()
-            soomFloaty.buttonImage = UIImage(systemName: "rectangle.on.rectangle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            
-            let items = [homeFloaty, mySchoolFloaty, chatFloaty, settingFloaty, soomFloaty]
-            
-            self.rootVC.setViewControllers(viewControllers: roots, floaties: items, animated: false)
-            
+            self.rootVC.setViewControllers([root1, soom, root2, root3], animated: true)
         }
         
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: homeFlow.stepper),
             .contribute(withNextPresentable: mySchoolFlow, withNextStepper: mySchoolFlow.stepper),
-            .contribute(withNextPresentable: chatFlow, withNextStepper: chatFlow.stepper),
             .contribute(withNextPresentable: settingFlow, withNextStepper: settingFlow.stepper),
         ])
     }

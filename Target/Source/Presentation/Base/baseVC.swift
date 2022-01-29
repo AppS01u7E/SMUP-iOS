@@ -21,9 +21,11 @@ class baseVC<T: Reactor>: UIViewController{
         view.backgroundColor = .white
         setUp()
         addView()
-        setLayout()
         configureVC()
         configureNavigation()
+    }
+    override func viewDidLayoutSubviews() {
+        setLayout()
     }
     
     @Inject var reactor: T

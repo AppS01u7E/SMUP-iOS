@@ -22,9 +22,7 @@ extension Container{
     private func registerVC() {
         autoregister(SignInVC.self, initializer: SignInVC.init)
         autoregister(HomeVC.self, initializer: HomeVC.init)
-        autoregister(TimeMapVC.self, initializer: TimeMapVC.init)
         autoregister(ChatListVC.self, initializer: ChatListVC.init)
-        autoregister(TimeMapDetailVC.self, initializer: TimeMapDetailVC.init)
         autoregister(SOOMVC.self, initializer: SOOMVC.init)
         autoregister(MainSettingVC.self, initializer: MainSettingVC.init)
         autoregister(SearchVC.self, initializer: SearchVC.init)
@@ -35,8 +33,6 @@ extension Container{
     private func registerReactor() {
         autoregister(SignInReactor.self, initializer: SignInReactor.init)
         autoregister(HomeReactor.self, initializer: HomeReactor.init)
-        autoregister(TimeMapReactor.self, initializer: TimeMapReactor.init)
-        autoregister(TimeMapDetailReactor.self, initializer: TimeMapDetailReactor.init)
         autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(ChatListReactor.self, initializer: ChatListReactor.init)
         autoregister(AlarmReactor.self, initializer: AlarmReactor.init)

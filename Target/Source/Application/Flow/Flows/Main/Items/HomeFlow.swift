@@ -39,10 +39,6 @@ final class HomeFlow: Flow{
         switch step{
         case .homeIsRequired:
             return coordinateToHome()
-        case let .timeMapIsRequired(date):
-            return navigateToTimeMap(selectedDate: date)
-        case let .timeMapDetailIsRequired(schedules, cur):
-            return presentToTimeMapDetail(schedules: schedules, current: cur)
         case .alarmIsRequired:
             return navigateToAlarm()
         case .dismiss:
@@ -57,19 +53,6 @@ final class HomeFlow: Flow{
 private extension HomeFlow{
     func coordinateToHome() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
-    }
-    func navigateToTimeMap(selectedDate: Date) -> FlowContributors{
-        let vc = TimeMapVC(selectedDate: selectedDate)
-        (self.rootVC.tabBarController as? MainTabbarVC)?.setFlaotyButtonHidden(true)
-        self.rootVC.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
-    }
-    func presentToTimeMapDetail(schedules: [Schedule], current: Int) -> FlowContributors{
-        let vc = TimeMapDetailVC(schedules: schedules, current: current)
-        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        self.rootVC.present(vc, animated: true, completion: nil)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
     }
     func navigateToAlarm() -> FlowContributors{
