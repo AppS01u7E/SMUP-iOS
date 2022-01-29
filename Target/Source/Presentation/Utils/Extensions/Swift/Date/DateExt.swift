@@ -59,7 +59,8 @@ extension Date{
     }
     
     func getCurrentTimeinterval() -> Double {
-        let forData = Date(year: self.year, month: self.month, day: self.day, hour: 0,
+        let converted = Date().convertKorea()
+        let forData = Date(year: converted.year, month: converted.month, day: converted.day, hour: 0,
                            minute: 0, second: 0, nanosecond: 0)
         return Date().convertKorea().timeIntervalSince(forData)
     }
