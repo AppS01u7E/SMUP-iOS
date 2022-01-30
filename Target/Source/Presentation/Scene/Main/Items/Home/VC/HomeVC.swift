@@ -37,8 +37,9 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     private let segControl = UISegmentedControl(items: ["일정표","급식표"]).then {
-        $0.selectedSegmentTintColor = UIColor(red: 0.798, green: 0.596, blue: 1, alpha: 1)
+        $0.selectedSegmentTintColor = .white
         $0.selectedSegmentIndex = 0
+        $0.setTitleTextAttributes([.foregroundColor : UIColor(red: 0.812, green: 0.608, blue: 0.973, alpha: 1).cgColor], for: .selected)
     }
     private let clockView = ClockView()
     
