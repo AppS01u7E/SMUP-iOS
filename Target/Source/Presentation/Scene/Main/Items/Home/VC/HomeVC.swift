@@ -57,7 +57,6 @@ final class HomeVC: baseVC<HomeReactor>{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        clockView.start()
         scrollView.pin.all()
         rootContainer.pin.top().left().right().bottom()
         rootContainer.flex.layout()
@@ -93,9 +92,13 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     // MARK: - Lifecycle
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        clockView.start()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clockView.end()
     }
     
     
