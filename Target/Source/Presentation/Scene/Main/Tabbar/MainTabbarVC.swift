@@ -39,6 +39,8 @@ final class MainTabbarVC: UITabBarController, Stepper {
 private extension MainTabbarVC{
     func configureVC(){
         self.delegate = self
+        self.tabBar.backgroundColor = .white
+        self.tabBar.barTintColor = .white
         self.tabBar.tintColor = UIColor(red: 0.636, green: 0.273, blue: 1, alpha: 1)
     }
 }

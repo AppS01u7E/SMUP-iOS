@@ -25,7 +25,7 @@ final class HomeVC: baseVC<HomeReactor>{
     
     private let dateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
-        $0.textColor = .systemGray4
+        $0.textColor = UIColor(red: 0.742, green: 0.74, blue: 0.74, alpha: 1)
         $0.textAlignment = .center
         $0.text = "\(Date().convertKorea().toString(.custom("yyyy.MM.dd")))"
     }
@@ -41,7 +41,6 @@ final class HomeVC: baseVC<HomeReactor>{
         $0.selectedSegmentIndex = 0
     }
     private let clockView = ClockView()
-    private let scheduleView = ScheduleView()
     
     private let breakfastLabel = MealLabel(part: .breakfast).then {
         $0.setDetailMeal(content: "fdzz")
@@ -58,7 +57,7 @@ final class HomeVC: baseVC<HomeReactor>{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        clockView.start()
         scrollView.pin.all()
         rootContainer.pin.top().left().right().bottom()
         rootContainer.flex.layout()
@@ -76,8 +75,7 @@ final class HomeVC: baseVC<HomeReactor>{
                 flex.addItem(todayLabel)
             }
             flex.addItem(segControl).height(38).top(4%).width(67%)
-            flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
-            flex.addItem(scheduleView).top(15%).width(85%).height(95)
+            flex.addItem(clockView).top(10%).width(bound.width*0.676).height(bound.width*0.676 + 150)
             flex.addItem().top(5%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
                 flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
                 flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
@@ -98,7 +96,6 @@ final class HomeVC: baseVC<HomeReactor>{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        clockView.start()
     }
     
     
@@ -122,10 +119,10 @@ final class HomeVC: baseVC<HomeReactor>{
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 if owner.segControl.selectedSegmentIndex == 0{
-                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
+                    [owner.clockView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
                     [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.none); $0.isHidden = true }
                 }else{
-                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.none); $0.isHidden = true }
+                    [owner.clockView].forEach{ $0.flex.display(.none); $0.isHidden = true }
                     [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.flex); $0.isHidden = false}
                 }
                 self.rootContainer.flex.layout()
@@ -134,6 +131,6 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     override func bindState(reactor: HomeReactor) {
-        scheduleView.bind(.init(date: Date(), perio: 1, name: "프로그래밍", content: ["앱 프로그래밍 과제"], reference: "2학년 2반 Chat에서 김성훈님이 공지하셨습니다"))
+        
     }
 }

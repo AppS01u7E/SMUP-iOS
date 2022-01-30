@@ -58,13 +58,6 @@ extension Date{
         return str
     }
     
-    func getCurrentTimeinterval() -> Double {
-        let converted = Date().convertKorea()
-        let forData = Date(year: converted.year, month: converted.month, day: converted.day, hour: 0,
-                           minute: 0, second: 0, nanosecond: 0)
-        return Date().convertKorea().timeIntervalSince(forData)
-    }
-    
     func convertCustomString() -> String{
         if self.isToday{
             return self.convertKorea().toString(.custom("a hh:mm분"))
