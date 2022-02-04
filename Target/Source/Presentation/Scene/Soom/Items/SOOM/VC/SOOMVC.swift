@@ -175,7 +175,7 @@ final class SOOMVC : LBTAListHeaderController<PostCell, String, StoryHeader>,UIC
         
     @Inject var reactor: SOOMReactor
 
-    init(reactor: SOOMReactor){
+    init(reactor: SOOMReactor?){
         super.init()
         self.reactor = reactor
     }

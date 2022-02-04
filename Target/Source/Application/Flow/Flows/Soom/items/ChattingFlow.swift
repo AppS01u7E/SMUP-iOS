@@ -53,13 +53,16 @@ final class ChattingFlow: Flow{
 private extension ChattingFlow{
     func coordinateToChatList() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
     func navigateToChatting(ID: String) -> FlowContributors{
         let vc = ChattingVC(ID: ID)
+        @Inject var reactor: ChattingReactor
+        vc.reactor = reactor
+        (self.rootVC.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(true)
         self.rootVC.isNavigationBarHidden = false
         self.rootVC.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: reactor))
     }
     func presentToChattingSetting(reactor: ChattingReactor) -> FlowContributors{
         let vc = SideMenuNavigationController(rootViewController: ChattingSettingSideVC(reactor: reactor))

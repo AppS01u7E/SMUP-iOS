@@ -37,7 +37,6 @@ final class AlarmVC: baseVC<AlarmReactor>{
         }
     }
     override func configureVC() {
-        bind(reactor: reactor)
         view.backgroundColor = UIColor(red: 0.962, green: 0.962, blue: 0.962, alpha: 1)
     }
     override func configureNavigation() {
@@ -93,9 +92,10 @@ extension AlarmVC: UITableViewDelegate{
         
         let delete = UIContextualAction(style: .normal, title: "삭제") { [weak self] _, _, completion in
             guard let self = self else { return }
+            guard let reactor = self.reactor else { return }
             Observable.just(indexPath.row)
                 .map { Reactor.Action.deleteOneAlarm($0) }
-                .bind(to: self.reactor.action)
+                .bind(to: reactor.action)
                 .disposed(by: self.disposeBag)
             completion(true)
         }

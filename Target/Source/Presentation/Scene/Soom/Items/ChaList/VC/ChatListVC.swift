@@ -24,6 +24,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        (self.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(false)
     }
     
     // MARK: - UI

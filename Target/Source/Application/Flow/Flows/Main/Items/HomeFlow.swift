@@ -53,12 +53,12 @@ final class HomeFlow: Flow{
 private extension HomeFlow{
     func coordinateToHome() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
     func navigateToAlarm() -> FlowContributors{
-        let vc = AlarmVC()
+        @Inject var vc: AlarmVC
         self.rootVC.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
     func dismissVC() -> FlowContributors{
         self.rootVC.visibleViewController?.dismiss(animated: true, completion: nil)

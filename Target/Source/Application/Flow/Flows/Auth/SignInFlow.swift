@@ -25,7 +25,6 @@ final class SignInFlow: Flow{
     
     @Inject var stepper: SignInStepper
     @Inject private var vc: SignInVC
-    @Inject private var reactor: SignInReactor
     private let rootVC = UINavigationController()
     
     // MARK: - Init
@@ -51,6 +50,6 @@ final class SignInFlow: Flow{
 private extension SignInFlow{
     func coordinateToSignIn() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
 }

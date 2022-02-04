@@ -28,16 +28,10 @@ class baseVC<T: Reactor>: UIViewController{
         setLayout()
     }
     
-    @Inject var reactor: T
-    
-    init(reactor: T){
+    init(reactor: T?){
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
-    
-    init() { super.init(nibName: nil, bundle: nil) }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

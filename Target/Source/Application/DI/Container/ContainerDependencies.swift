@@ -20,13 +20,30 @@ extension Container{
     
     // MARK: - VC
     private func registerVC() {
-        autoregister(SignInVC.self, initializer: SignInVC.init)
-        autoregister(HomeVC.self, initializer: HomeVC.init)
-        autoregister(ChatListVC.self, initializer: ChatListVC.init)
-        autoregister(SOOMVC.self, initializer: SOOMVC.init)
-        autoregister(MainSettingVC.self, initializer: MainSettingVC.init)
-        autoregister(SearchVC.self, initializer: SearchVC.init)
-        autoregister(MySchoolVC.self, initializer: MySchoolVC.init)
+        register(SignInVC.self) { r in
+            return SignInVC(reactor: r.resolve(SignInReactor.self))
+        }
+        register(HomeVC.self) { r in
+            return HomeVC(reactor: r.resolve(HomeReactor.self))
+        }
+        register(ChatListVC.self) { r in
+            return ChatListVC(reactor: r.resolve(ChatListReactor.self))
+        }
+        register(SOOMVC.self) { r in
+            return SOOMVC(reactor: r.resolve(SOOMReactor.self))
+        }
+        register(MainSettingVC.self) { r in
+            return MainSettingVC(reactor: r.resolve(MainSettingReactor.self))
+        }
+        register(SearchVC.self) { r in
+            return SearchVC(reactor: r.resolve(SearchReactor.self))
+        }
+        register(MySchoolVC.self) { r in
+            return MySchoolVC(reactor: r.resolve(MySchoolReactor.self))
+        }
+        register(AlarmVC.self) { r in
+            return AlarmVC(reactor: r.resolve(AlarmReactor.self))
+        }
     }
     
     // MARK: - Reactor

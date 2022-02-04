@@ -47,6 +47,6 @@ final class MySchoolFlow: Flow{
 private extension MySchoolFlow{
     func coordinateToMySchool() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor))
+        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
 }
