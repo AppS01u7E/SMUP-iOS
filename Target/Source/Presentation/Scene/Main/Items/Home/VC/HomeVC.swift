@@ -11,11 +11,13 @@ import RxCocoa
 import RxViewController
 import PinLayout
 import FlexLayout
+import SwiftDate
+import RxSwift
 
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
     private let alarmButton = UIBarButtonItem().then {
-        $0.image = UIImage(systemName: "bell")?.tintColor(.black)
+        $0.image = UIImage(systemName: "bell")?.tintColor(SMUPAsset.smupGray7.color)
     }
     
     private let rootContainer = UIView()
@@ -25,23 +27,24 @@ final class HomeVC: baseVC<HomeReactor>{
     
     private let dateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 18)
-        $0.textColor = UIColor(red: 0.742, green: 0.74, blue: 0.74, alpha: 1)
+        $0.textColor = SMUPAsset.smupGray4.color
         $0.textAlignment = .center
         $0.text = "\(Date().convertKorea().toString(.custom("yyyy.MM.dd")))"
     }
     private let todayLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)
-        $0.textColor = .black
+        $0.textColor = SMUPAsset.smupGray7.color
         $0.textAlignment = .center
         $0.text = "Today"
     }
     
-    private let segControl = UISegmentedControl(items: ["일정표","급식표"]).then {
-        $0.selectedSegmentTintColor = .white
+    private let segControl = UISegmentedControl(items: ["일정","급식표"]).then {
+        $0.selectedSegmentTintColor = SMUPAsset.smupGray1.color
         $0.selectedSegmentIndex = 0
         $0.setTitleTextAttributes([.foregroundColor : UIColor(red: 0.812, green: 0.608, blue: 0.973, alpha: 1).cgColor], for: .selected)
     }
     private let clockView = ClockView()
+    private let scheduleView = ScheduleView()
     
     private let breakfastLabel = MealLabel(part: .breakfast).then {
         $0.setDetailMeal(content: "fdzz")
@@ -54,6 +57,23 @@ final class HomeVC: baseVC<HomeReactor>{
     private let dinnerLabel = MealLabel(part: .dinner).then {
         $0.setDetailMeal(content: "fdzz")
         $0.isHidden = true
+    }
+    private var timer: Timer!
+    
+    // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeProcess(_:)), userInfo: nil, repeats: true)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+    }
+    // MARK: Selector
+    @objc private func timeProcess(_ timer: Timer) {
+        let date = Date().convertKorea()
+        clockView.timeProcess(date: date)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,7 +95,8 @@ final class HomeVC: baseVC<HomeReactor>{
                 flex.addItem(todayLabel)
             }
             flex.addItem(segControl).height(38).top(4%).width(67%)
-            flex.addItem(clockView).top(10%).width(bound.width*0.676).height(bound.width*0.676 + 150)
+            flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
+            flex.addItem(scheduleView).top(15%).width(bound.width*0.797).minHeight(95)
             flex.addItem().top(5%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
                 flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
                 flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
@@ -84,7 +105,7 @@ final class HomeVC: baseVC<HomeReactor>{
         }
     }
     override func configureVC() {
-        
+        view.backgroundColor = SMUPAsset.smupGray1.color
     }
     override func configureNavigation() {
         self.navigationItem.setTitle(title: "SMUP")
@@ -92,20 +113,12 @@ final class HomeVC: baseVC<HomeReactor>{
 
     }
     
-    // MARK: - Lifecycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        clockView.start()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        clockView.end()
-    }
-    
-    
     // MARK: - Reactor
     override func bindAction(reactor: HomeReactor) {
-        
+        self.rx.viewDidLayoutSubviews
+            .map { _ in Reactor.Action.viewDidAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     override func bindView(reactor: HomeReactor) {
@@ -123,10 +136,10 @@ final class HomeVC: baseVC<HomeReactor>{
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 if owner.segControl.selectedSegmentIndex == 0{
-                    [owner.clockView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.flex); $0.isHidden = false }
                     [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.none); $0.isHidden = true }
                 }else{
-                    [owner.clockView].forEach{ $0.flex.display(.none); $0.isHidden = true }
+                    [owner.clockView, owner.scheduleView].forEach{ $0.flex.display(.none); $0.isHidden = true }
                     [owner.breakfastLabel, owner.lunchLabel, owner.dinnerLabel].forEach{ $0.flex.display(.flex); $0.isHidden = false}
                 }
                 self.rootContainer.flex.layout()
@@ -135,6 +148,26 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     
     override func bindState(reactor: HomeReactor) {
+        let sharedState = reactor.state.share(replay: 2).observe(on: MainScheduler.asyncInstance)
+        
+        sharedState
+            .map(\.meal)
+            .withUnretained(self)
+            .bind { owner, meal in
+                owner.breakfastLabel.setDetailMeal(content: meal.breakfast.joined(separator: ""))
+                owner.lunchLabel.setDetailMeal(content: meal.lunch.joined(separator: ""))
+                owner.dinnerLabel.setDetailMeal(content: meal.dinner.joined(separator: ""))
+            }
+            .disposed(by: disposeBag)
+        scheduleView.bind(.init(date: Date(), perio: 2, name: "nil", content: ["nil"], reference: "nil"))
+        sharedState
+            .map(\.scheduel)
+            .withUnretained(self)
+            .subscribe { owner, schedule in
+                owner.scheduleView.bind(schedule)
+            }
+            .disposed(by: disposeBag)
+        
         
     }
 }

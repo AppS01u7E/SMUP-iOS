@@ -21,11 +21,12 @@ class baseVC<T: Reactor>: UIViewController{
         view.backgroundColor = .white
         setUp()
         addView()
+        setLayout()
         configureVC()
         configureNavigation()
     }
     override func viewDidLayoutSubviews() {
-        setLayout()
+        setLayoutSubViews()
     }
     
     init(reactor: T?){
@@ -44,6 +45,7 @@ class baseVC<T: Reactor>: UIViewController{
     func setUp(){}
     func addView(){}
     func setLayout(){}
+    func setLayoutSubViews(){}
     func configureVC(){}
     func configureNavigation(){}
     

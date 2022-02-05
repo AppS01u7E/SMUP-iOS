@@ -23,6 +23,13 @@ extension Date{
         return self + 9.hours
     }
     
+    func getCurrentTimeinterval() -> Double {
+        let converted = Date().convertKorea()
+        let forData = Date(year: converted.year, month: converted.month, day: converted.day, hour: 0,
+                           minute: 0, second: 0, nanosecond: 0)
+        return Date().convertKorea().timeIntervalSince(forData)
+    }
+    
     func convertSchedule() -> String{
         var str = "\(self.toString(.custom("a hh시 mm분")))\n"
         str.append("곧 n교시 수업이 시작됩니다")

@@ -15,12 +15,15 @@ final class ScheduleView: UIView{
     private let rootContainer = UIView()
     private let perioLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 16)
+        $0.textColor = SMUPAsset.smupGray7.color
     }
     private let contentLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 14)
+        $0.textColor = SMUPAsset.smupGray7.color
     }
     private let referenceLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 12)
+        $0.textColor = SMUPAsset.smupGray7.color
     }
     
     override func layoutSubviews() {
@@ -29,10 +32,10 @@ final class ScheduleView: UIView{
         
         rootContainer.layer.cornerRadius = 10
         rootContainer.clipsToBounds = true
-        rootContainer.backgroundColor = .white
+        rootContainer.backgroundColor = SMUPAsset.smupGray1.color
         self.layer.masksToBounds = false
         self.layer.borderWidth = 0
-        self.applyShadow(color: .black, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
+        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
     
     // MARK: - Init
@@ -40,7 +43,6 @@ final class ScheduleView: UIView{
         super.init(frame: .zero)
         addView()
         setLayout()
-        configureView()
     }
     
     required init?(coder: NSCoder) {
@@ -74,9 +76,5 @@ private extension ScheduleView{
             flex.addItem(contentLabel).paddingTop(7)
             flex.addItem(referenceLabel).paddingTop(7)
         }
-    }
-    func configureView(){
-        
-        
     }
 }
