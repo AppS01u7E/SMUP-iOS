@@ -10,6 +10,7 @@ import UIKit
 import RxDataSources
 import RxSwift
 import RxGesture
+import PinLayout
 
 final class AlarmVC: baseVC<AlarmReactor>{
     // MARK: - Properties
@@ -30,11 +31,9 @@ final class AlarmVC: baseVC<AlarmReactor>{
     override func addView() {
         view.addSubViews(alarmTableView)
     }
-    override func setLayout() {
-        alarmTableView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(bound.height*0.149)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.084)
-        }
+    override func setLayoutSubViews() {
+        super.setLayoutSubViews()
+        alarmTableView.pin.vertically(80).horizontally(32)
     }
     override func configureVC() {
         view.backgroundColor = UIColor(red: 0.962, green: 0.962, blue: 0.962, alpha: 1)
