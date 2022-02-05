@@ -20,21 +20,29 @@ final class HomeReactor: Reactor, Stepper{
     
     // MARK: - Reactor
     enum Action{
-        case viewDidLoad
-        case afterDayButtonDidTap
-        case beforeDayButtonDidTap
+        case viewDidAppear
         case alarmButtonDidTap
     }
     enum Mutation{
         case setDate(Date)
         case setMeal(Meal)
+        case setSchedule(Schedule)
     }
     struct State{
-        var selectedDate = Date()
-        var meal = Meal(breakfast: [], lunch: [], dinner: [])
+        var selectedDate: Date
+        var meal: Meal
+        var scheduel: Schedule
     }
     
-    var initialState: State = State()
+    var initialState: State
+    
+    init() {
+        initialState = State(
+            selectedDate: Date(),
+            meal: .init(breakfast: [], lunch: [], dinner: []),
+            scheduel: .init(date: Date(), perio: 0, name: "", content: [], reference: "")
+        )
+    }
     
 }
 
@@ -42,19 +50,11 @@ final class HomeReactor: Reactor, Stepper{
 extension HomeReactor{
     func mutate(action: Action) -> Observable<Mutation> {
         switch action{
-        case .viewDidLoad:
-            // TODO: 대충 급식 가져오는 API 불러오는 단계 라이프사이클이라는 뜻
-            return .just(.setMeal(.init(breakfast: ["아침","아침ㅁ"],
-                                        lunch: ["점심", "점심ㅁ"],
-                                        dinner: ["저녁", "저녁ㅁ"])))
-        case .afterDayButtonDidTap:
-            return .just(.setDate(currentState.selectedDate + 1.days))
-        case .beforeDayButtonDidTap:
-            return .just(.setDate(currentState.selectedDate - 1.days))
-            return .empty()
         case .alarmButtonDidTap:
             steps.accept(SMUPStep.alarmIsRequired)
             return .empty()
+        case .viewDidAppear:
+            return mockData()
         }
     }
 }
@@ -68,6 +68,8 @@ extension HomeReactor{
             newState.selectedDate = date
         case let .setMeal(meal):
             newState.meal = meal
+        case let .setSchedule(schedule):
+            newState.scheduel = schedule
         }
         return newState
     }
@@ -76,5 +78,14 @@ extension HomeReactor{
 
 // MARK: - Method
 private extension HomeReactor{
-    
+    func mockData() -> Observable<Mutation>{
+        let meal = Meal(breakfast: ["아침","아침ㅁ"],
+                        lunch: ["점심ㅁ", "점심"],
+                        dinner: ["저녁ㄱ", "저녁ㅁ"])
+        let schedule = Schedule(date: Date(), perio: 2, name: "김김김", content: ["집집집집집"], reference: "김김김님이 Soom에 공지하셨습니댜")
+        return .concat([
+            .just(.setMeal(meal)),
+            .just(.setSchedule(schedule))
+        ])
+    }
 }
