@@ -14,7 +14,8 @@ enum SMUPError: Error {
     case noInternet
     case unauthorization
     
-    
+    // MARK: signin
+    case wrongRefreshToken
 }
 
 extension SMUPError: LocalizedError {
@@ -24,6 +25,8 @@ extension SMUPError: LocalizedError {
             return "인터넷이 연결되어있지 않습니다."
         case .unauthorization:
             return "권한이 없습니다."
+        case .wrongRefreshToken:
+            return "refresh토큰이 잘못되었습니다."
         }
     }
 }
