@@ -20,6 +20,8 @@ enum SMUPError: Error {
     // MARK: group
     case groupNotFound
     case pagenationPolicyViolation
+    case groupTypePolicyViolation
+    case permisionDenid
 }
 
 extension SMUPError: LocalizedError {
@@ -35,6 +37,10 @@ extension SMUPError: LocalizedError {
             return "그룹을 찾지 못하였습니다."
         case .pagenationPolicyViolation:
             return "idx나 size가 자연수가 아닙니다."
+        case .groupTypePolicyViolation:
+            return "Group Type이 정책을 위반합니다."
+        case .permisionDenid:
+            return "해당 그룹의 type을 수정할 권한이 없습니다."
         }
     }
 }
