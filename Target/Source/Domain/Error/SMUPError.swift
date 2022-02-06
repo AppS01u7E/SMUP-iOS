@@ -16,6 +16,10 @@ enum SMUPError: Error {
     
     // MARK: signin
     case wrongRefreshToken
+    
+    // MARK: group
+    case groupNotFound
+    case pagenationPolicyViolation
 }
 
 extension SMUPError: LocalizedError {
@@ -27,6 +31,10 @@ extension SMUPError: LocalizedError {
             return "권한이 없습니다."
         case .wrongRefreshToken:
             return "refresh토큰이 잘못되었습니다."
+        case .groupNotFound:
+            return "그룹을 찾지 못하였습니다."
+        case .pagenationPolicyViolation:
+            return "idx나 size가 자연수가 아닙니다."
         }
     }
 }
