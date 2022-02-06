@@ -22,6 +22,7 @@ enum SMUPError: Error {
     case pagenationPolicyViolation
     case groupTypePolicyViolation
     case permisionDenid
+    case idPolicyViolation
 }
 
 extension SMUPError: LocalizedError {
@@ -41,6 +42,8 @@ extension SMUPError: LocalizedError {
             return "Group Type이 정책을 위반합니다."
         case .permisionDenid:
             return "해당 그룹의 type을 수정할 권한이 없습니다."
+        case .idPolicyViolation:
+            return "ID가 자연수가 아닙니다."
         }
     }
 }
