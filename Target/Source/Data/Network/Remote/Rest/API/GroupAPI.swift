@@ -15,6 +15,15 @@ enum GroupAPI {
     // MARK: 그룹 삭제 투표
     case deleteGroup(id: Int)
     case getDeleteRequester(id: Int)
+    
+    // MARK: 그룹 인원 관리
+    case getGroupJoinList(groupID: String)
+    case getGroupIsRequested(groupID: String)
+    case postRequestJoinGroup(groupID: String)
+    case putAcceptJoin(groupID: String, userID: String)
+    case putAcceptJoinAll(groupID: String)
+    case deleteRejectJoin(groupID: String, userID: String)
+    case deleteRejectAll(groupID: String)
 }
 
 extension GroupAPI: SMUPAPI {
@@ -40,18 +49,35 @@ extension GroupAPI: SMUPAPI {
             return "/\(id)"
         case let .getDeleteRequester(id):
             return "/\(id)"
+        case let .getGroupJoinList(groupID):
+            return "/\(groupID)/join/list"
+        case let .getGroupIsRequested(groupID):
+            return "/\(groupID)/join"
+        case let .postRequestJoinGroup(groupID):
+            return "/\(groupID)/join"
+        case let .putAcceptJoin(groupID, userID):
+            return "/\(groupID)/join/\(userID)"
+        case let .putAcceptJoinAll(groupID):
+            return "/\(groupID)/join/all"
+        case let .deleteRejectJoin(groupID, userID):
+            return "/\(groupID)/join/\(userID)"
+        case let .deleteRejectAll(groupID):
+            return "/\(groupID)/join/all"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getGroupListWithTitle, .getGroupListWithID, .getGroupList, .getDeleteRequester:
+        case .getGroupListWithTitle, .getGroupListWithID, .getGroupList, .getDeleteRequester,
+                .getGroupJoinList, .getGroupIsRequested:
             return .get
-        case .postCreateGroup:
+        case .postCreateGroup, .postRequestJoinGroup:
             return .post
+        case .putAcceptJoin, .putAcceptJoinAll:
+            return .put
         case .patchUpdateGroup, .patchGroupProfile:
             return .patch
-        case .deleteGroup:
+        case .deleteGroup, .deleteRejectJoin, .deleteRejectAll:
             return .delete
         }
     }
@@ -95,13 +121,13 @@ extension GroupAPI: SMUPAPI {
         switch self {
         case .getGroupListWithTitle, .getGroupListWithID:
             return [
-                404: .groupNotFound,
+                404: .notFound,
                 403: .unauthorization
             ]
         case .getGroupList:
             return [
                 400: .pagenationPolicyViolation,
-                404: .groupNotFound,
+                404: .notFound,
                 403: .unauthorization
             ]
         case .postCreateGroup:
@@ -113,7 +139,7 @@ extension GroupAPI: SMUPAPI {
             return [
                 400: .groupTypePolicyViolation,
                 403: .permisionDenid,
-                404: .groupNotFound
+                404: .notFound
             ]
         case .patchGroupProfile:
             return [
@@ -124,13 +150,48 @@ extension GroupAPI: SMUPAPI {
             return [
                 400: .idPolicyViolation,
                 403: .permisionDenid,
-                404: .groupNotFound
+                404: .notFound
             ]
         case .getDeleteRequester:
             return [
                 400: .idPolicyViolation,
                 403: .permisionDenid,
-                404: .groupNotFound
+                404: .notFound
+            ]
+        case .getGroupJoinList:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .getGroupIsRequested:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .postRequestJoinGroup:
+            return [
+                400: .alreadyJoined,
+                404: .notFound
+            ]
+        case .putAcceptJoin:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .putAcceptJoinAll:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .deleteRejectJoin:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .deleteRejectAll:
+            return [
+                403: .permisionDenid,
+                404: .notFound
             ]
         }
     }
