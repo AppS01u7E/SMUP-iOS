@@ -12,7 +12,9 @@ enum GroupAPI {
     case patchUpdateGroup(UpdateGroupRequest)
     case patchGroupProfile(GroupProfileRequest)
     
-    
+    // MARK: 그룹 삭제 투표
+    case deleteGroup(id: Int)
+    case getDeleteRequester(id: Int)
 }
 
 extension GroupAPI: SMUPAPI {
@@ -34,17 +36,23 @@ extension GroupAPI: SMUPAPI {
             return "/\(req.id)"
         case let .patchGroupProfile(req):
             return "/\(req.id)"
+        case let .deleteGroup(id):
+            return "/\(id)"
+        case let .getDeleteRequester(id):
+            return "/\(id)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getGroupListWithTitle, .getGroupListWithID, .getGroupList:
+        case .getGroupListWithTitle, .getGroupListWithID, .getGroupList, .getDeleteRequester:
             return .get
         case .postCreateGroup:
             return .post
         case .patchUpdateGroup, .patchGroupProfile:
             return .patch
+        case .deleteGroup:
+            return .delete
         }
     }
     
@@ -70,6 +78,8 @@ extension GroupAPI: SMUPAPI {
             let form = [MultipartFormData(provider: .data(req.image.pngData() ?? .init()),
                                          name: "img")]
             return .uploadMultipart(form)
+        default:
+            return .requestPlain
         }
     }
     
@@ -109,6 +119,18 @@ extension GroupAPI: SMUPAPI {
             return [
                 403: .permisionDenid,
                 
+            ]
+        case .deleteGroup:
+            return [
+                400: .idPolicyViolation,
+                403: .permisionDenid,
+                404: .groupNotFound
+            ]
+        case .getDeleteRequester:
+            return [
+                400: .idPolicyViolation,
+                403: .permisionDenid,
+                404: .groupNotFound
             ]
         }
     }
