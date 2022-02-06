@@ -39,6 +39,19 @@ extension SMUPAPI {
             return ["Content-Type": "application/json"]
         }
     }
+    
+    func reissue() -> Task {
+        do {
+            let refresh = try Keychain.shared.load(type: .refreshToken)
+            return .requestParameters(parameters: [
+                "refreshToken" : refresh
+            ], encoding: JSONEncoding.default)
+        } catch {
+            return .requestParameters(parameters: [
+                "refreshToken" : "1"
+            ], encoding: JSONEncoding.default)
+        }
+    }
 }
 
 enum SMUPDomain: String {
