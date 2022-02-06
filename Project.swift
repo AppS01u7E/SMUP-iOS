@@ -15,7 +15,8 @@ let project = Project(
             deploymentTarget: .iOS(targetVersion: "13.0", devices: [.iphone, .ipad]),
             infoPlist: .file(path: Path("Target/Support/Info.plist")),
             sources: ["Target/Source/**"],
-            resources: ["Target/Resource/**"]
+            resources: ["Target/Resource/**"],
+            entitlements: Path("Target/Support/\(projectName).entitlements")
         ),
         Target(
             name: "\(projectName)Test",
