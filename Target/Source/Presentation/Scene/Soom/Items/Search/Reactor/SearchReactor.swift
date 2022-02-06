@@ -61,10 +61,10 @@ extension SearchReactor{
 private extension SearchReactor{
     func getSoomMock() -> [Soom]{
         return [
-            .init(name: "Info - Appsolute", description: "안녕하세요! \n저희 동아리는 이거 만들구요, \n저희는 이런 사람들이 있습니다."),
-            .init(name: "피크닉", description: "도망치세요! \n여기는 읍읍"),
-            .init(name: "대충 숨", description: "대충 설명이라는 뜻"),
-            .init(name: "대충 숨이라는 뜻", description: "대충 설명")
+            .init(id: .init(), name: "Info - Absolute", owner: .init(), description: "안녕하세요! \n저희 동아리는 이거 만들구요, \n저희는 이런 사람들이 있습니다.", type: .clubMajor),
+            .init(id: .init(), name: "피크닉", owner: .init(), description: "도망치세요! \n여기는 읍읍", type: .clubMajor),
+            .init(id: .init(), name: "대충 숨", owner: .init(), description: "대충 설명", type: .clubCa),
+            .init(id: .init(), name: "숨충 대", owner: .init(), description: "명설 대충", type: .class)
         ]
     }
 }
