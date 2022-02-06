@@ -73,8 +73,7 @@ private extension BaseRemote {
         .retry(when: { (errorObservable: Observable<TokenError>) in
             errorObservable.flatMap { error -> Single<Void> in
                 if error == .tokenExpired {
-                    // TODO: Re Issue 로그인 시간 갱신
-                    
+                    return SigninRemote.shared.reissueToken()
                 }
                 throw TokenError.noToken
             }
