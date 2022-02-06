@@ -11,6 +11,7 @@ import Foundation
 
 enum KeychainType: String {
     case accessToken = "ACCESS-TOKEN"
+    case refreshToken = "REFRESH-TOKEN"
 }
 
 enum KeychainError: Error {
