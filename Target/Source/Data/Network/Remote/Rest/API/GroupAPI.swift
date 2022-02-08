@@ -17,13 +17,20 @@ enum GroupAPI {
     case getDeleteRequester(id: Int)
     
     // MARK: 그룹 인원 관리
-    case getGroupJoinList(groupID: String)
-    case getGroupIsRequested(groupID: String)
-    case postRequestJoinGroup(groupID: String)
-    case putAcceptJoin(groupID: String, userID: String)
-    case putAcceptJoinAll(groupID: String)
-    case deleteRejectJoin(groupID: String, userID: String)
-    case deleteRejectAll(groupID: String)
+    case getGroupJoinList(groupID: UUID)
+    case getGroupIsRequested(groupID: UUID)
+    case postRequestJoinGroup(groupID: UUID)
+    case putAcceptJoin(groupID: UUID, userID: UUID)
+    case putAcceptJoinAll(groupID: UUID)
+    case deleteRejectJoin(groupID: UUID, userID: UUID)
+    case deleteRejectAll(groupID: UUID)
+    
+    // MARK: 권한 및 멤버 관리
+    case getGroupMemberList(GroupMemberListRequest)
+    case getGroupMember(groupID: UUID, userID: UUID)
+    case putGroupMemberPermission(GroupMemberPermissionRequest)
+    case deleteKickGroupMember(groupID: UUID, userID: UUID)
+    case putGroupDelegation(groupID: UUID, userID: UUID)
 }
 
 extension GroupAPI: SMUPAPI {
@@ -63,21 +70,31 @@ extension GroupAPI: SMUPAPI {
             return "/\(groupID)/join/\(userID)"
         case let .deleteRejectAll(groupID):
             return "/\(groupID)/join/all"
+        case let .getGroupMemberList(req):
+            return "/\(req.groupId)/member/list"
+        case let .getGroupMember(groupID, userID):
+            return "/\(groupID)/member/\(userID)"
+        case let .putGroupMemberPermission(req):
+            return "/\(req.groupId)/member/\(req.userId)"
+        case let .deleteKickGroupMember(groupID, userID):
+            return "/\(groupID)/member/\(userID)"
+        case let .putGroupDelegation(groupID, userID):
+            return "/\(groupID)/owner/\(userID)"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .getGroupListWithTitle, .getGroupListWithID, .getGroupList, .getDeleteRequester,
-                .getGroupJoinList, .getGroupIsRequested:
+                .getGroupJoinList, .getGroupIsRequested, .getGroupMemberList, .getGroupMember:
             return .get
         case .postCreateGroup, .postRequestJoinGroup:
             return .post
-        case .putAcceptJoin, .putAcceptJoinAll:
+        case .putAcceptJoin, .putAcceptJoinAll, .putGroupMemberPermission, .putGroupDelegation:
             return .put
         case .patchUpdateGroup, .patchGroupProfile:
             return .patch
-        case .deleteGroup, .deleteRejectJoin, .deleteRejectAll:
+        case .deleteGroup, .deleteRejectJoin, .deleteRejectAll, .deleteKickGroupMember:
             return .delete
         }
     }
@@ -104,6 +121,15 @@ extension GroupAPI: SMUPAPI {
             let form = [MultipartFormData(provider: .data(req.image.pngData() ?? .init()),
                                          name: "img")]
             return .uploadMultipart(form)
+        case let .getGroupMemberList(req):
+            return .requestParameters(parameters: [
+                "idx": req.idx,
+                "size": req.size
+            ], encoding: URLEncoding.queryString)
+        case let .putGroupMemberPermission(req):
+            return .requestParameters(parameters: [
+                "permission": req.permission.rawValue
+            ], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }
@@ -189,6 +215,31 @@ extension GroupAPI: SMUPAPI {
                 404: .notFound
             ]
         case .deleteRejectAll:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .getGroupMemberList:
+            return [
+                400: .pagenationPolicyViolation,
+                404: .notFound
+            ]
+        case .getGroupMember:
+            return [
+                400: .pagenationPolicyViolation,
+                404: .notFound
+            ]
+        case .putGroupMemberPermission:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .deleteKickGroupMember:
+            return [
+                403: .permisionDenid,
+                404: .notFound
+            ]
+        case .putGroupDelegation:
             return [
                 403: .permisionDenid,
                 404: .notFound
