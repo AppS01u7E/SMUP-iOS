@@ -8,30 +8,27 @@
 
 import UIKit
 import Then
-import SnapKit
+import FlexLayout
+import PinLayout
 import Kingfisher
 
 final class SettingProfileView: UIView{
     // MARK: - Properties
     private let bound = UIScreen.main.bounds
+    private let rootContainer = UIView()
     private let profileImageView = UIImageView().then {
         $0.layer.cornerRadius = 44
         $0.clipsToBounds = true
     }
     private let usernameLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 18)
-        $0.textColor = .white
+        $0.textColor = SMUPAsset.smupGray1.color
         $0.textAlignment = .center
     }
     private let schoolLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 16)
-        $0.textColor = .white
+        $0.textColor = SMUPAsset.smupGray1.color
         $0.textAlignment = .center
-    }
-    
-    private let stack = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = UIScreen.main.bounds.width*0.0223
     }
     
     // MARK: - Init
@@ -39,7 +36,6 @@ final class SettingProfileView: UIView{
         super.init(frame: .zero)
         addView()
         setLayout()
-        configureView()
     }
     
     required init?(coder: NSCoder) {
@@ -47,10 +43,13 @@ final class SettingProfileView: UIView{
     }
     
     override func layoutSubviews() {
-        self.backgroundColor = SMUPAsset.smupMain3.color.withAlphaComponent(0.57)
+        rootContainer.pin.all()
+        rootContainer.flex.layout()
+        self.backgroundColor = SMUPAsset.smupMain3.color
         self.layer.cornerRadius = 15
         self.clipsToBounds = true
-        self.applyShadow(color: .black, radius: 2, offSet: .init(width: 2, height: 2), opacity: 0.1)
+        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2, offSet: .init(width: 2, height: 2), opacity: 0.1)
     }
     
     // MARK: - OpenMethod
@@ -66,19 +65,13 @@ final class SettingProfileView: UIView{
 // MARK: - UI
 private extension SettingProfileView{
     func addView(){
-        stack.addArrangeSubviews(profileImageView, usernameLabel, schoolLabel)
-        addSubViews(stack)
+        addSubViews(rootContainer)
     }
     func setLayout(){
-        profileImageView.snp.makeConstraints {
-            $0.width.height.equalTo(88)
+        rootContainer.flex.alignItems(.center).justifyContent(.center).define { flex in
+            flex.addItem(profileImageView).size(88)
+            flex.addItem(usernameLabel)
+            flex.addItem(schoolLabel)
         }
-        stack.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(bound.height*0.039)
-        }
-    }
-    func configureView(){
-        
     }
 }
