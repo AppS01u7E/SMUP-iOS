@@ -59,6 +59,7 @@ enum SMUPDomain: String {
     case signup
     case signin
     case account
+    case group
 }
 
 extension SMUPDomain {
