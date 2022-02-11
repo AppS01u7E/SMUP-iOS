@@ -16,6 +16,7 @@ class baseCollectionViewCell<T>: UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
         addView()
+        setLayout()
         configureCell()
     }
     @available(*, unavailable)
@@ -23,10 +24,11 @@ class baseCollectionViewCell<T>: UICollectionViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     override func layoutSubviews() {
-        setLayout()
+        setLayoutSubViews()
     }
     func addView(){}
     func setLayout(){}
+    func setLayoutSubViews(){}
     func configureCell(){}
     var model: T? {
         didSet { if let model = model { bind(model) } }
