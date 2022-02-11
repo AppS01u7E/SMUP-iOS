@@ -24,7 +24,7 @@ final class SearchVC: baseVC<SearchReactor>{
         $0.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.941, alpha: 1)
     }
     private let soomTableView = UITableView().then {
-        $0.register(SoomCell.self, forCellReuseIdentifier: SoomCell.reusableID)
+        $0.register(SoomSearchResultCell.self, forCellReuseIdentifier: SoomSearchResultCell.reusableID)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 300
         $0.separatorStyle = .none
@@ -87,7 +87,7 @@ final class SearchVC: baseVC<SearchReactor>{
         let sharedState = reactor.state.share(replay: 1)
         
         let soomDS = RxTableViewSectionedAnimatedDataSource<SoomSection>{ _, tv, ip, item in
-            guard let cell = tv.dequeueReusableCell(withIdentifier: SoomCell.reusableID, for: ip) as? SoomCell else { return .init() }
+            guard let cell = tv.dequeueReusableCell(withIdentifier: SoomSearchResultCell.reusableID, for: ip) as? SoomSearchResultCell else { return .init() }
             cell.model = item
             return cell
         }

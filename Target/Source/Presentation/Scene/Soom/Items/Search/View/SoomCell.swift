@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class SoomCell: baseTableViewCell<Soom>{
+final class SoomSearchResultCell: baseTableViewCell<Soom>{
     // MARK: - Properties
     private let view = UIView().then {
         $0.layer.cornerRadius = 17
