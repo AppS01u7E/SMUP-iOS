@@ -190,13 +190,6 @@ final class SOOMVC : LBTAListHeaderController<PostCell, String, StoryHeader>,UIC
         view.backgroundColor = .white
         self.navigationItem.rightBarButtonItem = alarmButton
         self.navigationController?.navigationBar.backgroundColor = .white
-        let statusBar = UIView()
-
-        statusBar.frame = UIApplication.shared.statusBarFrame
-
-        statusBar.backgroundColor = .white
-
-        UIApplication.shared.keyWindow?.addSubview(statusBar)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
