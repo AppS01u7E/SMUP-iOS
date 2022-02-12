@@ -9,6 +9,8 @@
 import UIKit
 import Then
 import SnapKit
+import PinLayout
+import FlexLayout
 import Kingfisher
 
 final class ChatListCell: baseTableViewCell<ChatList>{
@@ -25,10 +27,6 @@ final class ChatListCell: baseTableViewCell<ChatList>{
     private let recentMessageLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 12)
         $0.textColor = .black.withAlphaComponent(0.73)
-    }
-    private let firstStack = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 0
     }
     private let recentDateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 13)
@@ -48,41 +46,40 @@ final class ChatListCell: baseTableViewCell<ChatList>{
     
     // MARK: - UI
     override func addView() {
-        firstStack.addArrangeSubviews(nameLabel, recentMessageLabel)
-        addSubViews(profileImageView, firstStack, recentDateLabel, alarmCountLabel)
+    }
+    override func setLayoutSubViews() {
+        contentView.flex.layout(mode: .fitContainer)
     }
     override func setLayout() {
-        profileImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
-            $0.top.bottom.equalToSuperview().inset(10)
-            $0.width.height.equalTo(52)
-        }
-        recentDateLabel.snp.makeConstraints {
-            $0.bottom.equalTo(self.snp.centerY)
-            $0.trailing.equalToSuperview().inset(5)
-        }
-        alarmCountLabel.snp.makeConstraints {
-            $0.top.equalTo(self.snp.centerY)
-            $0.trailing.equalToSuperview().inset(5)
-            $0.width.height.equalTo(17)
-        }
-        firstStack.snp.makeConstraints {
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(10)
-            $0.trailing.equalTo(recentDateLabel.snp.leading).priority(.high)
-            $0.centerY.equalToSuperview()
+        contentView.flex.marginVertical(10).direction(.row).define { flex in
+            flex.addItem(profileImageView).size(52)
+            flex.addItem().marginLeft(10).alignItems(.start).grow(1).define { flex in
+                flex.addItem(nameLabel)
+                flex.addItem(recentMessageLabel)
+            }
+            flex.addItem().alignSelf(.end).height(100%).alignItems(.center).define { flex in
+                flex.addItem(recentDateLabel).alignSelf(.end)
+                flex.addItem(alarmCountLabel).alignSelf(.end).size(17)
+            }
         }
     }
     override func configureCell() {
-        self.selectionStyle = .none
+        
+    }
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        setLayoutSubViews()
+        return contentView.frame.size
     }
     override func bind(_ model: ChatList) {
         profileImageView.kf.setImage(with: URL(string: model.profileImageUrl) ?? .none,
                                      placeholder: UIImage(),
                                      options: [.cacheMemoryOnly])
         nameLabel.text = model.name
+        nameLabel.flex.markDirty()
         recentMessageLabel.text = model.recentMessage
+        recentMessageLabel.flex.markDirty()
         recentDateLabel.text = model.recentDate.convertCustomString()
+        recentDateLabel.flex.markDirty()
         if model.alarmCount != 0{
             alarmCountLabel.isHidden = false
             alarmCountLabel.text = "\(model.alarmCount)"

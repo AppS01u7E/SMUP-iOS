@@ -15,9 +15,9 @@ import RxDataSources
 
 final class ChatListVC: baseVC<ChatListReactor>{
     // MARK: - Properties
-    private let searchTextField = UITextField(placeholder: "검색하실 채팅방을 입력해주세요.").then {
-        $0.addLeftImage(image: .init(systemName: "magnifyingglass")?.tintColor(SMUPAsset.smupGray4.color) ?? .init())
-        $0.applyUnderline()
+    private let searchController = UISearchController(searchResultsController: nil).then {
+        $0.searchBar.placeholder = "검색하실 채팅방을 입력해주세요."
+        $0.obscuresBackgroundDuringPresentation = false
     }
     private let chatListTableView = UITableView().then {
         $0.register(ChatListCell.self, forCellReuseIdentifier: ChatListCell.reusableID)
@@ -32,17 +32,11 @@ final class ChatListVC: baseVC<ChatListReactor>{
     
     // MARK: - UI
     override func addView() {
-        view.addSubViews(searchTextField, chatListTableView)
+        view.addSubViews(chatListTableView)
     }
     override func setLayout() {
-        searchTextField.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(bound.height*0.023)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.11)
-            $0.height.equalTo(40)
-        }
         chatListTableView.snp.makeConstraints {
-            $0.top.equalTo(searchTextField.snp.bottom).offset(bound.height*0.024)
+            $0.top.equalToSuperview().offset(bound.height*0.024)
             $0.leading.trailing.equalToSuperview().inset(bound.width*0.084)
             $0.bottom.equalToSuperview()
         }
@@ -51,9 +45,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
         
     }
     override func configureNavigation() {
-        self.navigationController?.isNavigationBarHidden = true
-        
-        
+        self.navigationItem.searchController = searchController
     }
     
     // MARK: - Reactor
@@ -64,10 +56,9 @@ final class ChatListVC: baseVC<ChatListReactor>{
             .disposed(by: disposeBag)
     }
     override func bindView(reactor: ChatListReactor) {
-        searchTextField.rx.text
+        searchController.searchBar.rx.text
             .orEmpty
-            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
-            .map { Reactor.Action.updateQuery($0) }
+            .map(Reactor.Action.updateQuery)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -86,7 +77,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
     override func bindState(reactor: ChatListReactor) {
         let sharedState = reactor.state.share(replay: 1).observe(on: MainScheduler.asyncInstance)
         
-        let dataSrouces = RxTableViewSectionedReloadDataSource<ChatListSection>{ ds, tv, ip, item in
+        let dataSrouces = RxTableViewSectionedReloadDataSource<ChatListSection>{ _, tv, ip, item in
             guard let cell = tv.dequeueReusableCell(withIdentifier: ChatListCell.reusableID, for: ip) as? ChatListCell else { return .init() }
             cell.model = item
             return cell
