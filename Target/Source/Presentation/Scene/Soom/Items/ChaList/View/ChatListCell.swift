@@ -48,10 +48,10 @@ final class ChatListCell: baseTableViewCell<ChatList>{
     override func addView() {
     }
     override func setLayoutSubViews() {
-        contentView.flex.layout(mode: .fitContainer)
+        contentView.flex.layout()
     }
     override func setLayout() {
-        contentView.flex.marginVertical(10).direction(.row).define { flex in
+        contentView.flex.paddingVertical(10).direction(.row).define { flex in
             flex.addItem(profileImageView).size(52)
             flex.addItem().marginLeft(10).alignItems(.start).grow(1).define { flex in
                 flex.addItem(nameLabel)
@@ -64,7 +64,7 @@ final class ChatListCell: baseTableViewCell<ChatList>{
         }
     }
     override func configureCell() {
-        
+        self.selectionStyle = .none
     }
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         setLayoutSubViews()
