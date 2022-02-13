@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SnapKit
+import PinLayout
 import Then
 import RxSwift
 import RxCocoa
@@ -22,6 +22,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
     private let chatListTableView = UITableView().then {
         $0.register(ChatListCell.self, forCellReuseIdentifier: ChatListCell.reusableID)
         $0.rowHeight = 72
+        $0.separatorStyle = .none
     }
     
     // MARK: - Lifecycle
@@ -35,11 +36,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
         view.addSubViews(chatListTableView)
     }
     override func setLayout() {
-        chatListTableView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(bound.height*0.024)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.084)
-            $0.bottom.equalToSuperview()
-        }
+        chatListTableView.pin.vertically(view.pin.safeArea).horizontally(8.4%)
     }
     override func configureVC() {
         
