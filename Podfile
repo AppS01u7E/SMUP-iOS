@@ -37,7 +37,7 @@ target 'SMUP' do
   # Network
   pod 'Moya/RxSwift', '~> 15.0.0'
   pod 'Socket.IO-Client-Swift', '~> 15.2.0'
-  pod 'Firebase/Messaging'
+  pod 'Firebase/Messaging', '~> 8.12.0'
 
   # Pods for your project
 

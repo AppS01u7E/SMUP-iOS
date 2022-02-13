@@ -110,7 +110,7 @@ PODS:
 
 DEPENDENCIES:
   - AnimatedCollectionViewLayout (~> 1.1.0)
-  - Firebase/Messaging
+  - Firebase/Messaging (~> 8.12.0)
   - FlexLayout (~> 1.3.23)
   - Hero (~> 1.6.1)
   - JJFloatingActionButton
@@ -218,6 +218,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: af6cfd34548cad22c072467c669c31e503523277
+PODFILE CHECKSUM: bebf43d086734756a341a1db938adedcb6242c8d
 
 COCOAPODS: 1.11.2
