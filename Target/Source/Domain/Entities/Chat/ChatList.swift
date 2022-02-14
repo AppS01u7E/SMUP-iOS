@@ -8,7 +8,7 @@
 
 import RxDataSources
 
-struct ChatList: ModelType{
+struct ChatList: Equatable{
     let id: String
     let profileImageUrl: String
     let name: String

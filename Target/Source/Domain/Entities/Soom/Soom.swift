@@ -9,7 +9,7 @@
 import RxDataSources
 import Foundation
 
-struct Soom: ModelType, Identifiable{
+struct Soom: Codable, Equatable, Identifiable{
     let id: UUID
     let name: String
     let owner: UUID
