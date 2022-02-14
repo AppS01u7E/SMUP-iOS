@@ -15,7 +15,7 @@ struct Channel{
     let resources: [UIImage]
 }
 
-struct dummyUser: ModelType{
+struct dummyUser: Equatable{
     let username: String
     let profileImageUrl: String
     let school: String

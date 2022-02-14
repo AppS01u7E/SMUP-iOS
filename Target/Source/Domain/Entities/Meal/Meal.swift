@@ -6,7 +6,7 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-struct Meal{
+struct Meal: Codable{
     let breakfast: [String]
     let lunch: [String]
     let dinner: [String]

@@ -9,7 +9,7 @@
 import RxDataSources
 import Foundation
 
-struct Alarm: ModelType{
+struct Alarm: Codable, Equatable{
     let id: String
     let content: String
     let date: Date

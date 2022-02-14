@@ -9,7 +9,7 @@
 import RxDataSources
 import Foundation
 
-struct Schedule: ModelType{
+struct Schedule: Codable{
     let date: Date
     let perio: Int
     let name: String
