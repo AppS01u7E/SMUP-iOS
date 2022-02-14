@@ -12,11 +12,11 @@ import JJFloatingActionButton
 final class SoomTabbarFlow: Flow{
     // MARK: - TabIndex
     enum TabIndex: Int{
-        case home = 0
+        case soom = 0
         case search
         case chat
-        case soom
         case setting
+        case home
     }
     
     // MARK: - Root

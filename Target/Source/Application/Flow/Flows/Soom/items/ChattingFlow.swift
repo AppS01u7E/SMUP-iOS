@@ -39,10 +39,6 @@ final class ChattingFlow: Flow{
         switch step{
         case .chatListIsRequired:
             return coordinateToChatList()
-        case let .chattingIsRequired(ID):
-            return navigateToChatting(ID: ID)
-        case let .chattingSettingIsRequired(reactor):
-            return presentToChattingSetting(reactor: reactor)
         default:
             return .none
         }
@@ -54,30 +50,5 @@ private extension ChattingFlow{
     func coordinateToChatList() -> FlowContributors{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
-    }
-    func navigateToChatting(ID: String) -> FlowContributors{
-        let vc = ChattingVC(ID: ID)
-        @Inject var reactor: ChattingReactor
-        vc.reactor = reactor
-        (self.rootVC.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(true)
-        self.rootVC.isNavigationBarHidden = false
-        self.rootVC.pushViewController(vc, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: reactor))
-    }
-    func presentToChattingSetting(reactor: ChattingReactor) -> FlowContributors{
-        let vc = SideMenuNavigationController(rootViewController: ChattingSettingSideVC(reactor: reactor))
-        vc.statusBarEndAlpha = 0
-        vc.dismissOnPresent = true
-        vc.dismissOnPush = true
-        vc.enableTapToDismissGesture = true
-        vc.enableSwipeToDismissGesture = true
-        vc.menuWidth = UIScreen.main.bounds.width*0.6859
-        vc.presentationStyle = .menuSlideIn
-        vc.presentationStyle.presentingEndAlpha = 0.8
-        SideMenuManager.default.rightMenuNavigationController = vc
-        SideMenuManager.default.rightMenuNavigationController?.setNavigationBarHidden(true, animated: false)
-        let presentingVC = SideMenuManager.default.rightMenuNavigationController ?? .init(nibName: nil, bundle: nil)
-        self.rootVC.present(presentingVC, animated: true, completion: nil)
-        return .one(flowContributor: .contribute(withNextPresentable: presentingVC, withNextStepper: reactor))
     }
 }

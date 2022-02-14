@@ -50,7 +50,6 @@ extension Container{
     private func registerReactor() {
         autoregister(SignInReactor.self, initializer: SignInReactor.init)
         autoregister(HomeReactor.self, initializer: HomeReactor.init)
-        autoregister(ChattingReactor.self, initializer: ChattingReactor.init)
         autoregister(ChatListReactor.self, initializer: ChatListReactor.init)
         autoregister(AlarmReactor.self, initializer: AlarmReactor.init)
         autoregister(SOOMReactor.self, initializer: SOOMReactor.init)

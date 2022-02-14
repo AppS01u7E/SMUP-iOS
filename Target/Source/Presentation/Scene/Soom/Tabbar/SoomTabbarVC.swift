@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SnapKit
+import PinLayout
 import Then
 import RxCocoa
 import RxSwift
@@ -68,13 +68,10 @@ final class SoomTabbarVC: UITabBarController, Stepper {
 // MARK: - UI
 private extension SoomTabbarVC{
     func addView(){
-        self.view.insertSubview(floaty, belowSubview: self.tabBar)
+        self.view.addSubViews(floaty)
     }
     func setLayout(){
-        floaty.snp.makeConstraints {
-            $0.bottom.trailing.equalToSuperview().inset(30)
-            $0.width.height.equalTo(64)
-        }
+        floaty.pin.bottomRight(30).size(64)
     }
     func configureVC(){
         self.tabBar.isHidden = true

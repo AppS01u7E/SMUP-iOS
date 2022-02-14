@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SnapKit
+import PinLayout
 import Then
 
 final class SoomCategoryCollectionViewCell: baseCollectionViewCell<SoomCategory>{
@@ -22,13 +22,9 @@ final class SoomCategoryCollectionViewCell: baseCollectionViewCell<SoomCategory>
     override func addView() {
         addSubViews(majorLabel, iconImageView)
     }
-    override func setLayout() {
-        majorLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(14)
-        }
-        iconImageView.snp.makeConstraints {
-            $0.bottom.trailing.equalToSuperview().inset(7)
-        }
+    override func setLayoutSubViews() {
+        majorLabel.pin.topLeft(14).height(14).width(100%)
+        iconImageView.pin.bottomRight(7).sizeToFit()
     }
     override func configureCell() {
         self.layer.cornerRadius = 18

@@ -8,11 +8,17 @@
 
 import UIKit
 import RxDataSources
+import PinLayout
+import FlexLayout
 import RxSwift
 
 final class SearchVC: baseVC<SearchReactor>{
     // MARK: - Properties
-    private let searchTextField = SearchTextField(placeholders: "검색하실 SOOM 이름을 입력해주세요.")
+    private let rootContainer = UIView()
+    private let searchTextField = UITextField(placeholder: "검색하실 SOOM 이름을 입력해주세요.").then {
+        $0.addLeftImage(image: .init(systemName: "magnifyingglass")?.tintColor(SMUPAsset.smupGray4.color) ?? .init())
+        $0.applyUnderline()
+    }
     private let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -24,7 +30,7 @@ final class SearchVC: baseVC<SearchReactor>{
         $0.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.941, alpha: 1)
     }
     private let soomTableView = UITableView().then {
-        $0.register(SoomCell.self, forCellReuseIdentifier: SoomCell.reusableID)
+        $0.register(SoomSearchResultCell.self, forCellReuseIdentifier: SoomSearchResultCell.reusableID)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 300
         $0.separatorStyle = .none
@@ -35,33 +41,22 @@ final class SearchVC: baseVC<SearchReactor>{
         categoryCollectionView.rx.setDelegate(self).disposed(by: disposeBag)
     }
     override func addView() {
-        view.addSubViews(searchTextField, categoryCollectionView, separatorView, soomTableView)
+        view.addSubViews(rootContainer)
+    }
+    override func setLayoutSubViews() {
+        rootContainer.pin.all(view.safeAreaInsets)
+        rootContainer.flex.layout()
     }
     override func setLayout() {
-        searchTextField.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.11)
-            $0.height.equalTo(40)
-        }
-        categoryCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.036)
-            $0.top.equalTo(searchTextField.snp.bottom).offset(13)
-            $0.height.equalTo(bound.width*0.23)
-        }
-        separatorView.snp.makeConstraints {
-            $0.top.equalTo(categoryCollectionView.snp.bottom).offset(bound.height*0.02236)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.036)
-            $0.height.equalTo(1)
-        }
-        soomTableView.snp.makeConstraints {
-            $0.top.equalTo(separatorView.snp.bottom).offset(bound.height*0.02236)
-            $0.leading.trailing.equalToSuperview().inset(bound.width*0.0966)
-            $0.height.equalTo(bound.height*0.7589)
+        rootContainer.flex.define { flex in
+            flex.addItem(searchTextField).marginHorizontal(13%).height(40)
+            flex.addItem(categoryCollectionView).marginHorizontal(3.6%).marginTop(13).height(bound.width*0.23)
+            flex.addItem(separatorView).marginHorizontal(3.6%).marginTop(15).height(1)
+            flex.addItem(soomTableView).marginHorizontal(9.6%).marginTop(15).height(75.89%).bottom(0)
         }
     }
     override func configureVC() {
-        
+        view.backgroundColor = SMUPAsset.smupGray1.color
     }
     
     // MARK: - Reactor
@@ -87,7 +82,7 @@ final class SearchVC: baseVC<SearchReactor>{
         let sharedState = reactor.state.share(replay: 1)
         
         let soomDS = RxTableViewSectionedAnimatedDataSource<SoomSection>{ _, tv, ip, item in
-            guard let cell = tv.dequeueReusableCell(withIdentifier: SoomCell.reusableID, for: ip) as? SoomCell else { return .init() }
+            guard let cell = tv.dequeueReusableCell(withIdentifier: SoomSearchResultCell.reusableID, for: ip) as? SoomSearchResultCell else { return .init() }
             cell.model = item
             return cell
         }
