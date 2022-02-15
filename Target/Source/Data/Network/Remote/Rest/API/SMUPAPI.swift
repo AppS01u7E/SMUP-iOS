@@ -60,6 +60,7 @@ enum SMUPDomain: String {
     case signin
     case account
     case group
+    case meal
 }
 
 extension SMUPDomain {
