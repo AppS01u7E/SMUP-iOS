@@ -18,6 +18,8 @@ final class HomeReactor: Reactor, Stepper{
     
     private let disposeBag = DisposeBag()
     
+    @Inject private var getTodayMealUseCase: GetTodayMealUseCase
+    
     // MARK: - Reactor
     enum Action{
         case viewDidAppear
@@ -54,7 +56,7 @@ extension HomeReactor{
             steps.accept(SMUPStep.alarmIsRequired)
             return .empty()
         case .viewDidAppear:
-            return mockData()
+            return viewDidAppear()
         }
     }
 }
@@ -78,13 +80,10 @@ extension HomeReactor{
 
 // MARK: - Method
 private extension HomeReactor{
-    func mockData() -> Observable<Mutation>{
-        let meal = Meal(breakfast: ["아침","아침ㅁ"],
-                        lunch: ["점심ㅁ", "점심"],
-                        dinner: ["저녁ㄱ", "저녁ㅁ"])
+    func viewDidAppear() -> Observable<Mutation> {
         let schedule = Schedule(date: Date(), perio: 2, name: "김김김", content: ["집집집집집"], reference: "김김김님이 Soom에 공지하셨습니댜")
         return .concat([
-            .just(.setMeal(meal)),
+            getTodayMealUseCase.execute().asObservable().map{ .setMeal($0) },
             .just(.setSchedule(schedule))
         ])
     }
