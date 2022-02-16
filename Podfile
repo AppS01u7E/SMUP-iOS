@@ -1,12 +1,8 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '12.0'
 
-target 'SMUP' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  project 'SMUP' 
-  
-  # Rx
+def pods 
+# Rx
   pod 'RxSwift', '~> 6.2.0'
   pod 'RxCocoa', '~> 6.2.0'
   pod 'RxViewController', '~> 2.0.0'
@@ -39,7 +35,17 @@ target 'SMUP' do
   pod 'Socket.IO-Client-Swift', '~> 15.2.0'
   pod 'Firebase/Core', '~> 8.12.0'
   pod 'Firebase/Messaging', '~> 8.12.0'
+end
 
-  # Pods for your project
+use_frameworks!
+target 'SMUP' do
+  # Comment the next line if you don't want to use dynamic frameworks
 
+  project 'SMUP'
+  pods
+
+end
+
+target 'SMUPTest' do
+  pods
 end
