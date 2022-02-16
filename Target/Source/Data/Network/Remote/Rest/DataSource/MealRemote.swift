@@ -19,5 +19,6 @@ final class MealRemote: BaseRemote<MealAPI> {
     func getTodayMeal() -> Single<Meal> {
         return request(.getTodayMeal)
             .map(Meal.self)
+            .catchAndReturn(.init(breakfast: ["a"], lunch: ["a"], dinner: ["a"]))
     }
 }

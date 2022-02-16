@@ -42,7 +42,7 @@ final class HomeReactor: Reactor, Stepper{
         initialState = State(
             selectedDate: Date(),
             meal: .init(breakfast: [], lunch: [], dinner: []),
-            scheduel: .init(date: Date(), perio: 0, name: "", content: [], reference: "")
+            scheduel: .init(date: Date(), perio: 0, name: "", content: [""], reference: "")
         )
     }
     
@@ -81,7 +81,7 @@ extension HomeReactor{
 // MARK: - Method
 private extension HomeReactor{
     func viewDidAppear() -> Observable<Mutation> {
-        let schedule = Schedule(date: Date(), perio: 2, name: "김김김", content: ["집집집집집"], reference: "김김김님이 Soom에 공지하셨습니댜")
+        let schedule = Schedule(date: Date(), perio: 2, name: "김김김", content: ["집집집집집", "Asdf", "fda"], reference: "김김김님이 Soom에 공지하셨습니댜")
         return .concat([
             getTodayMealUseCase.execute().asObservable().map{ .setMeal($0) },
             .just(.setSchedule(schedule))
