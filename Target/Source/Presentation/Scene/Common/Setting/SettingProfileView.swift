@@ -49,7 +49,7 @@ final class SettingProfileView: UIView{
         self.layer.cornerRadius = 15
         self.clipsToBounds = true
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2, offSet: .init(width: 2, height: 2), opacity: 0.1)
+        self.applyShadow(color: SMUPAsset.smupGray6.color, radius: 2, offSet: .init(width: 2, height: 2), opacity: 0.1)
     }
     
     // MARK: - OpenMethod

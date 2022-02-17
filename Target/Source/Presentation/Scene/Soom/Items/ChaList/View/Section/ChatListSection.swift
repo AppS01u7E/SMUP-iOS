@@ -8,14 +8,14 @@
 
 import RxDataSources
 
-struct ChatListSection: AnimatableSectionModelType{
+struct ChatListSection: SectionModelType{
     let header: String
-    var items: [ChatList]
+    var items: [ChatRoom]
 }
 
 extension ChatListSection{
-    typealias Item = ChatList
-    init(original: ChatListSection, items: [ChatList]) {
+    typealias Item = ChatRoom
+    init(original: ChatListSection, items: [ChatRoom]) {
         self = original
         self.items = items
     }

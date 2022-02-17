@@ -19,12 +19,12 @@ final class SoomSearchResultCell: baseTableViewCell<Soom>{
     }
     private let titleLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.semiBold, size: 13)
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
     }
     private let descriptionsLabel = UILabel().then{
         $0.numberOfLines = 0
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 12)
-        $0.textColor = SMUPAsset.smupGray7.color.withAlphaComponent(0.65)
+        $0.textColor = SMUPAsset.smupGray6.color.withAlphaComponent(0.65)
     }
     private let postButton = UIButton().then {
         $0.setTitle("게시물 보기", for: .normal)
@@ -69,7 +69,7 @@ final class SoomSearchResultCell: baseTableViewCell<Soom>{
     }
     override func configureCell() {
         self.selectionStyle = .none
-        view.applyShadow(color: SMUPAsset.smupGray7.color, radius: 4, offSet: .init(width: 0, height: 2), opacity: 1)
+        view.applyShadow(color: SMUPAsset.smupGray6.color, radius: 4, offSet: .init(width: 0, height: 2), opacity: 1)
         
     }
     override func bind(_ model: Soom) {

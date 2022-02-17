@@ -34,7 +34,7 @@ final class ClockView: UIView{
         $0.text = "오전 00시 00분\n곧 0교시 수업이 시작됩니다"
     }
     private let separatorView = UIView().then {
-        $0.backgroundColor = SMUPAsset.smupGray5.color
+        $0.backgroundColor = SMUPAsset.smupGray4.color
     }
     private let perioTimeLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 18)

@@ -39,7 +39,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
         chatListTableView.pin.vertically(view.pin.safeArea).horizontally(8.4%)
     }
     override func configureVC() {
-        
+        view.backgroundColor = SMUPAsset.smupGray1.color
     }
     override func configureNavigation() {
         self.navigationItem.searchController = searchController
@@ -59,11 +59,11 @@ final class ChatListVC: baseVC<ChatListReactor>{
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        chatListTableView.rx.modelSelected(ChatList.self)
+        chatListTableView.rx.modelSelected(ChatRoom.self)
             .withUnretained(self)
             .do(onNext: { owner, item in
                 let back: UIBarButtonItem = .init(title: item.name, style: .plain, target: owner, action: nil)
-                back.tintColor = .black
+                back.tintColor = SMUPAsset.smupGray6.color
                 owner.navigationItem.backBarButtonItem = back
             })
             .map { Reactor.Action.chattingDidTap($0.1.id) }

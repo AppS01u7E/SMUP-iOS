@@ -13,7 +13,7 @@ import PinLayout
 final class MealLabel: UIView{
     // MARK: - Init
     private let contentLabel = UILabel().then {
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 14)
         $0.numberOfLines = 0
     }

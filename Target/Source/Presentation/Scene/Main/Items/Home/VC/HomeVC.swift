@@ -17,7 +17,7 @@ import RxSwift
 final class HomeVC: baseVC<HomeReactor>{
     // MARK: - Properties
     private let alarmButton = UIBarButtonItem().then {
-        $0.image = UIImage(systemName: "bell")?.tintColor(SMUPAsset.smupGray7.color)
+        $0.image = UIImage(systemName: "bell")?.tintColor(SMUPAsset.smupGray6.color)
     }
     
     private let rootContainer = UIView()
@@ -33,7 +33,7 @@ final class HomeVC: baseVC<HomeReactor>{
     }
     private let todayLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 36)
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
         $0.textAlignment = .center
         $0.text = "Today"
     }

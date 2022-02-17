@@ -15,15 +15,15 @@ final class ScheduleView: UIView{
     private let rootContainer = UIView()
     private let perioLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 16)
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
     }
     private let contentLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 14)
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
     }
     private let referenceLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 12)
-        $0.textColor = SMUPAsset.smupGray7.color
+        $0.textColor = SMUPAsset.smupGray6.color
     }
     
     override func layoutSubviews() {
@@ -35,7 +35,7 @@ final class ScheduleView: UIView{
         rootContainer.backgroundColor = SMUPAsset.smupGray1.color
         self.layer.masksToBounds = false
         self.layer.borderWidth = 0
-        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
+        self.applyShadow(color: SMUPAsset.smupGray6.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
     
     // MARK: - Init

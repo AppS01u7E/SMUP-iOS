@@ -25,11 +25,11 @@ final class ChatListReactor: Reactor, Stepper{
         case chattingDidTap(String)
     }
     enum Mutation{
-        case setChatList([ChatList])
+        case setChatList([ChatRoom])
         case setQuery(String)
     }
     struct State{
-        var chatLists: [ChatList] = []
+        var chatLists: [ChatRoom] = []
         var query = ""
     }
     
@@ -46,7 +46,7 @@ extension ChatListReactor{
         case let .updateQuery(q):
             return .just(.setQuery(q))
         case let .chattingDidTap(id):
-            steps.accept(SMUPStep.chattingIsRequired(withID: id))
+            steps.accept(SMUPStep.chattingIsRequired(id: id))
             return .empty()
         default:
             return .empty()
@@ -71,11 +71,11 @@ extension ChatListReactor{
 
 // MARK: - Method
 private extension ChatListReactor{
-    func getDummyChatList() -> [ChatList] {
+    func getDummyChatList() -> [ChatRoom] {
         return [
-            .init(id: "asdf", profileImageUrl: "https://yt3.ggpht.com/ytc/AKedOLRtjfB6gUvfT114pomkfO_-caO0cQ7Gy7bq9iMa=s88-c-k-c0x00ffffff-no-rj", name: "asdf", recentDate: Date(), recentMessage: "fdzz", alarmCount: 1),
-            .init(id: "FDSA", profileImageUrl: "https://tistory4.daumcdn.net/tistory/3812930/attach/1dd1ccd271264acdb363bd5a484b4b12", name: "김성훈", recentDate: Date(), recentMessage: "일하셈", alarmCount: 0),
-            .init(id: "ASFW", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=48&v=4", name: "ㅁㄴㅇㄹ", recentDate: (Date() - 1.days), recentMessage: "ㅇ?", alarmCount: 2)
+            .init(id: "asdf", isDone: true, name: "김성훈", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 0),
+            .init(id: "fdsa", isDone: false, name: "ㅁㄴㅇㄹ", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 2),
+            .init(id: "ssss", isDone: true, name: "baegte", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 0 )
         ]
     }
 }

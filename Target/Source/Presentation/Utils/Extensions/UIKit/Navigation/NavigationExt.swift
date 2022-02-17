@@ -12,7 +12,7 @@ extension UINavigationItem{
     func setTitle(title: String){
         let lb = UILabel()
         lb.text = title
-        lb.textColor = SMUPAsset.smupGray7.color
+        lb.textColor = SMUPAsset.smupGray6.color
         lb.font = UIFont(font: SMUPFontFamily.Inter.bold, size: 24)
         self.titleView = lb
     }

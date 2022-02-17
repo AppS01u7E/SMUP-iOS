@@ -22,7 +22,7 @@ enum JWTTokenType {
     public var headerString: String {
         switch self {
         case .accessToken:
-            return "accessToken"
+            return "Authorization1"
         default:
             return ""
         }

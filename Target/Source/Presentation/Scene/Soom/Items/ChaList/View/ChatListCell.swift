@@ -12,8 +12,9 @@ import SnapKit
 import PinLayout
 import FlexLayout
 import Kingfisher
+import RxSwift
 
-final class ChatListCell: baseTableViewCell<ChatList>{
+final class ChatListCell: baseTableViewCell<ChatRoom>{
     // MARK: - Properties
     private let profileImageView = UIImageView().then {
         $0.layer.cornerRadius = 26
@@ -22,15 +23,15 @@ final class ChatListCell: baseTableViewCell<ChatList>{
     }
     private let nameLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 14)
-        $0.textColor = .black
+        $0.textColor = SMUPAsset.smupGray6.color
     }
     private let recentMessageLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.regular, size: 12)
-        $0.textColor = .black.withAlphaComponent(0.73)
+        $0.textColor = SMUPAsset.smupGray6.color.withAlphaComponent(0.73)
     }
     private let recentDateLabel = UILabel().then {
         $0.font = UIFont(font: SMUPFontFamily.Inter.medium, size: 13)
-        $0.textColor = .black
+        $0.textColor = SMUPAsset.smupGray6.color
         $0.textAlignment = .right
     }
     private let alarmCountLabel = UILabel().then {
@@ -42,6 +43,12 @@ final class ChatListCell: baseTableViewCell<ChatList>{
         $0.textColor = .white
         $0.isHidden = true
         $0.textAlignment = .center
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.model = nil
+        self.disposeBag = DisposeBag()
     }
     
     // MARK: - UI
@@ -70,19 +77,22 @@ final class ChatListCell: baseTableViewCell<ChatList>{
         setLayoutSubViews()
         return contentView.frame.size
     }
-    override func bind(_ model: ChatList) {
-        profileImageView.kf.setImage(with: URL(string: model.profileImageUrl) ?? .none,
+    override func bind(_ model: ChatRoom) {
+        profileImageView.kf.setImage(with: URL(string: model.profile) ?? .none,
                                      placeholder: UIImage(),
-                                     options: [.cacheMemoryOnly])
+                                     options: [])
         nameLabel.text = model.name
         nameLabel.flex.markDirty()
-        recentMessageLabel.text = model.recentMessage
-        recentMessageLabel.flex.markDirty()
-        recentDateLabel.text = model.recentDate.convertCustomString()
-        recentDateLabel.flex.markDirty()
-        if model.alarmCount != 0{
+        
+        if !model.isDone {
             alarmCountLabel.isHidden = false
-            alarmCountLabel.text = "\(model.alarmCount)"
+            alarmCountLabel.text = "\(model.unreadCount)"
         }
+        // TODO: Recent
+//        recentMessageLabel.text = model.recentMessage
+        recentMessageLabel.flex.markDirty()
+//        recentDateLabel.text = model.recentDate.convertCustomString()
+        recentDateLabel.flex.markDirty()
+        
     }
 }

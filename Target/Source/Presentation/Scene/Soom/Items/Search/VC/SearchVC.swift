@@ -16,7 +16,7 @@ final class SearchVC: baseVC<SearchReactor>{
     // MARK: - Properties
     private let rootContainer = UIView()
     private let searchTextField = UITextField(placeholder: "검색하실 SOOM 이름을 입력해주세요.").then {
-        $0.addLeftImage(image: .init(systemName: "magnifyingglass")?.tintColor(SMUPAsset.smupGray4.color) ?? .init())
+        $0.addLeftImage(image: .init(systemName: "magnifyingglass")?.tintColor(SMUPAsset.smupGray3.color) ?? .init())
         $0.applyUnderline()
     }
     private let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
@@ -27,7 +27,7 @@ final class SearchVC: baseVC<SearchReactor>{
         $0.collectionViewLayout = layout
     }
     private let separatorView = UIView().then {
-        $0.backgroundColor = UIColor(red: 0.941, green: 0.941, blue: 0.941, alpha: 1)
+        $0.backgroundColor = SMUPAsset.smupGray3.color
     }
     private let soomTableView = UITableView().then {
         $0.register(SoomSearchResultCell.self, forCellReuseIdentifier: SoomSearchResultCell.reusableID)
