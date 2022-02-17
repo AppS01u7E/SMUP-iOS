@@ -16,6 +16,8 @@ extension Container{
         registerReactor()
         registerStepper()
         registerFlow()
+        registerRepository()
+        registerUseCase()
     }
     
     // MARK: - VC
@@ -78,5 +80,14 @@ extension Container{
         autoregister(SettingFlow.self, initializer: SettingFlow.init)
         autoregister(SearchFlow.self, initializer: SearchFlow.init)
         autoregister(MySchoolFlow.self, initializer: MySchoolFlow.init)
+    }
+    
+    // MARK: - Data
+    private func registerRepository() {
+        autoregister(MealRepository.self, initializer: DefaultMealRepository.init)
+    }
+    private func registerUseCase() {
+        autoregister(GetMealUseCase.self, initializer: GetMealUseCase.init)
+        autoregister(GetTodayMealUseCase.self, initializer: GetTodayMealUseCase.init)
     }
 }

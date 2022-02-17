@@ -35,7 +35,7 @@ final class ScheduleView: UIView{
         rootContainer.backgroundColor = SMUPAsset.smupGray1.color
         self.layer.masksToBounds = false
         self.layer.borderWidth = 0
-        self.applyShadow(color: SMUPAsset.smupGray6.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
+        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
     
     // MARK: - Init
@@ -43,6 +43,7 @@ final class ScheduleView: UIView{
         super.init(frame: .zero)
         addView()
         setLayout()
+        configureView()
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +53,7 @@ final class ScheduleView: UIView{
     // MARK: - OpneMethod
     public func bind(_ model: Schedule){
         perioLabel.text = "\(model.perio)교시 \(model.name)"
+        perioLabel.flex.markDirty()
         let conStr = NSMutableAttributedString()
         model.content.forEach{ con in
             let imageAttachment = NSTextAttachment()
@@ -61,7 +63,10 @@ final class ScheduleView: UIView{
             conStr.append(.init(string: " \(con)\n"))
         }
         contentLabel.attributedText = conStr
+        contentLabel.flex.markDirty()
         referenceLabel.text = model.reference
+        referenceLabel.flex.markDirty()
+        setNeedsLayout()
     }
 }
 
@@ -73,8 +78,16 @@ private extension ScheduleView{
     func setLayout(){
         rootContainer.flex.padding(10).define { flex in
             flex.addItem(perioLabel)
-            flex.addItem(contentLabel).paddingTop(7)
+            flex.addItem(contentLabel).paddingTop(7).minHeight(0).maxHeight(100)
             flex.addItem(referenceLabel).paddingTop(7)
         }
+    }
+    func configureView() {
+        rootContainer.layer.cornerRadius = 10
+        rootContainer.clipsToBounds = true
+        rootContainer.backgroundColor = SMUPAsset.smupGray1.color
+        self.layer.masksToBounds = false
+        self.layer.borderWidth = 0
+        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
 }
