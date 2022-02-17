@@ -96,7 +96,7 @@ final class HomeVC: baseVC<HomeReactor>{
             }
             flex.addItem(segControl).height(38).top(4%).width(67%)
             flex.addItem(clockView).top(10%).width(bound.width*0.797).height(bound.width*0.797)
-            flex.addItem(scheduleView).top(15%).width(bound.width*0.797).minHeight(95)
+            flex.addItem(scheduleView).top(15%).width(bound.width*0.797).minHeight(0).maxHeight(250)
             flex.addItem().top(5%).horizontally(0).bottom(0).width(100%).height(60%).justifyContent(.spaceEvenly).alignItems(.center).define { flex in
                 flex.addItem(breakfastLabel).width(85%).minHeight(90).maxHeight(300)
                 flex.addItem(lunchLabel).width(85%).minHeight(90).maxHeight(300)
@@ -159,12 +159,13 @@ final class HomeVC: baseVC<HomeReactor>{
                 owner.dinnerLabel.setDetailMeal(content: meal.dinner.joined(separator: ""))
             }
             .disposed(by: disposeBag)
-        scheduleView.bind(.init(date: Date(), perio: 2, name: "nil", content: ["nil"], reference: "nil"))
+        
         sharedState
             .map(\.scheduel)
             .withUnretained(self)
             .subscribe { owner, schedule in
                 owner.scheduleView.bind(schedule)
+                owner.view.setNeedsLayout()
             }
             .disposed(by: disposeBag)
         
