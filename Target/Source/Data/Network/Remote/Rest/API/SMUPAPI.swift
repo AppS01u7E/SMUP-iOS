@@ -55,10 +55,8 @@ extension SMUPAPI {
 }
 
 enum SMUPDomain: String {
-    case auth
-    case signup
-    case signin
-    case account
+    case auth = "account/auth"
+    case account = "account/acc"
     case group
     case meal
 }
