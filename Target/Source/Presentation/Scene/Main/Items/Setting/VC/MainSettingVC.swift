@@ -46,6 +46,13 @@ final class MainSettingVC: baseVC<MainSettingReactor>{
     }
     override func configureVC() {
         view.backgroundColor = SMUPAsset.smupGray1.color
-        profileView.setUser(user: .init(username: "test", profileImageUrl: "https://avatars.githubusercontent.com/u/74440939?s=48&v=4", school: "대충어디학교"))
+        profileView.setUser(user: .init(id: "a",
+                                        email: "email",
+                                        name: "이름",
+                                        gender: .male,
+                                        createdAt: Date(),
+                                        profilePhoto: "https://static.wanted.co.kr/images/wdes/0_4.5a97ad6b.png",
+                                        birth: "20210311",
+                                        school: .gwangju))
     }
 }

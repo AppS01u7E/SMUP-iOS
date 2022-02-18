@@ -35,7 +35,7 @@ final class ScheduleView: UIView{
         rootContainer.backgroundColor = SMUPAsset.smupGray1.color
         self.layer.masksToBounds = false
         self.layer.borderWidth = 0
-        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
+        self.applyShadow(color: SMUPAsset.smupGray6.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
     
     // MARK: - Init
@@ -88,6 +88,6 @@ private extension ScheduleView{
         rootContainer.backgroundColor = SMUPAsset.smupGray1.color
         self.layer.masksToBounds = false
         self.layer.borderWidth = 0
-        self.applyShadow(color: SMUPAsset.smupGray7.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
+        self.applyShadow(color: SMUPAsset.smupGray6.color, radius: 2.5, offSet: .init(width: 0, height: 3), opacity: 0.5)
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2022 baegteun. All rights reserved.
 //
 
-enum School: String {
+enum School: String, Codable {
     case busan = "BUSAN"
     case daedeok = "DAEDEOK"
     case gwangju = "GWANGJU"

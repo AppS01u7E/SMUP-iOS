@@ -53,12 +53,12 @@ final class SettingProfileView: UIView{
     }
     
     // MARK: - OpenMethod
-    public func setUser(user: dummyUser){
-        profileImageView.kf.setImage(with: URL(string: user.profileImageUrl) ?? .none,
+    public func setUser(user: User){
+        profileImageView.kf.setImage(with: URL(string: user.profilePhoto) ?? .none,
                                      placeholder: UIImage(),
                                      options: [])
-        usernameLabel.text = user.username
-        schoolLabel.text = user.school
+        usernameLabel.text = user.name
+        schoolLabel.text = user.school.rawValue
     }
 }
 

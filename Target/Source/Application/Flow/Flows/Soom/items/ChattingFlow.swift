@@ -39,8 +39,8 @@ final class ChattingFlow: Flow{
         switch step{
         case .chatListIsRequired:
             return coordinateToChatList()
-        case let .chattingIsRequired(id):
-            return navigateToChatting(withID: id)
+        case let .chattingIsRequired(id, isDone):
+            return navigateToChatting(withID: id, isDone: isDone)
         default:
             return .none
         }
@@ -53,8 +53,8 @@ private extension ChattingFlow{
         self.rootVC.setViewControllers([vc], animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
-    func navigateToChatting(withID id: String) -> FlowContributors {
-        let reactor = ChattingReactor(id: id)
+    func navigateToChatting(withID id: String, isDone: Bool) -> FlowContributors {
+        let reactor = ChattingReactor(id: id, isDone: isDone)
         let vc = ChattingVC()
         (self.rootVC.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(true)
         self.rootVC.pushViewController(vc, animated: true)

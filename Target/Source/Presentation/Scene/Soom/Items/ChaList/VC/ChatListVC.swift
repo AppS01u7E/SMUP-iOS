@@ -66,7 +66,7 @@ final class ChatListVC: baseVC<ChatListReactor>{
                 back.tintColor = SMUPAsset.smupGray6.color
                 owner.navigationItem.backBarButtonItem = back
             })
-            .map { Reactor.Action.chattingDidTap($0.1.id) }
+            .map { Reactor.Action.chattingDidTap($0.1) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
             

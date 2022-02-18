@@ -2,13 +2,14 @@ import Foundation
 
 
 struct User: Codable {
-    let id: UUID
+    let id: String
     let email: String
-    let firstName: String
-    let lastName: String
+    let name: String
     let gender: User.Gender
-    let grade: Int
+    let createdAt: Date
+    let profilePhoto: String
     let birth: String
+    let school: School
     
     enum Gender: String, Codable {
         case male = "남"

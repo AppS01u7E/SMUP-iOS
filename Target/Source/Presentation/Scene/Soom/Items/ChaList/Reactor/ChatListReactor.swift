@@ -22,7 +22,7 @@ final class ChatListReactor: Reactor, Stepper{
     enum Action{
         case viewDidAppear
         case updateQuery(String)
-        case chattingDidTap(String)
+        case chattingDidTap(ChatRoom)
     }
     enum Mutation{
         case setChatList([ChatRoom])
@@ -45,8 +45,8 @@ extension ChatListReactor{
             return .just(.setChatList(getDummyChatList()))
         case let .updateQuery(q):
             return .just(.setQuery(q))
-        case let .chattingDidTap(id):
-            steps.accept(SMUPStep.chattingIsRequired(id: id))
+        case let .chattingDidTap(room):
+            steps.accept(SMUPStep.chattingIsRequired(id: room.id, isDone: room.isDone))
             return .empty()
         default:
             return .empty()
@@ -73,9 +73,7 @@ extension ChatListReactor{
 private extension ChatListReactor{
     func getDummyChatList() -> [ChatRoom] {
         return [
-            .init(id: "asdf", isDone: true, name: "김성훈", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 0),
-            .init(id: "fdsa", isDone: false, name: "ㅁㄴㅇㄹ", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 2),
-            .init(id: "ssss", isDone: true, name: "baegte", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", unreadCount: 0 )
+            
         ]
     }
 }

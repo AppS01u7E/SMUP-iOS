@@ -10,12 +10,12 @@ import RxDataSources
 
 struct UserListSection: SectionModelType{
     let header: String
-    var items: [dummyUser]
+    var items: [User]
 }
 
 extension UserListSection{
-    typealias Item = dummyUser
-    init(original: UserListSection, items: [dummyUser]) {
+    typealias Item = User
+    init(original: UserListSection, items: [User]) {
         self = original
         self.items = items
     }
