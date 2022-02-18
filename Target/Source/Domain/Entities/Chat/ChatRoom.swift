@@ -11,6 +11,10 @@ struct ChatRoom: Codable {
     let isDone: Bool
     let name: String
     let profile: String
-    // TODO: Type
+    let type: ChatRoom.`Type`
     let unreadCount: Int
+    enum `Type`: String, Codable {
+        case group = "GROUP"
+        case interview = "INTERVIEW"
+    }
 }
