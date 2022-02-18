@@ -52,7 +52,7 @@ extension SigninAPI: SMUPAPI {
         switch self {
         case .reissue:
             return [
-                400: .wrongRefreshToken
+                :
             ]
         }
     }
