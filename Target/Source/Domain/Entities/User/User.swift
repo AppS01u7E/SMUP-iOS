@@ -11,7 +11,7 @@ struct User: Codable {
     let birth: String
     
     enum Gender: String, Codable {
-        case male = "남"
-        case female = "여"
+        case male = "MAN"
+        case female = "WOMAN"
     }
 }
