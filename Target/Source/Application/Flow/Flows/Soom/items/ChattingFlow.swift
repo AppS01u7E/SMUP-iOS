@@ -54,8 +54,8 @@ private extension ChattingFlow{
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc.reactor ?? .init()))
     }
     func navigateToChatting(withID id: String, isDone: Bool) -> FlowContributors {
-        let reactor = ChattingReactor(id: id, isDone: isDone)
-        let vc = ChattingVC()
+        let reactor = ChattingReactor(id: id)
+        let vc = ChattingVC(reactor: reactor, isDone: isDone)
         (self.rootVC.tabBarController as? SoomTabbarVC)?.setFlaotyButtonHidden(true)
         self.rootVC.pushViewController(vc, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: reactor))

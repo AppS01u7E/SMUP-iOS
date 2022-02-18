@@ -84,7 +84,7 @@ final class ChatListCell: baseTableViewCell<ChatRoom>{
         nameLabel.text = model.name
         nameLabel.flex.markDirty()
         
-        if !model.isDone {
+        if model.unreadCount != 0 {
             alarmCountLabel.isHidden = false
             alarmCountLabel.text = "\(model.unreadCount)"
         }

@@ -26,15 +26,13 @@ final class ChattingReactor: Reactor, Stepper {
     }
     struct State {
         var roomID: String
-        let isDone: Bool
     }
     let initialState: State
     
     // MARK: - Init
-    init(id: String, isDone: Bool) {
+    init(id: String) {
         initialState = State(
-            roomID: id,
-            isDone: isDone
+            roomID: id
         )
     }
     

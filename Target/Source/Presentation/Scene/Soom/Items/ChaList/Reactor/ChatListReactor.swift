@@ -73,7 +73,8 @@ extension ChatListReactor{
 private extension ChatListReactor{
     func getDummyChatList() -> [ChatRoom] {
         return [
-            
+            .init(id: "A", isDone: false, name: "김성훈", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", type: .group, unreadCount: 2),
+            .init(id: "B", isDone: true, name: "B", profile: "https://avatars.githubusercontent.com/u/74440939?v=4", type: .interview, unreadCount: 0)
         ]
     }
 }
