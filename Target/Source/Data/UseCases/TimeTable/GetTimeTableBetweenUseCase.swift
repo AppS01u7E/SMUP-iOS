@@ -1,4 +1,4 @@
-import RxFlow
+import RxSwift
 import Foundation
 
 final class GetTimeTableBetweenUseCase {
