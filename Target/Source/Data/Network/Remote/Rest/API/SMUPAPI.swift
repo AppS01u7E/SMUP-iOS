@@ -17,7 +17,7 @@ protocol SMUPAPI: TargetType, JWTTokenAuthorizable {
 
 extension SMUPAPI {
     var baseURL: URL {
-        return URL(string: "")!
+        return URL(string: "http://3.36.108.34:8080/api/v1")!
     }
     
     var path: String {
@@ -59,6 +59,8 @@ enum SMUPDomain: String {
     case account = "account/acc"
     case group
     case meal
+    case schedule
+    case timeTable = "schedule/timetable"
 }
 
 extension SMUPDomain {
