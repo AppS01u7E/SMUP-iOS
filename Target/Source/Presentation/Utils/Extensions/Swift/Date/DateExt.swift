@@ -12,7 +12,16 @@ import SwiftDate
 extension Date{
     func isInPerio(perio: Int) -> Bool{
         return self.resetDate().isInRange(date: perio.convertStartTime().toDate("HH:mm")!.date, and: perio.convertEndTime().toDate("HH:mm")!.date)
-        
+    }
+    
+    func getPeriod() -> Int {
+        let reseted = self.resetDate()
+        if reseted.isInRange(
+            date: "00010101T08:40".toDate(style: .custom("yyyyMMdd'T'HH:mm"))?.date ?? .init(),
+            and: "00010101T09:30".toDate(style: .custom("yyyyMMdd'T'HH:mm"))?.date ?? .init()) {
+            return 1
+        }
+        return 0
     }
     
     func resetDate() -> Date{
