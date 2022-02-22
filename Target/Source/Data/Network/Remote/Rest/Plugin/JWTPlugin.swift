@@ -43,7 +43,7 @@ final class JWTPlugin: PluginType {
         var request = request
         
         let token = getToken(type: tokenType)
-        request.addValue(token, forHTTPHeaderField: tokenType.headerString)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: tokenType.headerString)
         return request
     }
     
